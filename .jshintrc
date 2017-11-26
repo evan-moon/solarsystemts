@@ -1,0 +1,8 @@
+{
+    "node": true,
+    "browser": true,
+    "globals": {
+        "angular": false
+    },
+    "esversion": 6
+}

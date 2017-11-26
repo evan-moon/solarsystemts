@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "strict": true,
+        "module": "es2015",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "allowJs": true,
+    },
+    "files": [
+        "./src/typings/index.d.ts",
+        "./src/typings/es6.d.ts"
+    ]
+}

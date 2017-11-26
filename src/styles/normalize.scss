@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    outline: 0;
+    list-style: none;
+}
+
+html, body, #root {
+    margin: 0;
+    height: 100%;
+}
+
+body, h1, h2, h3 {
+    font-weight: 600
+}
+
+a {
+    &:hover {
+        opacity: 0.6;
+    }
+}

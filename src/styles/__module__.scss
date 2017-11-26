@@ -1,5 +1,11 @@
-@import '~src/styles/utils/mixins';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
+@import '~xeicon/xeicon.css';
+
 @import '~src/styles/normalize';
+
+@import '~src/styles/utils/colors';
+@import '~src/styles/utils/mixins';
 
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;

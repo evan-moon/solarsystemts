@@ -1,22 +1,22 @@
 <template lang="html">
-<div>
-    <HeaderTool></HeaderTool>
+<b-container>
+    <ViewerTool></ViewerTool>
     <GLRenderer></GLRenderer>
-</div>
+</b-container>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import GLRenderer from 'src/components/GLRenderer.vue';
-import HeaderTool from 'src/components/HeaderTool.vue';
+import ViewerTool from 'src/components/ViewerTool.vue';
 
 @Component({
     name: 'Home',
-    components: { GLRenderer, HeaderTool }
+    components: { GLRenderer, ViewerTool }
 })
 export default class Home extends Vue {
-    
+
 }
 </script>
 

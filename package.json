@@ -13,12 +13,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "bootstrap-vue": "^1.2.0",
     "jquery": "^3.2.1",
     "moment": "^2.19.2",
     "three": "^0.88.0",
     "typescript": "^2.6.1",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "xeicon": "^2.3.3"
   },
   "devDependencies": {
     "@types/jquery": "^3.2.16",

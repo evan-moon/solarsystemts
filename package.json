@@ -16,6 +16,7 @@
     "bootstrap-vue": "^1.2.0",
     "jquery": "^3.2.1",
     "moment": "^2.19.2",
+    "q": "^1.5.1",
     "three": "^0.88.0",
     "typescript": "^2.6.1",
     "vue": "^2.5.2",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@types/jquery": "^3.2.16",
+    "@types/q": "^1.0.6",
     "@types/three": "^0.84.30",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",

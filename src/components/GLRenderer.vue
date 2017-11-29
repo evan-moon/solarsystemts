@@ -3,14 +3,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Scenario } from 'src/constants/scenario.constant';
+import LoaderService from 'src/services/Loader.service';
 
 @Component({
     name: 'GLRenderer'
 })
 export default class GLRenderer extends Vue {
+    @Prop() isPlaying: boolean;
+    currentScenario: Scenario|null = null;
+
+    setScenario (scenario: Scenario) {
+        this.currentScenario = scenario;
+    }
+
     mounted () {
-        console.log('mounted GLRenderer');
+        if (this.currentScenario) {
+            LoaderService.load(this.currentScenario);
+        }
+        else {
+            // Do nothing
+        }
     }
 }
 </script>

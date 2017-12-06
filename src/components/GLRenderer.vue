@@ -1,11 +1,12 @@
 <template>
-<div id="renderer" ref="renderer"></div>
+<div :id="rendererID" ref="renderer"></div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { Scenario } from 'src/constants/scenario.constant';
 import LoaderService from 'src/services/Loader.service';
+import WorldService from 'src/services/World.service';
 
 @Component({
     name: 'GLRenderer'
@@ -13,6 +14,7 @@ import LoaderService from 'src/services/Loader.service';
 export default class GLRenderer extends Vue {
     @Prop() isPlaying: boolean;
     currentScenario: Scenario|null = null;
+    rendererID: string = 'renderer';
 
     setScenario (scenario: Scenario) {
         this.currentScenario = scenario;
@@ -20,7 +22,9 @@ export default class GLRenderer extends Vue {
 
     mounted () {
         if (this.currentScenario) {
-            LoaderService.load(this.currentScenario);
+            LoaderService.load(this.currentScenario).then(res => {
+                WorldService.setRenderer(`#${this.rendererID}`);
+            });
         }
         else {
             // Do nothing

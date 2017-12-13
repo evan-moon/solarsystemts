@@ -11,7 +11,10 @@ import {
     SphereGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
     TextureLoader, Euler, Raycaster, PerspectiveCamera
 } from 'three';
+import { OrbitControls } from 'three-orbitcontrols-ts';
+
 import CameraManager from 'src/managers/Camera.manager';
+import ControlsManager from 'src/managers/Controls.manager';
 
 interface RenderConfig {
     antialias?: boolean;
@@ -47,6 +50,9 @@ class WorldService {
     protected CameraManager: CameraManager;
     protected currentCamera: PerspectiveCamera;
     protected cameraPos: string;
+
+    protected ControlsManager: ControlsManager;
+    protected controls: OrbitControls;
 
     constructor () {
         this.rendererSelector = '';
@@ -126,8 +132,6 @@ class WorldService {
     }
 
     public render (): void {
-        console.log(1);
-        console.log(this.currentCamera);
         this.renderer.render(this.scene, this.currentCamera);
     }
 
@@ -144,11 +148,11 @@ class WorldService {
         this.cameraPos = 'root';
     }
 
-    private setControls () {
-
+    private initControls () {
+        this.ControlsManager = new ControlsManager(this.currentCamera, this.rendererDOM);
     }
 
-    private setSpacebox () {
+    private initSpacebox () {
 
     }
 

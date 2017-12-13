@@ -1,7 +1,7 @@
 /**
- * @name LoaderService
+ * @name Loader.service
  * @author Evan Moon
- * @desc 시뮬레이터에 필요한 에셋들을 로딩하는 서비스
+ * @desc 시뮬레이터에 필요한 에셋들을 로딩하는 클래스
  */
 
 import * as Q from 'q';
@@ -13,7 +13,7 @@ import FragmentShader from 'src/shaders/atmosphere.fsh';
 class LoaderService {
     private shaders: string[];
 
-    load (scenario: Scenario) {
+    load () {
         let defer = Q.defer();
         this.shaders = [ VertexShader, FragmentShader ];
         defer.resolve();

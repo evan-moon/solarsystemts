@@ -13,7 +13,7 @@ import WorldService from 'src/services/World.service';
 })
 export default class GLRenderer extends Vue {
     @Prop() isPlaying: boolean;
-    currentScenario: Scenario|null = null;
+    currentScenario: Scenario;
     rendererID: string = 'renderer';
 
     setScenario (scenario: Scenario) {
@@ -22,8 +22,11 @@ export default class GLRenderer extends Vue {
 
     mounted () {
         if (this.currentScenario) {
-            LoaderService.load(this.currentScenario).then(res => {
+            LoaderService.load().then(res => {
+                console.log('Finish Shader Load');
                 WorldService.setRenderer(`#${this.rendererID}`);
+                WorldService.create();
+                WorldService.render();
             });
         }
         else {

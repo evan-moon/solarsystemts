@@ -44,9 +44,7 @@ export default class Viewer extends Vue {
 </script>
 
 <style lang="scss">
-div {
-    h1 {
-        color: #aaaaaa;
-    }
+.container-fluid {
+    padding: 0;
 }
 </style>

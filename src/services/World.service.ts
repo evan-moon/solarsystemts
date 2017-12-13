@@ -6,6 +6,12 @@
 import * as $ from 'jquery';
 import { Scenario } from 'src/constants/scenario.constant';
 import DimensionService from 'src/services/dimension.service';
+import {
+    Scene, WebGLRenderer, AmbientLight, Vector3, Vector2,
+    SphereGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
+    TextureLoader, Euler, Raycaster, PerspectiveCamera
+} from 'three';
+import CameraManager from 'src/managers/Camera.manager';
 
 interface RenderConfig {
     antialias?: boolean;
@@ -33,8 +39,16 @@ class WorldService {
     protected renderConfig: RenderConfig;
     protected smallestSMA: number;
 
+    protected scene: Scene;
+    protected renderer: WebGLRenderer;
+    protected raycaster: Raycaster;
+    protected mousePos: Vector2;
+
+    protected CameraManager: CameraManager;
+    protected currentCamera: PerspectiveCamera;
+    protected cameraPos: string;
+
     constructor () {
-        // Do nothing
         this.rendererSelector = '';
         this.rendererWidth = window.innerWidth;
         this.rendererHeight = window.innerHeight;
@@ -51,39 +65,102 @@ class WorldService {
         this.epochTime = 0;
     }
 
-    setWindow (w: number, h: number): void {
+    public setWindow (w: number, h: number): void {
         this.rendererWidth = w;
         this.rendererHeight = h;
     }
 
-    setDimension ({ smallest, largest }: SMA): void {
+    public setDimension ({ smallest, largest }: SMA): void {
         DimensionService.setLargestDimension(largest);
         this.stageSize = DimensionService.getScaled(largest);
         this.smallestSMA = smallest;
     }
 
-    setRenderer (selector: string): void {
+    public setRenderer (selector: string): void {
         this.rendererDOMjQuery = $(selector);
         this.rendererDOM = this.rendererDOMjQuery[0];
         this.rendererWidth = this.rendererDOMjQuery.width();
         this.rendererHeight = this.rendererDOMjQuery.height();
     }
 
-    setScenario (scenario: Scenario): void {
+    public setScenario (scenario: Scenario): void {
         this.scenario = scenario;
     }
 
-    getScenario (): Scenario {
+    public getScenario (): Scenario {
         return this.scenario;
     }
 
-    render (): void {
+    public create (): void {
+        // set scene
+        this.scene = new Scene();
+
+        // set renderer
+        if (!this.renderer) {
+            this.renderer = new WebGLRenderer(this.renderConfig);
+        }
+        else {
+            // Do nothing
+        }
+        this.renderer.setSize(this.rendererWidth, this.rendererHeight);
+        this.renderer.setPixelRatio(this.rendererRatio);
+        this.renderer.setClearColor(0x222222, 1);
+
+        // set basic light
+        let light: AmbientLight = new AmbientLight(0x111111);
+        light.position.set(0, 0, 0,);
+        this.scene.add(light);
+
+        // set raycaster
+        this.raycaster = new Raycaster();
+
+        // set mouse position to 0, 0, 0
+        this.mousePos = new Vector2();
+
+        this.rendererDOMjQuery.append(this.renderer.domElement);
+        $(document).on('click', e => {
+            this.onClick(e);
+        });
+
+        this.initCamera();
+    }
+
+    public render (): void {
+        console.log(1);
+        console.log(this.currentCamera);
+        this.renderer.render(this.scene, this.currentCamera);
+    }
+
+    public play (): void {}
+    public pause (): void {}
+    public destroy (): void {}
+
+    private initCamera (): void {
+        const aspect = this.rendererWidth / this.rendererHeight;
+        this.CameraManager = new CameraManager(this.scene, this.stageSize, aspect);
+        this.CameraManager.init();
+
+        this.currentCamera = this.CameraManager.globalCamera;
+        this.cameraPos = 'root';
+    }
+
+    private setControls () {
 
     }
 
-    play (): void {}
-    pause (): void {}
-    destroy (): void {}
+    private setSpacebox () {
+
+    }
+
+    private onClick (e: any): void {
+        console.log(e);
+        e.preventDefault();
+        this.mousePos.x = (e.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
+        this.mousePos.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1;
+        // this.raycaster.setFromCamera(this.mousePos, this.camera);
+
+        let intersects: any[] = this.raycaster.intersectObjects(this.scene.children, true);
+    }
 }
 
 const instance = new WorldService();

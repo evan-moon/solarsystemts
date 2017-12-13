@@ -3,6 +3,7 @@ import { PerspectiveCamera, Vector3 } from 'three';
 import { OrbitControls } from 'three-orbitcontrols-ts';
 
 interface ControlsConfig {
+    enableZoom?: boolean;
     enableDamping?: boolean;
     dampingFactor?: number;
     rotateSpeed?: number;
@@ -20,9 +21,10 @@ class ControlsManager {
         this.camera = camera;
         this.rendererDOM = rendererDOM;
         this.config = {
+            enableZoom: true,
             enableDamping: true,
-            dampingFactor: 0.1,
-            rotateSpeed: 0.5,
+            dampingFactor: 0.08,
+            rotateSpeed: 0.3,
             zoomSpeed: 0.5,
         };
         this.controlsCenter = new Vector3();

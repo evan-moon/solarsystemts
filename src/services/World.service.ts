@@ -8,8 +8,9 @@ import { Scenario } from 'src/constants/scenario.constant';
 import DimensionService from 'src/services/dimension.service';
 import {
     Scene, WebGLRenderer, AmbientLight, Vector3, Vector2,
-    SphereGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
-    TextureLoader, Euler, Raycaster, PerspectiveCamera
+    SphereBufferGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
+    TextureLoader, Euler, Raycaster, PerspectiveCamera,
+    AxisHelper, GridHelper
 } from 'three';
 import { OrbitControls } from 'three-orbitcontrols-ts';
 
@@ -26,6 +27,12 @@ interface SMA {
     largest: number
 }
 
+interface Space {
+    geometry: SphereBufferGeometry;
+    material: MeshBasicMaterial;
+    mesh?: Mesh;
+}
+
 class WorldService {
     public date: Date;
     public epochTime: number;
@@ -38,6 +45,7 @@ class WorldService {
     private rendererRatio: number;
     private stageSize: number;
     private scenario: Scenario;
+    private currentSpaceTexture: string;
 
     protected renderConfig: RenderConfig;
     protected smallestSMA: number;
@@ -69,6 +77,8 @@ class WorldService {
         };
         this.date = new Date;
         this.epochTime = 0;
+
+        this.currentSpaceTexture = 'universe';
     }
 
     public setWindow (w: number, h: number): void {
@@ -129,9 +139,13 @@ class WorldService {
         });
 
         this.initCamera();
+        this.initControls();
+        this.initSpacebox();
+        this.initHelper();
     }
 
     public render (): void {
+        this.controls.update();
         this.renderer.render(this.scene, this.currentCamera);
     }
 
@@ -150,14 +164,43 @@ class WorldService {
 
     private initControls () {
         this.ControlsManager = new ControlsManager(this.currentCamera, this.rendererDOM);
+        this.controls = this.ControlsManager.createControls();
     }
 
     private initSpacebox () {
+        const name: string = 'spacebox';
+        const d = 6;
+        const r = this.stageSize * d;
+        const widthSegments = 60;
+        const heightSegments = 40;
+        let space: Space = {
+            geometry: new SphereBufferGeometry(this.stageSize * d, widthSegments, heightSegments),
+            material: new MeshBasicMaterial({
+                color: new Color(0xaaaaaa),
+                side: BackSide,
+                map: new TextureLoader().load(`src/assets/images/space/${this.currentSpaceTexture}.jpg`)
+            })
+        };
 
+        space.mesh = new Mesh(space.geometry, space.material);
+        space.mesh.name = name;
+
+        if (this.scene.getObjectByName(name)) {
+            this.scene.remove(this.scene.getObjectByName(name));
+        }
+
+        this.scene.add(space.mesh);
+    }
+
+    private initHelper () {
+        let axisHelper: AxisHelper = new AxisHelper(this.stageSize);
+        let gridHelper: GridHelper = new GridHelper(this.stageSize, this.stageSize / 2000);
+        gridHelper.rotation.x = ( 90 / 180 ) * Math.PI;
+
+        this.scene.add(axisHelper, gridHelper);
     }
 
     private onClick (e: any): void {
-        console.log(e);
         e.preventDefault();
         this.mousePos.x = (e.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
         this.mousePos.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1;

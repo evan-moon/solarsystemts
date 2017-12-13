@@ -20,13 +20,19 @@ export default class GLRenderer extends Vue {
         this.currentScenario = scenario;
     }
 
+    tick () {
+        WorldService.render();
+        window.requestAnimationFrame(() => {
+            this.tick();
+        });
+    }
+
     mounted () {
         if (this.currentScenario) {
             LoaderService.load().then(res => {
-                console.log('Finish Shader Load');
                 WorldService.setRenderer(`#${this.rendererID}`);
                 WorldService.create();
-                WorldService.render();
+                this.tick();
             });
         }
         else {

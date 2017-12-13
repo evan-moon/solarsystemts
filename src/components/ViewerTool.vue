@@ -62,7 +62,7 @@ export default class ViewerTool extends Vue {
 $toolbar-height: 45px;
 
 .viewer-tool {
-    position:  fixed;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;

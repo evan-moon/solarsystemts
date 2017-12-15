@@ -50,7 +50,7 @@ interface Ring {
     map: string;
 };
 
-export interface Planet {
+export interface PlanetData {
     title: string;
     name: string;
     mass: number;
@@ -62,9 +62,10 @@ export interface Planet {
     atmosphere?: AtmoSphere;
     ring?: Ring;
     material: Material;
+    isStar: boolean;
 };
 
-export const SUN: Planet = {
+export const SUN: PlanetData = {
     title: 'The Sun',
     name: 'sun',
     mass: 1.9891e30,
@@ -75,10 +76,11 @@ export const SUN: Planet = {
         emissive: new Color(0xdddd33),
         color: '#ffff00',
         map: `${TEX_DIR}sun.jpg`
-    }
+    },
+    isStar: true
 };
 
-export const MERCURY: Planet = {
+export const MERCURY: PlanetData = {
     title: 'Mercury',
     name: 'mercury',
     mass: 3.3022e23,
@@ -105,10 +107,11 @@ export const MERCURY: Planet = {
     material: {
         color: '#588a7b',
         map: `${TEX_DIR}mercury.jpg`
-    }
+    },
+    isStar: false
 };
 
-export const VENUS: Planet = {
+export const VENUS: PlanetData = {
     title: 'Venus',
     name: 'venus',
     mass: 4.868e24,
@@ -136,10 +139,11 @@ export const VENUS: Planet = {
     material: {
         color: '#fda700',
         map: `${TEX_DIR}venus.jpg`
-    }
+    },
+    isStar: false
 };
 
-export const EARTH: Planet = {
+export const EARTH: PlanetData = {
     title: 'The Earth',
     name: 'earth',
     mass: 5.9736e24,
@@ -191,10 +195,11 @@ export const EARTH: Planet = {
     material: {
         color: '#1f7cda',
         map: `${TEX_DIR}earth.jpg`
-    }
+    },
+    isStar: false
 };
 
-export const MARS: Planet = {
+export const MARS: PlanetData = {
     title: 'Mars',
     name: 'mars',
     mass: 6.4185e23,
@@ -246,10 +251,11 @@ export const MARS: Planet = {
     material: {
         color: '#ff3300',
         map: `${TEX_DIR}mars.jpg`
-    }
+    },
+    isStar: false
 };
 
-export const JUPITER: Planet = {
+export const JUPITER: PlanetData = {
     title: 'Jupiter',
     name: 'jupiter',
     mass: 1.8986e27,
@@ -277,10 +283,11 @@ export const JUPITER: Planet = {
     material: {
         color: '#ff9932',
         map: `${TEX_DIR}jupiter.jpg`
-    }
+    },
+    isStar: false
 };
 
-export const SATURN: Planet = {
+export const SATURN: PlanetData = {
     title: 'Saturn',
     name: 'saturn',
     mass: 5.6846e26,
@@ -313,10 +320,11 @@ export const SATURN: Planet = {
     material: {
         color: '#ffcc99',
         map: `${TEX_DIR}saturn.jpg`
-    }
+    },
+    isStar: false
 };
 
-export const URANUS: Planet = {
+export const URANUS: PlanetData = {
     title: 'Uranus',
     name: 'uranus',
     mass: 8.6810e25,
@@ -344,10 +352,11 @@ export const URANUS: Planet = {
     material: {
         color: '#99ccff',
         map: `${TEX_DIR}uranus.jpg`
-    }
+    },
+    isStar: false
 };
 
-export const NEPTUNE: Planet = {
+export const NEPTUNE: PlanetData = {
     title: 'Neptune',
     name: 'neptune',
     mass: 1.0243e26,
@@ -375,10 +384,11 @@ export const NEPTUNE: Planet = {
     material: {
         color: '#3299ff',
         map: `${TEX_DIR}neptune.jpg`
-    }
+    },
+    isStar: false
 };
 
-export const PLUTO: Planet = {
+export const PLUTO: PlanetData = {
     title: 'Pluto',
     name: 'pluto',
     mass: 1.305e22 + 1.52e21,
@@ -406,11 +416,12 @@ export const PLUTO: Planet = {
     material: {
         color: '#aaaaaa',
         map: `${TEX_DIR}pluto.jpg`
-    }
+    },
+    isStar: false
 };
 
 /* DWARVES */
-// export const CERES: Planet = {
+// export const CERES: PlanetData = {
 //     title: 'Ceres',
 //     name: 'ceres',
 //     mass: 893.2e20,
@@ -440,7 +451,7 @@ export const PLUTO: Planet = {
 //     }
 // };
 //
-// export const ERIS: Planet = {
+// export const ERIS: PlanetData = {
 //     title: 'Eris',
 //     name: 'eris',
 //     mass: 893.2e20,

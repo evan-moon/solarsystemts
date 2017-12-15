@@ -1,7 +1,7 @@
 import {
     SUN, MERCURY, VENUS, EARTH, MARS,
     JUPITER, SATURN, URANUS, NEPTUNE, PLUTO,
-    Planet
+    PlanetData
 } from 'src/constants/planets.constant';
 
 interface Tick {
@@ -13,7 +13,7 @@ interface Tick {
 export interface Scenario {
     name: string;
     id: string;
-    planets: Planet[],
+    planets: PlanetData[],
     secondsPerTick: Tick
 };
 

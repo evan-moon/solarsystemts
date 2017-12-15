@@ -5,6 +5,8 @@ import Component from 'vue-class-component';
 import App from './App.vue';
 import router from './router';
 
+import 'src/polyfills/math.polyfill';
+
 Vue.config.productionTip = false;
 
 Component.registerHooks([

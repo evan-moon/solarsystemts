@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 import { PerspectiveCamera, Vector3 } from 'three';
-import { OrbitControls } from 'three-orbitcontrols-ts';
+import { OrbitControls } from 'src/plugin/Orbit-controls';
 
 interface ControlsConfig {
     enableZoom?: boolean;

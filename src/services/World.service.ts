@@ -12,7 +12,7 @@ import {
     TextureLoader, Euler, Raycaster, PerspectiveCamera,
     AxisHelper, GridHelper
 } from 'three';
-import { OrbitControls } from 'three-orbitcontrols-ts';
+import { OrbitControls } from 'src/plugin/Orbit-controls';
 
 import CameraManager from 'src/managers/Camera.manager';
 import ControlsManager from 'src/managers/Controls.manager';
@@ -23,8 +23,8 @@ interface RenderConfig {
     alpha?: boolean;
 }
 interface SMA {
-    smallest: number,
-    largest: number
+    smallest: number;
+    largest: number;
 }
 
 interface Space {

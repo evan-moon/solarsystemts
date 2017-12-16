@@ -3,12 +3,7 @@
  * @author Evan Moon
  * @desc Math polyfill for hyperbolic methods
  */
-interface Math {
-    sinh: Function;
-    tanh: Function;
-    cosh: Function;
-    sign: Function;
-}
+
 
 Math.sinh = function (x: number): number {
     return (Math.exp(x) - Math.exp(-x)) / 2;

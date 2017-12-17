@@ -45,6 +45,20 @@ class OrbitManager {
         this.name = name;
     }
 
+    public getPosFromElements (computed) {
+        if (!computed) return new Vector3();
+
+        const a1 = new Euler(computed.tilt || 0, 0, computed.o, 'XYZ');
+        const a2 = new Euler(computed.i, 0, computed.w, 'XYZ');
+        const q1 = new Quaternion().setFromEuler(a1);
+        const q2 = new Quaternion().setFromEuler(a2);
+
+        const planeQuaternion = new Quaternion().multiplyQuaternions(q1, q2);
+        computed.pos.applyQuaternion(planeQuaternion);
+
+        return computed.pos;
+    }
+
     public calcElements (timeEpoch: Date) {
         if (!this.orbitData) {
             throw new Error('There is no orbit data in this Orbit manager');
@@ -109,7 +123,7 @@ class OrbitManager {
             return new Vector3();
         }
         const computed = this.calcElements(timeEpoch);
-        // return this.getPosFromElements(computed);
+        return this.getPosFromElements(computed);
     }
 
     private getEccentricAnomaly (e: number, M: number) {

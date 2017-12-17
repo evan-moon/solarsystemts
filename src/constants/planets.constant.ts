@@ -27,7 +27,7 @@ interface Kepler6Elements {
     M?: number;
 };
 
-export interface Orbit {
+export interface OrbitData {
     base: Kepler6Elements;
     cy?: Kepler6Elements;
     day?: Kepler6Elements;
@@ -57,7 +57,7 @@ export interface PlanetData {
     radius: number;
     sideralDay?: number;
     k?: number;
-    orbit?: Orbit;
+    orbit?: OrbitData;
     tilt?: number;
     atmosphere?: AtmoSphere;
     ring?: Ring;
@@ -419,64 +419,3 @@ export const PLUTO: PlanetData = {
     },
     isStar: false
 };
-
-/* DWARVES */
-// export const CERES: PlanetData = {
-//     title: 'Ceres',
-//     name: 'ceres',
-//     mass: 893.2e20,
-//     radius: 1821.6,
-//     sideralDay: 9.07417 * HOUR,
-//     orbit: {
-//         base: {
-//             a: 2.7677395221463 * AU,
-//             e: 0.07646881615610954,
-//             w: 71.17556363381966,
-//             M: 166.2332253774163,
-//             i: 10.59946296272898,
-//             o: 80.67354255829908
-//         },
-//         day: {
-//             a: 0,
-//             e: 0,
-//             i: 0,
-//             M: 0.214050496,
-//             w: 0,
-//             o: 0
-//         }
-//     },
-//     material: {
-//         color: '#999999',
-//         map: `${TEX_DIR}ceres.jpg`
-//     }
-// };
-//
-// export const ERIS: PlanetData = {
-//     title: 'Eris',
-//     name: 'eris',
-//     mass: 893.2e20,
-//     radius: 1821.6,
-//     sideralDay: 25.9 * HOUR,
-//     orbit: {
-//         base: {
-//             a: 67.72049983633802 * AU,
-//             e: 0.4402757254627496,
-//             w: 151.5325796513168,
-//             M: 197.9288256170611,
-//             i: 44.16476529362038,
-//             o: 35.88169902286788
-//         },
-//         day: {
-//             a: 0,
-//             e: 0,
-//             i: 0,
-//             M: 0.001768576,
-//             w: 0,
-//             o: 0
-//         }
-//     },
-//     material: {
-//         color: '#999999',
-//         map: `${TEX_DIR}eris.jpg`
-//     }
-// };

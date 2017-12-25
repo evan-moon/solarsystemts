@@ -28,16 +28,18 @@ export default class GLRenderer extends Vue {
     }
 
     mounted () {
-        if (this.currentScenario) {
-            LoaderService.load().then(res => {
-                WorldService.setRenderer(`#${this.rendererID}`);
-                WorldService.create();
-                this.tick();
-            });
-        }
-        else {
-            // Do nothing
-        }
+        this.$nextTick(() => {
+            if (this.currentScenario) {
+                LoaderService.load().then(res => {
+                    WorldService.setRenderer(`#${this.rendererID}`);
+                    WorldService.create();
+                    this.tick();
+                });
+            }
+            else {
+                throw new Error('There is no scenario in GLRenderer component');
+            }
+        });
     }
 }
 </script>

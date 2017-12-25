@@ -116,7 +116,7 @@ class WorldService {
             this.renderer = new WebGLRenderer(this.renderConfig);
         }
         else {
-            // Do nothing
+            throw new Error('There is no renderer!');
         }
         this.renderer.setSize(this.rendererWidth, this.rendererHeight);
         this.renderer.setPixelRatio(this.rendererRatio);

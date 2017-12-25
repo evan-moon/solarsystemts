@@ -31,6 +31,9 @@ interface ComputedOrbitData {
     P: number; // Sidereal period
     Pw: number; // Argument of periapsis precession period (mean value)
     Pn: number; // Longitude of the ascending node precession period (mean value)
+
+    pos?: Vector3;
+    tilt?: number;
 }
 
 class OrbitManager {
@@ -45,7 +48,7 @@ class OrbitManager {
         this.name = name;
     }
 
-    public getPosFromElements (computed) {
+    public getPosFromElements (computed: ComputedOrbitData): Vector3 {
         if (!computed) return new Vector3();
 
         const a1 = new Euler(computed.tilt || 0, 0, computed.o, 'XYZ');

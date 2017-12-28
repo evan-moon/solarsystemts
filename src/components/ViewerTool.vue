@@ -9,12 +9,15 @@
     </div>
 
     <b-col cols="2" class="tool-wrapper" data-name="time">
-        <p>{{ date | date}}</p>
+        <!-- <p>{{ date | date }}</p> -->
     </b-col>
 
     <b-col cols="2" class="tool-wrapper" data-name="scenarios">
         <b-form-select v-model="currentScenario">
-            <option v-for="scenario in scenarios" :value="scenario">{{ scenario.name }}</option>
+            <option value="placeholder">Placeholder</option>
+            <option v-for="scenario in viewerState.scenarios" :value="scenario.id">
+                {{ scenario.name }}
+            </option>
         </b-form-select>
     </b-col>
 
@@ -22,10 +25,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import { State, Getter, Action } from 'vuex-class';
 import * as moment from 'moment';
-
-import { Scenario, SolarSystemScenario } from 'src/constants/scenario.constant';
 
 @Component({
     name: 'ViewerTool',
@@ -36,22 +38,20 @@ import { Scenario, SolarSystemScenario } from 'src/constants/scenario.constant';
     }
 })
 export default class ViewerTool extends Vue {
-    isPlaying: boolean = false;
-    date: Date = new Date();
-    scenarios: Scenario[] = [ SolarSystemScenario ];
-    currentScenario: Scenario = this.scenarios[0];
+    currentScenario: string = 'solarSystem';
+
+    @State('Viewer') viewerState: any;
+    @Getter('isPlaying') isPlaying: boolean;
+    @Action('setCurrentScenario') setCurrentScenario: any;
+    @Action('setPlaying') setPlaying: any;
 
     togglePlaying (): void {
-        this.isPlaying = !this.isPlaying;
-        this.$emit('onChangePlaying', this.isPlaying);
+        this.setPlaying(!this.isPlaying);
     }
 
-    onChangeScenario (): void {
-        this.$emit('onChangeScenario', this.currentScenario);
-    }
-
-    mounted (): void {
-        this.onChangeScenario();
+    @Watch('currentScenario')
+    onChangeScenario (value: string, oldValue: string): void {
+        this.setCurrentScenario(value);
     }
 };
 </script>

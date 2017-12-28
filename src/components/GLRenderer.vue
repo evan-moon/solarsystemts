@@ -3,42 +3,35 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
-import { Scenario } from 'src/constants/scenario.constant';
+import { Component, Vue } from 'vue-property-decorator';
 import LoaderService from 'src/services/Loader.service';
-import WorldService from 'src/services/World.service';
+import World from 'src/celestial/World';
 
 @Component({
     name: 'GLRenderer'
 })
 export default class GLRenderer extends Vue {
-    @Prop() isPlaying: boolean;
-    currentScenario: Scenario;
     rendererID: string = 'renderer';
-
-    setScenario (scenario: Scenario) {
-        this.currentScenario = scenario;
-    }
+    world: any;
 
     tick () {
-        WorldService.render();
+        this.world.render();
         window.requestAnimationFrame(() => {
+            this.tick();
+        });
+    }
+
+    loadWorld () {
+        LoaderService.load().then(res => {
+            this.world = new World(`#${this.rendererID}`);
+            this.world.create();
             this.tick();
         });
     }
 
     mounted () {
         this.$nextTick(() => {
-            if (this.currentScenario) {
-                LoaderService.load().then(res => {
-                    WorldService.setRenderer(`#${this.rendererID}`);
-                    WorldService.create();
-                    this.tick();
-                });
-            }
-            else {
-                throw new Error('There is no scenario in GLRenderer component');
-            }
+            this.loadWorld();
         });
     }
 }

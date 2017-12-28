@@ -3,7 +3,6 @@
     <ViewerTool
         ref="toolbar"
         @onChangePlaying="onChangePlaying"
-        @onChangeScenario="onChangeScenario"
     ></ViewerTool>
     <GLRenderer
         ref="renderer"
@@ -15,8 +14,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { Scenario } from 'src/constants/scenario.constant';
-
 import GLRenderer from 'src/components/GLRenderer.vue';
 import ViewerTool from 'src/components/ViewerTool.vue';
 
@@ -26,19 +23,13 @@ import ViewerTool from 'src/components/ViewerTool.vue';
 })
 export default class Viewer extends Vue {
     isPlaying: boolean = false;
-    currentScenario: Scenario|null = null;
-
     $refs: {
+        toolbar: ViewerTool,
         renderer: GLRenderer
     }
 
     onChangePlaying (isPlaying: boolean) {
         this.isPlaying = isPlaying;
-    }
-
-    onChangeScenario (scenario: Scenario) {
-        this.currentScenario = scenario;
-        this.$refs.renderer.setScenario(scenario);
     }
 }
 </script>

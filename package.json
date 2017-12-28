@@ -23,6 +23,7 @@
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
+    "vuex-class": "^0.3.0",
     "xeicon": "^2.3.3"
   },
   "devDependencies": {

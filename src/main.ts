@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import App from './App.vue';
+import store from './stores/store';
 import router from './router';
 
 import 'src/polyfills/math.polyfill';
@@ -18,6 +19,7 @@ Component.registerHooks([
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
+    store,
     router,
     template: '<App/>',
     components: { App }

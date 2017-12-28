@@ -5,13 +5,12 @@
  */
 
 import * as Q from 'q';
-import { Scenario } from 'src/constants/scenario.constant';
 
 import VertexShader from 'src/shaders/atmosphere.vsh';
 import FragmentShader from 'src/shaders/atmosphere.fsh';
 
 class LoaderService {
-    private shaders: string[];
+    private shaders: string[]; // raw shader resources
 
     load () {
         let defer = Q.defer();

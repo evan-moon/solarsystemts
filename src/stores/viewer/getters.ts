@@ -6,7 +6,7 @@ export function getAllScenarios (state: ViewerState): Scenario[] {
     return state.scenarios;
 }
 
-export function getCurrentScenario (state: ViewerState): Scenario {
+export function currentScenario (state: ViewerState): Scenario {
     return state.currentScenario;
 }
 
@@ -16,6 +16,6 @@ export function isPlaying (state: ViewerState): boolean {
 
 export default <GetterTree<ViewerState, any>> {
     getAllScenarios,
-    getCurrentScenario,
+    currentScenario,
     isPlaying
 }

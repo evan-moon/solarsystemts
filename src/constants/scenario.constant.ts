@@ -4,6 +4,7 @@ import {
     SUN, MERCURY, VENUS, EARTH, MARS,
     JUPITER, SATURN, URANUS, NEPTUNE, PLUTO
 } from 'src/constants/planets.constant';
+import { DEFAULT_CALC_PER_TICK } from 'src/constants';
 
 interface Tick {
     min: number;
@@ -14,7 +15,10 @@ interface Tick {
 export interface Scenario {
     name: string;
     id: string;
-    system: StarSystemData|PlanetSystemData
+    system: StarSystemData|PlanetSystemData,
+    startDate: Date,
+    secondsPerTick: Tick,
+    calcPerTick: number
 };
 
 export const SolarSystem = {
@@ -36,9 +40,11 @@ export const SolarSystem = {
             PLUTO
         ]
     },
+    startDate: new Date(),
     secondsPerTick: {
         min: 3600 * 5,
         max: 3600 * 25,
         initial: 3600 * (1 / 60) * 1000
-    }
+    },
+    calcPerTick: DEFAULT_CALC_PER_TICK
 };

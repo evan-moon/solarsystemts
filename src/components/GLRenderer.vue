@@ -4,8 +4,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { Getter } from 'vuex-class';
 import LoaderService from 'src/lib/services/Loader.service';
-import World from 'src/lib/graphics/World';
+import { World } from 'src/lib/graphics/World';
 
 @Component({
     name: 'GLRenderer'
@@ -13,6 +14,8 @@ import World from 'src/lib/graphics/World';
 export default class GLRenderer extends Vue {
     rendererID: string = 'renderer';
     world: any;
+
+    @Getter('currentScenario') currentScenario: any;
 
     tick () {
         this.world.render();
@@ -24,6 +27,7 @@ export default class GLRenderer extends Vue {
     loadWorld () {
         LoaderService.load().then(res => {
             this.world = new World(`#${this.rendererID}`);
+            this.world.setScenario(this.currentScenario);
             this.world.create();
             this.tick();
         });

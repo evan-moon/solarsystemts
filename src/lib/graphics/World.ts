@@ -1,5 +1,6 @@
 /**
- * @name World.service
+ * @class
+ * @name World
  * @author Evan Moon
  */
 
@@ -13,9 +14,9 @@ import {
     AxisHelper, GridHelper
 } from 'three';
 import { OrbitControls } from 'src/plugin/Orbit-controls';
-
 import CameraManager from 'src/lib/managers/Camera.manager';
 import ControlsManager from 'src/lib/managers/Controls.manager';
+import { Ticker } from 'src/lib/helpers/Ticker';
 
 interface RenderConfig {
     antialias?: boolean;
@@ -32,9 +33,9 @@ interface Space {
     mesh?: Mesh;
 }
 
-class World {
+export class World {
     public date: Date;
-    public epochTime: number;
+    public ticker: Ticker;
 
     private rendererSelector: string;
     private rendererDOM: HTMLElement;
@@ -66,6 +67,7 @@ class World {
         this.rendererWidth = window.innerWidth;
         this.rendererHeight = window.innerHeight;
         this.rendererRatio = window.devicePixelRatio;
+        this.setRenderer(rendererSelector);
 
         this.stageSize = 50000;
 
@@ -75,7 +77,6 @@ class World {
             alpha: true
         };
         this.date = new Date();
-        this.epochTime = 0;
 
         this.currentSpaceTexture = 'universe';
     }
@@ -107,6 +108,9 @@ class World {
     }
 
     public create (): void {
+        if (!this.scenario) {
+            console.error('You have to set any scenario first. use setScenario()');
+        }
         // set scene
         this.scene = new Scene();
 
@@ -115,7 +119,7 @@ class World {
             this.renderer = new WebGLRenderer(this.renderConfig);
         }
         else {
-            throw new Error('There is no renderer!');
+            console.error('There is no renderer!');
         }
         this.renderer.setSize(this.rendererWidth, this.rendererHeight);
         this.renderer.setPixelRatio(this.rendererRatio);
@@ -141,16 +145,17 @@ class World {
         this.initControls();
         this.initSpacebox();
         this.initHelper();
+
+        this.ticker = new Ticker(this.scenario.startDate);
+        this.ticker.setSecondsPerTick(this.scenario.secondsPerTick.initial);
+        this.ticker.setCalcPerTick(this.scenario.calcPerTick);
     }
 
     public render (): void {
         this.controls.update();
         this.renderer.render(this.scene, this.currentCamera);
+        console.log(this.ticker.currentTime);
     }
-
-    public play (): void {}
-    public pause (): void {}
-    public destroy (): void {}
 
     private initCamera (): void {
         const aspect = this.rendererWidth / this.rendererHeight;
@@ -208,5 +213,3 @@ class World {
         let intersects: any[] = this.raycaster.intersectObjects(this.scene.children, true);
     }
 }
-
-export default World;

@@ -7,11 +7,9 @@
             <i v-show="isPlaying" class="xi-pause"></i>
         </b-button>
     </div>
-
     <b-col cols="2" class="tool-wrapper" data-name="time">
         <!-- <p>{{ date | date }}</p> -->
     </b-col>
-
     <b-col cols="2" class="tool-wrapper" data-name="scenarios">
         <b-form-select v-model="currentScenario">
             <option value="placeholder">Placeholder</option>
@@ -20,7 +18,6 @@
             </option>
         </b-form-select>
     </b-col>
-
 </b-row>
 </template>
 

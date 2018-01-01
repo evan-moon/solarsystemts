@@ -6,21 +6,19 @@
 import { Vector3 } from 'three';
 
 class DimensionService {
-    scale: number;
+    private scale: number = 1;
 
-    constructor () {
-        this.scale = 1;
-    }
+    constructor () {}
 
-    setLargestDimension (dim: number) {
+    public setLargestDimension (dim: number) {
         this.scale = 1000 / dim;
     }
 
-    getScaledVector (obj: Vector3): Vector3 {
+    public getScaledVector (obj: Vector3): Vector3 {
         return obj.multiplyScalar(this.scale);
     }
 
-    getScaled (obj: number): number {
+    public getScaled (obj: number): number {
         return obj * this.scale;
     }
 }

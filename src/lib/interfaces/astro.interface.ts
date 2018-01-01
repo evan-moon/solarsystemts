@@ -3,7 +3,7 @@ import { Color } from 'three';
 export interface Material {
     emissive?: Color;
     color: string;
-    map: string;
+    map?: string;
 };
 
 export interface Kepler6Elements {
@@ -24,7 +24,7 @@ export interface OrbitData {
 };
 
 export interface AtmoSphereComponent {
-    title: string;
+    id: string;
     name: string;
     ratio: number;
 };
@@ -40,17 +40,22 @@ export interface Ring {
     map: string;
 };
 
-export interface PlanetData {
-    title: string;
+export interface AstronomicalObjectData {
+    id: string;
     name: string;
     mass: number;
     radius: number;
+    material: Material;
     sideralDay?: number;
-    k?: number;
+}
+
+export interface PlanetData extends AstronomicalObjectData {
     orbit?: OrbitData;
     tilt?: number;
     atmosphere?: AtmoSphere;
     ring?: Ring;
-    material: Material;
-    isStar: boolean;
 };
+
+export interface StarData extends AstronomicalObjectData {
+    k?: number;
+}

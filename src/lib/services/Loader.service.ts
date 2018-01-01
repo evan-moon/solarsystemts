@@ -24,6 +24,14 @@ class LoaderService {
         return this.shaders;
     }
 
+    public getVertexShader (): string {
+        return this.shaders[0];
+    }
+
+    public getFregmentShader (): string {
+        return this.shaders[1];
+    }
+
     public removeShaders () {
         this.shaders = [];
     }

@@ -1,4 +1,4 @@
-import { Scenario, SolarSystemScenario } from 'src/constants/scenario.constant';
+import { Scenario, SolarSystem } from 'src/constants/scenario.constant';
 
 export class ViewerState {
     public scenarios: Scenario[];
@@ -6,7 +6,7 @@ export class ViewerState {
     public isPlaying: boolean;
 
     constructor () {
-        this.scenarios = [ SolarSystemScenario ];
+        this.scenarios = [ SolarSystem ];
         this.currentScenario = this.scenarios[0];
         this.isPlaying = false;
     }

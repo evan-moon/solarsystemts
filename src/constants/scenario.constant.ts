@@ -1,4 +1,5 @@
-import { PlanetData } from 'src/lib/interfaces/astro.interface';
+import { StarSystemData } from 'src/lib/systems/StarSystem.ts';
+import { PlanetSystemData } from 'src/lib/systems/PlanetSystem.ts';
 import {
     SUN, MERCURY, VENUS, EARTH, MARS,
     JUPITER, SATURN, URANUS, NEPTUNE, PLUTO
@@ -13,25 +14,28 @@ interface Tick {
 export interface Scenario {
     name: string;
     id: string;
-    planets: PlanetData[],
-    secondsPerTick: Tick
+    system: StarSystemData|PlanetSystemData
 };
 
-export const SolarSystemScenario = {
+export const SolarSystem = {
+    id: 'solarSystemScene',
     name: 'Solar System',
-    id: 'solarSystem',
-    planets: [
-        SUN,
-        MERCURY,
-        VENUS,
-        EARTH,
-        MARS,
-        JUPITER,
-        SATURN,
-        URANUS,
-        NEPTUNE,
-        PLUTO
-    ],
+    system: {
+        id: 'solarSystem',
+        name: 'Solar System',
+        star: SUN,
+        planets: [
+            MERCURY,
+            VENUS,
+            EARTH,
+            MARS,
+            JUPITER,
+            SATURN,
+            URANUS,
+            NEPTUNE,
+            PLUTO
+        ]
+    },
     secondsPerTick: {
         min: 3600 * 5,
         max: 3600 * 25,

@@ -4,15 +4,15 @@
  *     cy => orbit data by century
  * }
  */
-import { PlanetData } from 'src/lib/interfaces/astro.interface';
+import { StarData, PlanetData } from 'src/lib/interfaces/astro.interface';
 import { AU, SIDERAL_DAY, NM_TO_KM, DAY, HOUR } from 'src/constants';
 import { Color } from 'three';
 
 const TEX_DIR = 'src/assets/images/surface/';
 
-export const SUN: PlanetData = {
-    title: 'The Sun',
-    name: 'sun',
+export const SUN: StarData = {
+    id: 'sun',
+    name: 'The Sun',
     mass: 1.9891e30,
     radius: 6.96342e5,
     sideralDay: 25.6 * DAY,
@@ -21,13 +21,12 @@ export const SUN: PlanetData = {
         emissive: new Color(0xdddd33),
         color: '#ffff00',
         map: `${TEX_DIR}sun.jpg`
-    },
-    isStar: true
+    }
 };
 
 export const MERCURY: PlanetData = {
-    title: 'Mercury',
-    name: 'mercury',
+    id: 'mercury',
+    name: 'Mercury',
     mass: 3.3022e23,
     radius: 2439,
     sideralDay: 58.646 * DAY,
@@ -52,13 +51,12 @@ export const MERCURY: PlanetData = {
     material: {
         color: '#588a7b',
         map: `${TEX_DIR}mercury.jpg`
-    },
-    isStar: false
+    }
 };
 
 export const VENUS: PlanetData = {
-    title: 'Venus',
-    name: 'venus',
+    id: 'venus',
+    name: 'Venus',
     mass: 4.868e24,
     radius: 6051,
     tilt: 177.4,
@@ -84,13 +82,12 @@ export const VENUS: PlanetData = {
     material: {
         color: '#fda700',
         map: `${TEX_DIR}venus.jpg`
-    },
-    isStar: false
+    }
 };
 
 export const EARTH: PlanetData = {
-    title: 'The Earth',
-    name: 'earth',
+    id: 'earth',
+    name: 'The Earth',
     mass: 5.9736e24,
     radius: 3443.9307 * NM_TO_KM,
     tilt: 23 + (26 / 60) + (21 / 3600),
@@ -98,24 +95,24 @@ export const EARTH: PlanetData = {
     atmosphere: {
         atmospherePressure: 101.325,
         components: [{
-            title: 'Nitrogen',
-            name: 'nitrogen',
+            id: 'N',
+            name: 'Nitrogen',
             ratio: 78.08
         }, {
-            title: 'Oxygen',
-            name: 'oxygen',
+            id: 'O2',
+            name: 'Oxygen',
             ratio: 20.95
         }, {
-            title: 'Argon',
-            name: 'argon',
+            id: 'Ar',
+            name: 'Argon',
             ratio: 0.93
         }, {
-            title: 'Carbon Dioxide',
-            name: 'carbonDioxide',
+            id: 'CO2',
+            name: 'Carbon Dioxide',
             ratio: 0.038
         }, {
-            title: 'Etc',
-            name: 'etc',
+            id: 'etc',
+            name: 'Etc',
             ratio: 0.002
         }]
     },
@@ -140,13 +137,12 @@ export const EARTH: PlanetData = {
     material: {
         color: '#1f7cda',
         map: `${TEX_DIR}earth.jpg`
-    },
-    isStar: false
+    }
 };
 
 export const MARS: PlanetData = {
-    title: 'Mars',
-    name: 'mars',
+    id: 'mars',
+    name: 'Mars',
     mass: 6.4185e23,
     radius: 3376,
     tilt: 25.19,
@@ -154,23 +150,23 @@ export const MARS: PlanetData = {
     atmosphere: {
         atmospherePressure: 0.636,
         components: [{
-            title: 'Carbon Dioxide',
-            name: 'carbonDioxide',
+            id: 'CO2',
+            name: 'Carbon Dioxide',
             ratio: 95.97
         }, {
-            title: 'Nitrogen',
-            name: 'nitrogen',
+            id: 'N',
+            name: 'Nitrogen',
             ratio: 1.89
         }, {
-            title: 'Argon',
-            name: 'argon',
+            id: 'Ar',
+            name: 'Argon',
             ratio: 1.93
         }, {
-            title: 'Oxygen',
-            name: 'oxygen',
+            id: 'O2',
+            name: 'Oxygen',
             ratio: 0.146
         }, {
-            title: 'Etc',
+            id: 'etc',
             name: 'etc',
             ratio: 0.064
         }]
@@ -196,13 +192,12 @@ export const MARS: PlanetData = {
     material: {
         color: '#ff3300',
         map: `${TEX_DIR}mars.jpg`
-    },
-    isStar: false
+    }
 };
 
 export const JUPITER: PlanetData = {
-    title: 'Jupiter',
-    name: 'jupiter',
+    id: 'jupiter',
+    name: 'Jupiter',
     mass: 1.8986e27,
     radius: 71492,
     tilt: 3.13,
@@ -228,13 +223,12 @@ export const JUPITER: PlanetData = {
     material: {
         color: '#ff9932',
         map: `${TEX_DIR}jupiter.jpg`
-    },
-    isStar: false
+    }
 };
 
 export const SATURN: PlanetData = {
-    title: 'Saturn',
-    name: 'saturn',
+    id: 'saturn',
+    name: 'Saturn',
     mass: 5.6846e26,
     radius: 58232,
     tilt: 26.7,
@@ -265,13 +259,12 @@ export const SATURN: PlanetData = {
     material: {
         color: '#ffcc99',
         map: `${TEX_DIR}saturn.jpg`
-    },
-    isStar: false
+    }
 };
 
 export const URANUS: PlanetData = {
-    title: 'Uranus',
-    name: 'uranus',
+    id: 'uranus',
+    name: 'Uranus',
     mass: 8.6810e25,
     radius: 25559,
     tilt: 97.77,
@@ -297,12 +290,11 @@ export const URANUS: PlanetData = {
     material: {
         color: '#99ccff',
         map: `${TEX_DIR}uranus.jpg`
-    },
-    isStar: false
+    }
 };
 
 export const NEPTUNE: PlanetData = {
-    title: 'Neptune',
+    id: 'Neptune',
     name: 'neptune',
     mass: 1.0243e26,
     radius: 24764,
@@ -329,13 +321,12 @@ export const NEPTUNE: PlanetData = {
     material: {
         color: '#3299ff',
         map: `${TEX_DIR}neptune.jpg`
-    },
-    isStar: false
+    }
 };
 
 export const PLUTO: PlanetData = {
-    title: 'Pluto',
-    name: 'pluto',
+    id: 'pluto',
+    name: 'Pluto',
     mass: 1.305e22 + 1.52e21,
     radius: 1153,
     // tilt: 119.61,
@@ -361,6 +352,5 @@ export const PLUTO: PlanetData = {
     material: {
         color: '#aaaaaa',
         map: `${TEX_DIR}pluto.jpg`
-    },
-    isStar: false
+    }
 };

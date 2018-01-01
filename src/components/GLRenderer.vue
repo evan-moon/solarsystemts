@@ -4,8 +4,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import LoaderService from 'src/services/Loader.service';
-import World from 'src/celestial/World';
+import LoaderService from 'src/lib/services/Loader.service';
+import World from 'src/lib/graphics/World';
 
 @Component({
     name: 'GLRenderer'

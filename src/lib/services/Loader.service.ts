@@ -12,7 +12,7 @@ import FragmentShader from 'src/shaders/atmosphere.fsh';
 class LoaderService {
     private shaders: string[]; // raw shader resources
 
-    load () {
+    public load () {
         let defer = Q.defer();
         this.shaders = [ VertexShader, FragmentShader ];
         defer.resolve();
@@ -20,11 +20,11 @@ class LoaderService {
         return defer.promise;
     }
 
-    getShaders (): string[] {
+    public getShaders (): string[] {
         return this.shaders;
     }
 
-    removeShaders () {
+    public removeShaders () {
         this.shaders = [];
     }
 }

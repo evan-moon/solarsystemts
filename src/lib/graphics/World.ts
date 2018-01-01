@@ -5,17 +5,17 @@
 
 import * as $ from 'jquery';
 import { Scenario } from 'src/constants/scenario.constant';
-import DimensionService from 'src/services/dimension.service';
+import DimensionService from 'src/lib/services/dimension.service';
 import {
     Scene, WebGLRenderer, AmbientLight, Vector3, Vector2,
     SphereBufferGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
-    TextureLoader, Euler, Raycaster, PerspectiveCamera,
+    TextureLoader, Raycaster, PerspectiveCamera,
     AxisHelper, GridHelper
 } from 'three';
 import { OrbitControls } from 'src/plugin/Orbit-controls';
 
-import CameraManager from 'src/managers/Camera.manager';
-import ControlsManager from 'src/managers/Controls.manager';
+import CameraManager from 'src/lib/managers/Camera.manager';
+import ControlsManager from 'src/lib/managers/Controls.manager';
 
 interface RenderConfig {
     antialias?: boolean;
@@ -74,7 +74,7 @@ class World {
             preserveDrawingBuffer: true,
             alpha: true
         };
-        this.date = new Date;
+        this.date = new Date();
         this.epochTime = 0;
 
         this.currentSpaceTexture = 'universe';

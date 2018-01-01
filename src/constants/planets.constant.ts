@@ -4,66 +4,11 @@
  *     cy => orbit data by century
  * }
  */
-
+import { PlanetData } from 'src/lib/interfaces/astro.interface';
 import { AU, SIDERAL_DAY, NM_TO_KM, DAY, HOUR } from 'src/constants';
 import { Color } from 'three';
 
 const TEX_DIR = 'src/assets/images/surface/';
-
-interface Material {
-    emissive?: Color;
-    color: string;
-    map: string;
-};
-
-interface Kepler6Elements {
-    a: number;
-    e: number;
-    o: number;
-    i?: number;
-    l: number;
-    lp: number;
-    w?: number;
-    M?: number;
-};
-
-export interface OrbitData {
-    base: Kepler6Elements;
-    cy?: Kepler6Elements;
-    day?: Kepler6Elements;
-};
-
-interface AtmoSphereComponent {
-    title: string;
-    name: string;
-    ratio: number;
-};
-
-interface AtmoSphere {
-    atmospherePressure: number;
-    components: AtmoSphereComponent[];
-};
-
-interface Ring {
-    innerRadius: number;
-    outerRadius: number;
-    map: string;
-};
-
-export interface PlanetData {
-    title: string;
-    name: string;
-    mass: number;
-    radius: number;
-    sideralDay?: number;
-    k?: number;
-    orbit?: OrbitData;
-    tilt?: number;
-    atmosphere?: AtmoSphere;
-    ring?: Ring;
-    material: Material;
-    isStar: boolean;
-};
 
 export const SUN: PlanetData = {
     title: 'The Sun',

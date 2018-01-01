@@ -20,8 +20,9 @@ export class Ticker {
         const date: Date = this.date;
         const m: number = date.getTime();
         const nextDate: number = m + this.secondsPerTick;
+        this.date = new Date(nextDate);
 
-        return new Date(nextDate);
+        return this.date;
     }
 
     get deltaT (): number {

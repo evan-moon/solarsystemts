@@ -1,7 +1,7 @@
+import { PlanetData } from 'src/lib/interfaces/astro.interface';
 import {
     SUN, MERCURY, VENUS, EARTH, MARS,
-    JUPITER, SATURN, URANUS, NEPTUNE, PLUTO,
-    PlanetData
+    JUPITER, SATURN, URANUS, NEPTUNE, PLUTO
 } from 'src/constants/planets.constant';
 
 interface Tick {

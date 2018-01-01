@@ -34,6 +34,7 @@ interface Space {
 }
 
 export class World {
+    public startDate: Date;
     public date: Date;
     public ticker: Ticker;
 
@@ -101,6 +102,8 @@ export class World {
 
     public setScenario (scenario: Scenario): void {
         this.scenario = scenario;
+        this.date = this.scenario.startDate;
+        this.startDate = this.scenario.startDate;
     }
 
     public getScenario (): Scenario {
@@ -154,7 +157,7 @@ export class World {
     public render (): void {
         this.controls.update();
         this.renderer.render(this.scene, this.currentCamera);
-        console.log(this.ticker.currentTime);
+        this.date = this.ticker.currentTime;
     }
 
     private initCamera (): void {

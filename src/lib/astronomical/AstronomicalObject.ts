@@ -4,7 +4,7 @@
  * @desc 천체 클래스
  */
 import {
-    Object3D, Color, TextureLoader,
+    Object3D, Color, TextureLoader, Texture,
     MeshPhongMaterial, SphereBufferGeometry, Mesh
 } from 'three';
 import { Material, AstronomicalObjectData } from 'src/lib/interfaces/astro.interface';
@@ -16,10 +16,11 @@ interface BodyQuality {
     rings: number;
 }
 
-
-
 export class AstronomicalObject {
-    public static bodyQuality: BodyQuality;
+    public static bodyQuality: BodyQuality = {
+        segment: 0,
+        rings: 0
+    };
 
     public id: string;
     public name: string;
@@ -47,13 +48,15 @@ export class AstronomicalObject {
         AstronomicalObject.bodyQuality.rings = 50;
 
         this.root = new Object3D();
+        this.root.name = this.id;
         this.createPlanetBody();
     }
 
     private createPlanetBody (): void {
-        const mat = this.material;
-        const segment = AstronomicalObject.bodyQuality.segment;
-        const rings = AstronomicalObject.bodyQuality.rings;
+        const mat: any = Object.assign({}, this.material);
+
+        const segment: number = AstronomicalObject.bodyQuality.segment;
+        const rings: number = AstronomicalObject.bodyQuality.rings;
         this.renderedRadius = this.getPlanetSize(this.radius);
 
         console.log(this.name, 'Actual Radius -> ', this.radius);
@@ -62,8 +65,16 @@ export class AstronomicalObject {
         this.body = new Object3D();
 
         if (mat.map) {
-            console.log(new TextureLoader().load(mat.map));
+            mat.map = new TextureLoader().load(mat.map);
         }
+
+        const geometry = new SphereBufferGeometry(this.renderedRadius, segment, rings);
+        const material = new MeshPhongMaterial(mat);
+        material.color = new Color(0xffffff);
+
+        const mesh = new Mesh(geometry, material);
+        this.body.add(mesh);
+        this.body.name = `${this.id}-body`;
     }
 
     private getPlanetSize (value: number): number {

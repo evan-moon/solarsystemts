@@ -5,8 +5,13 @@
  */
 
 import * as $ from 'jquery';
-import { Scenario } from 'src/constants/scenario.constant';
-import DimensionService from 'src/lib/services/dimension.service';
+import { KM } from 'src/constants';
+import { ScenarioData } from 'src/constants/scenario.constant';
+import { Scenario } from 'src/lib/graphics/Scenario';
+import { StarSystemData } from 'src/lib/systems/StarSystem';
+import { PlanetSystemData } from 'src/lib/systems/PlanetSystem';
+import { PlanetData } from 'src/lib/interfaces/astro.interface';
+import DimensionService from 'src/lib/services/Dimension.service';
 import {
     Scene, WebGLRenderer, AmbientLight, Vector3, Vector2,
     SphereBufferGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
@@ -50,7 +55,6 @@ export class World {
 
     protected renderConfig: RenderConfig;
     protected smallestSMA: number;
-
     protected scene: Scene;
     protected renderer: WebGLRenderer;
     protected raycaster: Raycaster;
@@ -93,6 +97,42 @@ export class World {
         this.smallestSMA = smallest;
     }
 
+    private calcDimension (scenarioData: ScenarioData): SMA {
+        let sma: SMA = {
+            largest: 0,
+            smallest: 0
+        };
+        if (scenarioData.system.type === 'starsystem') {
+            const system = scenarioData.system as StarSystemData;
+            sma.largest = system.planets.reduce((a: number, b: PlanetData) => {
+                return (b.orbit && b.orbit.base.a > a) ? b.orbit.base.a : a;
+            }, 0);
+            sma.smallest = system.planets.reduce((a: number, b: PlanetData) => {
+                return (b.orbit && (!a || b.orbit.base.a < a)) ? b.orbit.base.a : a;
+            }, 0);
+        }
+        else if (scenarioData.system.type === 'planetsystem') {
+            const system = scenarioData.system as PlanetSystemData;
+            sma.largest = system.moons.reduce((a: number, b: PlanetData) => {
+                return (b.orbit && b.orbit.base.a > a) ? b.orbit.base.a : a;
+            }, 0);
+            sma.smallest = system.moons.reduce((a: number, b: PlanetData) => {
+                return (b.orbit && (!a || b.orbit.base.a < a)) ? b.orbit.base.a : a;
+            }, 0);
+        }
+        else throw new Error('Please check the scenario type!: calcDimension::World');
+
+        sma.largest *= KM;
+        sma.smallest *= KM;
+
+        console.log('=========== CALCED DIMENSION ==========');
+        console.log('largest SMA => ', sma.largest);
+        console.log('smallest SMA => ', sma.smallest);
+        console.log('=======================================');
+
+        return sma;
+    }
+
     public setRenderer (selector: string): void {
         this.rendererDOMjQuery = $(selector);
         this.rendererDOM = this.rendererDOMjQuery[0];
@@ -100,10 +140,11 @@ export class World {
         this.rendererHeight = this.rendererDOMjQuery.height();
     }
 
-    public setScenario (scenario: Scenario): void {
-        this.scenario = scenario;
-        this.date = this.scenario.startDate;
-        this.startDate = this.scenario.startDate;
+    public setScenario (scenarioData: ScenarioData): void {
+        this.scenario = new Scenario(scenarioData);
+        this.date = scenarioData.startDate;
+        this.startDate = scenarioData.startDate;
+        this.setDimension(this.calcDimension(scenarioData));
     }
 
     public getScenario (): Scenario {
@@ -149,9 +190,9 @@ export class World {
         this.initSpacebox();
         this.initHelper();
 
-        this.ticker = new Ticker(this.scenario.startDate);
-        this.ticker.setSecondsPerTick(this.scenario.secondsPerTick.initial);
-        this.ticker.setCalcPerTick(this.scenario.calcPerTick);
+        this.ticker = new Ticker(this.scenario.getStartDate());
+        this.ticker.setSecondsPerTick(this.scenario.getSecondsPerTick().initial);
+        this.ticker.setCalcPerTick(this.scenario.getCalcPerTick());
     }
 
     public render (): void {
@@ -201,7 +242,7 @@ export class World {
 
     private initHelper () {
         let axisHelper: AxisHelper = new AxisHelper(this.stageSize);
-        let gridHelper: GridHelper = new GridHelper(this.stageSize, this.stageSize / 2000);
+        let gridHelper: GridHelper = new GridHelper(this.stageSize, this.stageSize / 20);
         gridHelper.rotation.x = ( 90 / 180 ) * Math.PI;
 
         this.scene.add(axisHelper, gridHelper);

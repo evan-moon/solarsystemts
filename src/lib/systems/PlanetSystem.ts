@@ -10,13 +10,14 @@ import { System } from 'src/lib/systems/System';
 export interface PlanetSystemData {
     id: string;
     name: string;
+    type: string;
     centralPlanet: PlanetData;
     moons: PlanetData[];
 }
 
 export class PlanetSystem extends System {
     centralPlanet: Planet;
-    moons: Planet[];
+    moons: Planet[] = [];
 
     constructor (data: PlanetSystemData) {
         super(data.id, data.name);

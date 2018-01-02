@@ -26,7 +26,7 @@ const DEFAULT_CONFIG: CameraConfig = {
 class CameraManager {
     public globalCamera: PerspectiveCamera;
     public currentCamera: PerspectiveCamera;
-    public allCams: PerspectiveCamera[];
+    public allCams: PerspectiveCamera[] = [];
 
     private stageSize: number;
     private scene: Scene;

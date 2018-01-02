@@ -8,7 +8,7 @@ import { AtmoSphereComponent } from 'src/lib/interfaces/astro.interface';
 
 export class AtmoSphere {
     public atmospherePressure: number;
-    private components: AtmoSphereComponent[];
+    private components: AtmoSphereComponent[] = [];
 
     constructor (components: AtmoSphereComponent[]) {
         this.components = components;

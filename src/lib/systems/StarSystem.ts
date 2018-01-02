@@ -11,13 +11,14 @@ import { System } from 'src/lib/systems/System';
 export interface StarSystemData {
     id: string;
     name: string;
+    type: string;
     star: StarData;
     planets: PlanetData[]
 }
 
 export class StarSystem extends System {
     star: Star;
-    planets: Planet[];
+    planets: Planet[] = [];
 
     constructor (data: StarSystemData) {
         super(data.id, data.name);

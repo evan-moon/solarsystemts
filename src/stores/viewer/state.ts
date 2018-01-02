@@ -1,8 +1,8 @@
-import { Scenario, SolarSystem } from 'src/constants/scenario.constant';
+import { ScenarioData, SolarSystem } from 'src/constants/scenario.constant';
 
 export class ViewerState {
-    public scenarios: Scenario[];
-    public currentScenario: Scenario;
+    public scenarios: ScenarioData[] = [];
+    public currentScenario: ScenarioData;
     public isPlaying: boolean;
 
     constructor () {

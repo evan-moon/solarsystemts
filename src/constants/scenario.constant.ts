@@ -6,13 +6,13 @@ import {
 } from 'src/constants/planets.constant';
 import { DEFAULT_CALC_PER_TICK } from 'src/constants';
 
-interface Tick {
+export interface Tick {
     min: number;
     max: number;
     initial: number;
 };
 
-export interface Scenario {
+export interface ScenarioData {
     name: string;
     id: string;
     system: StarSystemData|PlanetSystemData,
@@ -27,6 +27,7 @@ export const SolarSystem = {
     system: {
         id: 'solarSystem',
         name: 'Solar System',
+        type: 'starsystem',
         star: SUN,
         planets: [
             MERCURY,

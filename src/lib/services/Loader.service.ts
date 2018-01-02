@@ -10,7 +10,7 @@ import VertexShader from 'src/shaders/atmosphere.vsh';
 import FragmentShader from 'src/shaders/atmosphere.fsh';
 
 class LoaderService {
-    private shaders: string[]; // raw shader resources
+    private shaders: string[] = []; // raw shader resources
 
     public load () {
         let defer = Q.defer();

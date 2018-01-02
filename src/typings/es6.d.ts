@@ -5,3 +5,7 @@ declare interface Math {
     cosh(x: number): number;
     sign(x: number): number;
 }
+
+declare interface ObjectConstructor {
+    assign(...objects: Object[]): Object;
+}

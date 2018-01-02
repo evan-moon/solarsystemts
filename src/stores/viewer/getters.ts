@@ -1,12 +1,12 @@
 import { Getter, GetterTree } from 'vuex';
 import { ViewerState } from './state';
-import { Scenario } from 'src/constants/scenario.constant';
+import { ScenarioData } from 'src/constants/scenario.constant';
 
-export function getAllScenarios (state: ViewerState): Scenario[] {
+export function getAllScenarios (state: ViewerState): ScenarioData[] {
     return state.scenarios;
 }
 
-export function currentScenario (state: ViewerState): Scenario {
+export function currentScenario (state: ViewerState): ScenarioData {
     return state.currentScenario;
 }
 

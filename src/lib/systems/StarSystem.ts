@@ -21,8 +21,16 @@ export class StarSystem extends System {
     planets: Planet[] = [];
 
     constructor (data: StarSystemData) {
-        super(data.id, data.name);
+        super(data.id, data.name, data.type);
         this.star = new Star(data.star);
         data.planets.forEach( planetData => this.planets.push(new Planet(planetData)) );
+    }
+
+    private setCenter (): void {
+
+    }
+
+    private setPlanets (): void {
+
     }
 }

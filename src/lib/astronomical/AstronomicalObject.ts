@@ -52,6 +52,10 @@ export class AstronomicalObject {
         this.createPlanetBody();
     }
 
+    public get3DBody () {
+        return this.root;
+    }
+
     private createPlanetBody (): void {
         const mat: any = Object.assign({}, this.material);
 

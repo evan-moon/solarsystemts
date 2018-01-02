@@ -8,8 +8,8 @@ import * as $ from 'jquery';
 import { KM } from 'src/constants';
 import { ScenarioData } from 'src/constants/scenario.constant';
 import { Scenario } from 'src/lib/graphics/Scenario';
-import { StarSystemData } from 'src/lib/systems/StarSystem';
-import { PlanetSystemData } from 'src/lib/systems/PlanetSystem';
+import { StarSystemData, StarSystem } from 'src/lib/systems/StarSystem';
+import { PlanetSystemData, PlanetSystem } from 'src/lib/systems/PlanetSystem';
 import { PlanetData } from 'src/lib/interfaces/astro.interface';
 import DimensionService from 'src/lib/services/Dimension.service';
 import {
@@ -141,10 +141,10 @@ export class World {
     }
 
     public setScenario (scenarioData: ScenarioData): void {
-        this.scenario = new Scenario(scenarioData);
         this.date = scenarioData.startDate;
         this.startDate = scenarioData.startDate;
         this.setDimension(this.calcDimension(scenarioData));
+        this.scenario = new Scenario(scenarioData);
     }
 
     public getScenario (): Scenario {
@@ -193,6 +193,8 @@ export class World {
         this.ticker = new Ticker(this.scenario.getStartDate());
         this.ticker.setSecondsPerTick(this.scenario.getSecondsPerTick().initial);
         this.ticker.setCalcPerTick(this.scenario.getCalcPerTick());
+
+        this.setPlanets();
     }
 
     public render (): void {
@@ -208,6 +210,7 @@ export class World {
 
         this.currentCamera = this.CameraManager.globalCamera;
         this.cameraPos = 'root';
+        this.currentCamera.position.set(this.stageSize, this.stageSize, this.stageSize * 1.5);
     }
 
     private initControls () {
@@ -246,6 +249,21 @@ export class World {
         gridHelper.rotation.x = ( 90 / 180 ) * Math.PI;
 
         this.scene.add(axisHelper, gridHelper);
+    }
+
+    private setPlanets () {
+        if (!this.scenario) {
+            throw new Error('There is no scenario: setPlanets::World');
+        }
+        let system = null;
+
+        if (this.scenario.system.type === 'starsystem') {
+            system = this.scenario.system as StarSystem;
+        }
+        else if (this.scenario.system.type === 'planetsystem') {
+            system = this.scenario.system as PlanetSystem;
+        }
+        else throw new Error('Please check your system type: setPlanet::World');
     }
 
     private onClick (e: any): void {

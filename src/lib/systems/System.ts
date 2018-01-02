@@ -3,16 +3,18 @@
  * @name System
  * @desc 하나의 '계'를 추상화한 클래스
  */
+import { Object3D } from 'three';
 
 export class System {
     id: string;
     name: string;
-    constructor (id: string, name: string) {
+    type: string;
+    root: Object3D;
+
+    constructor (id: string, name: string, type: string) {
         this.id = id;
         this.name = name;
-    }
-
-    public getCenterObject () {
-        console.log(this);
+        this.type = type;
+        this.root = new Object3D();
     }
 }

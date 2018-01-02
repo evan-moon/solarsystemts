@@ -20,8 +20,16 @@ export class PlanetSystem extends System {
     moons: Planet[] = [];
 
     constructor (data: PlanetSystemData) {
-        super(data.id, data.name);
+        super(data.id, data.name, data.type);
         this.centralPlanet = new Planet(data.centralPlanet);
         data.moons.forEach( moonData => this.moons.push(new Planet(moonData)) );
+    }
+
+    public setCenter (): void {
+
+    }
+
+    public setPlanets (): void {
+
     }
 }

@@ -5,7 +5,7 @@
  * @desc 항성 클래스
  */
 import { AstronomicalObjectData, StarData } from 'src/lib/interfaces/astro.interface';
-import { AstronomicalObject } from 'src/lib/celestial/AstronomicalObject';
+import { AstronomicalObject } from 'src/lib/astronomical/AstronomicalObject';
 
 export class Star extends AstronomicalObject {
     constructor (data: StarData) {

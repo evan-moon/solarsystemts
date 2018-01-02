@@ -9,7 +9,7 @@ import {
 } from 'three';
 import { Material, AstronomicalObjectData } from 'src/lib/interfaces/astro.interface';
 import { KM } from 'src/constants';
-import DimensionService from 'src/services/Dimension.service';
+import DimensionService from 'src/lib/services/Dimension.service';
 
 interface BodyQuality {
     segment: number;

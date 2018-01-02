@@ -5,7 +5,7 @@
  * @desc 행성 클래스
  */
 import { AstronomicalObjectData, PlanetData } from 'src/lib/interfaces/astro.interface';
-import { AstronomicalObject } from 'src/lib/celestial/AstronomicalObject';
+import { AstronomicalObject } from 'src/lib/astronomical/AstronomicalObject';
 
 export class Planet extends AstronomicalObject {
     constructor (data: PlanetData) {

@@ -6,10 +6,10 @@
 import { Object3D } from 'three';
 
 export class System {
-    id: string;
-    name: string;
-    type: string;
-    root: Object3D;
+    public id: string;
+    public name: string;
+    public type: string;
+    public root: Object3D;
 
     constructor (id: string, name: string, type: string) {
         this.id = id;

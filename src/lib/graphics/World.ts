@@ -10,7 +10,7 @@ import { ScenarioData } from 'src/constants/scenario.constant';
 import { Scenario } from 'src/lib/graphics/Scenario';
 import { StarSystemData, StarSystem } from 'src/lib/systems/StarSystem';
 import { PlanetSystemData, PlanetSystem } from 'src/lib/systems/PlanetSystem';
-import { PlanetData } from 'src/lib/interfaces/astro.interface';
+import { SystemBodies, PlanetData } from 'src/lib/interfaces/astro.interface';
 import DimensionService from 'src/lib/services/Dimension.service';
 import {
     Scene, WebGLRenderer, AmbientLight, Vector3, Vector2,
@@ -145,6 +145,10 @@ export class World {
         this.startDate = scenarioData.startDate;
         this.setDimension(this.calcDimension(scenarioData));
         this.scenario = new Scenario(scenarioData);
+
+        let planetBodies: SystemBodies = this.scenario.getBodies();
+
+        // 각 행성 위치에 맞게 오브젝트 배치
     }
 
     public getScenario (): Scenario {

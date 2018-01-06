@@ -12,7 +12,6 @@
     </b-col>
     <b-col cols="2" class="tool-wrapper" data-name="scenarios">
         <b-form-select v-model="currentScenario">
-            <option value="placeholder">Placeholder</option>
             <option v-for="scenario in viewerState.scenarios" :value="scenario.id">
                 {{ scenario.name }}
             </option>

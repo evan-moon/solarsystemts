@@ -1,4 +1,4 @@
-import { Color } from 'three';
+import { Object3D, Color } from 'three';
 
 export interface Material {
     emissive?: Color;
@@ -58,4 +58,10 @@ export interface PlanetData extends AstronomicalObjectData {
 
 export interface StarData extends AstronomicalObjectData {
     k?: number;
+}
+
+export interface SystemBodies {
+    center: Object3D;
+    others: Object3D[];
+    type: string;
 }

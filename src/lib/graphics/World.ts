@@ -82,6 +82,7 @@ export class World {
             alpha: true
         };
         this.date = new Date();
+        this.scene = new Scene();
 
         this.currentSpaceTexture = 'universe';
     }
@@ -147,7 +148,8 @@ export class World {
         this.scenario = new Scenario(scenarioData);
 
         let planetBodies: SystemBodies = this.scenario.getBodies();
-
+        this.scene.add(planetBodies.center);
+        planetBodies.others.forEach(planetBody => this.scene.add(planetBody));
         // 각 행성 위치에 맞게 오브젝트 배치
     }
 
@@ -159,8 +161,6 @@ export class World {
         if (!this.scenario) {
             console.error('You have to set any scenario first. use setScenario()');
         }
-        // set scene
-        this.scene = new Scene();
 
         // set renderer
         if (!this.renderer) {

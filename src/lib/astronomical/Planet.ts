@@ -4,19 +4,25 @@
  * @name Planet
  * @desc 행성 클래스
  */
-import { Vector3 } from 'three';
+import {
+    Vector3, MeshLambertMaterial, RingGeometry,
+    Mesh, TextureLoader, DoubleSide
+} from 'three';
 import {
     AstronomicalObjectData, PlanetData,
     ComputedOrbitData, Ring
 } from 'src/lib/interfaces/astro.interface';
+import { QUARTER_CIRCLE, DEG_TO_RAD } from 'src/constants';
 import { AstronomicalObject } from 'src/lib/astronomical/AstronomicalObject';
 import { AtmoSphere } from 'src/lib/astronomical/AtmoSphere';
 import { OrbitManager } from 'src/lib/managers/Orbit.manager';
+import DimensionService from 'src/lib/services/Dimension.service';
 
 export class Planet extends AstronomicalObject {
     public atmospherePressure?: number;
     public atmosphere?: AtmoSphere;
     public ring?: Ring;
+    public tilt?: number;
 
     private invMass: number;
     private orbitManager: OrbitManager;
@@ -33,7 +39,6 @@ export class Planet extends AstronomicalObject {
     private relVelocity: Vector3;
 
     constructor (data: PlanetData) {
-        console.log(data);
         let astronomical: AstronomicalObjectData = {
             id: data.id,
             name: data.name,
@@ -65,12 +70,37 @@ export class Planet extends AstronomicalObject {
         if (data.ring) {
             this.ring = data.ring;
         }
+        if (data.tilt) {
+            this.tilt = data.tilt;
+        }
 
         this.setPlanetBody();
     }
 
     public setPlanetBody () {
-        console.log(this);
+        if (this.ring) {
+            const innerSize = DimensionService.getScaled(this.ring.innerRadius);
+            const outerSize = DimensionService.getScaled(this.ring.innerRadius);
+            const segments = 30;
+
+            const material: MeshLambertMaterial = new MeshLambertMaterial({
+                map: new TextureLoader().load(this.ring.map),
+                transparent: true,
+                side: DoubleSide
+            });
+            const geometry: RingGeometry = new RingGeometry(outerSize, innerSize, segments);
+            const mesh: Mesh = new Mesh(geometry, material);
+            mesh.rotation.x = -1 * QUARTER_CIRCLE;
+            mesh.name = this.ringId;
+            this.body.add(mesh);
+        }
+
+        let tilt = QUARTER_CIRCLE;
+        if (this.tilt) {
+            tilt -= (this.tilt * DEG_TO_RAD);
+        }
+        this.body.rotation.x = tilt;
+        this.root.add(this.body);
     }
 
     public setPositionByDate (date: Date): void {

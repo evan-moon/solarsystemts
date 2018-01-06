@@ -3,6 +3,7 @@
  * @name StarSystem
  * @desc 항성을 기준으로 공전하는 행성을 가진 계
  */
+import { Object3D } from 'three';
 import { StarData, PlanetData } from 'src/lib/interfaces/astro.interface';
 import { Star } from 'src/lib/astronomical/Star';
 import { Planet } from 'src/lib/astronomical/Planet';
@@ -17,8 +18,8 @@ export interface StarSystemData {
 }
 
 export class StarSystem extends System {
-    star: Star;
-    planets: Planet[] = [];
+    private star: Star;
+    private planets: Planet[] = [];
 
     constructor (data: StarSystemData) {
         super(data.id, data.name, data.type);
@@ -26,11 +27,29 @@ export class StarSystem extends System {
         data.planets.forEach( planetData => this.planets.push(new Planet(planetData)) );
     }
 
-    private setCenter (): void {
-
+    public getCenter (): Star {
+        return this.star;
     }
 
-    private setPlanets (): void {
+    public getCenterBody (): Object3D {
+        return this.star.get3DBody();
+    }
 
+    public getPlanets (): Planet[] {
+        return this.planets;
+    }
+
+    public getPlanetById (id: string): Planet {
+        return this.planets.filter(planet => planet.id === id)[0];
+    }
+
+    public getPlanetByName (name: string): Planet {
+        return this.planets.filter(planet => planet.name === name)[0];
+    }
+
+    public getPlanetBodies (): Object3D[] {
+        let arr: Object3D[] = [];
+        this.planets.forEach(planet => arr.push(planet.get3DBody()));
+        return arr;
     }
 }

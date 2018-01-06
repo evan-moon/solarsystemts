@@ -3,6 +3,7 @@
  * @name PlanetSystem
  * @desc 행성을 기준으로 공전하는 위성을 가진 계
  */
+import { Object3D } from 'three';
 import { PlanetData } from 'src/lib/interfaces/astro.interface';
 import { Planet } from 'src/lib/astronomical/Planet';
 import { System } from 'src/lib/systems/System';
@@ -16,8 +17,8 @@ export interface PlanetSystemData {
 }
 
 export class PlanetSystem extends System {
-    centralPlanet: Planet;
-    moons: Planet[] = [];
+    private centralPlanet: Planet;
+    private moons: Planet[] = [];
 
     constructor (data: PlanetSystemData) {
         super(data.id, data.name, data.type);
@@ -25,11 +26,29 @@ export class PlanetSystem extends System {
         data.moons.forEach( moonData => this.moons.push(new Planet(moonData)) );
     }
 
-    public setCenter (): void {
-
+    public getCenter (): Planet {
+        return this.centralPlanet;
     }
 
-    public setPlanets (): void {
+    public getCenterBody (): Object3D {
+        return this.centralPlanet.get3DBody();
+    }
 
+    public getMoons (): Planet[] {
+        return this.moons;
+    }
+
+    public getMoonById (id: string): Planet {
+        return this.moons.filter(moon => moon.id === id)[0];
+    }
+
+    public getMoonByName (name: string): Planet {
+        return this.moons.filter(moon => moon.name === name)[0];
+    }
+
+    public getMoonBodies (): Object3D[] {
+        let arr: Object3D[] = [];
+        this.moons.forEach(moon => arr.push(moon.get3DBody()));
+        return arr;
     }
 }

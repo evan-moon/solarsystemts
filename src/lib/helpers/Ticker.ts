@@ -1,7 +1,10 @@
+import { J2000 } from 'src/constants';
+
 export class Ticker {
     public date: Date;
     public startDate: Date;
 
+    private _epochTime: number // ms;
     private calcPerTick: number;
     private actualCalcPerTick: number;
     private secondsPerTick: number;
@@ -14,6 +17,7 @@ export class Ticker {
         this.actualCalcPerTick = 1;
         this.secondsPerTick = 1;
         this.deltaTIncrement = 1;
+        this.epochTime = date.getTime();
     }
 
     get currentTime (): Date {
@@ -21,12 +25,21 @@ export class Ticker {
         const m: number = date.getTime();
         const nextDate: number = m + this.secondsPerTick;
         this.date = new Date(nextDate);
+        this.epochTime = date.getTime();
 
         return this.date;
     }
 
     get deltaT (): number {
         return this.secondsPerTick;
+    }
+
+    set epochTime (date: number) {
+        this._epochTime = (date - J2000.getTime()) / 1000;
+    }
+
+    get epochTime (): number {
+        return this._epochTime;
     }
 
     public setDeltaT (): void {

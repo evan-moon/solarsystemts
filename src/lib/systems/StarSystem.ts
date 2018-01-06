@@ -52,4 +52,9 @@ export class StarSystem extends System {
         this.planets.forEach(planet => arr.push(planet.get3DBody()));
         return arr;
     }
+
+    public setPlanetsPosition (): void {
+        let date = new Date(); // 추후 외부에서 인자로 받는 날짜로 바꿀 것
+        this.planets.forEach((planet: Planet) => planet.setPositionByDate(date));
+    }
 }

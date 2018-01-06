@@ -51,4 +51,9 @@ export class PlanetSystem extends System {
         this.moons.forEach(moon => arr.push(moon.get3DBody()));
         return arr;
     }
+
+    public setMoonsPosition (): void {
+        let date = new Date(); // 추후 외부에서 인자로 받는 날짜로 바꿀 것
+        this.moons.forEach((moon: Planet) => moon.setPositionByDate(date));
+    }
 }

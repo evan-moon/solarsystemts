@@ -259,15 +259,10 @@ export class World {
         if (!this.scenario) {
             throw new Error('There is no scenario: setPlanets::World');
         }
-        let system = null;
 
-        if (this.scenario.system.type === 'starsystem') {
-            system = this.scenario.system as StarSystem;
-        }
-        else if (this.scenario.system.type === 'planetsystem') {
-            system = this.scenario.system as PlanetSystem;
-        }
-        else throw new Error('Please check your system type: setPlanet::World');
+        let bodies = this.scenario.getBodies();
+        this.scene.add(bodies.center);
+        bodies.others.forEach(planet => this.scene.add(planet));
     }
 
     private onClick (e: any): void {

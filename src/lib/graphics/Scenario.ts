@@ -43,7 +43,6 @@ export class Scenario {
         if (!this.system) {
             throw new Error('There is no system in this Scenario! : Scenario::getBodies');
         }
-
         if (this.system.type === 'starsystem') {
             let system = this.system as StarSystem;
             let bodies: SystemBodies = {
@@ -63,16 +62,18 @@ export class Scenario {
             return bodies;
         }
         else {
-            throw new Error('invalid system type : Scenario::getBodies');
+            throw new Error('invalid system type: Scenario::getBodies');
         }
     }
 
     private setSystem (system: StarSystemData|PlanetSystemData): void {
         if (system.type === 'starsystem') {
             this.system = new StarSystem(system as StarSystemData);
+            this.system.setPlanetsPosition();
         }
         else if (system.type === 'planetsystem') {
             this.system = new PlanetSystem(system as PlanetSystemData);
+            this.system.setMoonsPosition();
         }
         else {
             throw new Error('Please check your scenario type: Scenario Class');

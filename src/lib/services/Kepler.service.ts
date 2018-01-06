@@ -37,7 +37,7 @@ class KeplerService {
      * @desc 이심률이 0.0 < e < 0.9인 타원일 경우
      */
     public compute (e: number, M: number) {
-        return x => {
+        return (x: number) => {
             return x + (
                 M + e * Math.sin(x) - x
             ) / (
@@ -50,7 +50,7 @@ class KeplerService {
      * @desc 이심률이 0.9 <= e < 1.0인 타원일 경우
      */
     public computeWithLaguerre (e: number, M: number) {
-        return x => {
+        return (x: number) => {
             const sin = e * Math.sin(x);
             const cos = e * Math.cos(x);
             const f = x - sin - M;
@@ -65,7 +65,7 @@ class KeplerService {
      * @desc 이심률이 1 이상인 포물선인 경우
      */
     public computeWithLaguerreHyp (e: number, M: number) {
-        return x => {
+        return (x: number) => {
             const sin = e * Math.sinh(x);
             const cos = e * Math.cosh(x);
             const f = x - sin - M;

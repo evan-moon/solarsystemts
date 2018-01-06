@@ -5,6 +5,7 @@
  */
 import {
     Object3D, Color, TextureLoader, Texture,
+    Geometry, LineBasicMaterial, Vector3, Line,
     MeshPhongMaterial, SphereBufferGeometry, Mesh
 } from 'three';
 import { Material, AstronomicalObjectData } from 'src/lib/interfaces/astro.interface';
@@ -33,6 +34,10 @@ export class AstronomicalObject {
     protected root: Object3D; // body, moons
     protected body: Object3D; // mesh, rigns
 
+    protected bodyId: string;
+    protected helperId: string;
+    protected ringId: string;
+
     constructor (data: AstronomicalObjectData) {
         this.id = data.id;
         this.name = data.name;
@@ -49,11 +54,26 @@ export class AstronomicalObject {
 
         this.root = new Object3D();
         this.root.name = this.id;
+
+        this.bodyId = `${this.id}-body`;
+        this.helperId = `${this.id}-axis-helper`;
+        this.ringId = `${this.id}-ring`;
+
         this.createObjectBasicBody();
     }
 
     public get3DBody () {
         return this.root;
+    }
+
+    public setShowHelper (val: boolean): void {
+        const helper = this.body.getObjectByName(this.helperId);
+        if (helper) {
+            helper.visible = val;
+        }
+        else {
+            console.error('There is no axis helper in this Astronomical Object');
+        }
     }
 
     private createObjectBasicBody (): void {
@@ -75,14 +95,31 @@ export class AstronomicalObject {
 
         const mesh = new Mesh(geometry, material);
         this.body.add(mesh);
-        this.body.name = `${this.id}-body`;
+        this.body.name = this.bodyId;
+
+        this.setHelper();
 
         // console.log(this.name, 'Actual Radius -> ', this.radius);
         // console.log(this.name, 'Rendered Radius -> ', this.renderedRadius);
     }
 
-    private getPlanetSize (value: number): number {
+    protected getPlanetSize (value: number): number {
         const toKM = value * KM;
         return DimensionService.getScaled(toKM);
+    }
+
+    protected setHelper (): void {
+        const geometry = new Geometry();
+        const material = new LineBasicMaterial({
+            color: 0x00ff00
+        });
+        const centerPos = new Vector3();
+        const tailPos = new Vector3(0, this.getPlanetSize(this.radius) * 2, 0);
+        geometry.vertices.push(centerPos, tailPos);
+
+        const mesh = new Line(geometry, material);
+        mesh.name = this.helperId;
+
+        this.body.add(mesh);
     }
 }

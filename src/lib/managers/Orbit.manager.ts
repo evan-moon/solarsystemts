@@ -7,36 +7,10 @@
 import * as $ from 'jquery';
 import { Vector3, Euler, Quaternion } from 'three';
 import { G, CENTURY, DAY, KM, DEG_TO_RAD, CIRCLE, AU } from 'src/constants';
-import { OrbitData } from 'src/constants/planets.constant';
-import Kepler from 'src/services/Kepler.service';
+import { OrbitData, ComputedOrbitData } from 'src/lib/interfaces/astro.interface';
+import Kepler from 'src/lib/services/Kepler.service';
 
-interface ComputedOrbitData {
-    time: Date; // 해당 데이터에 대한 시간
-    a: number; // Semi-majot axis (장반경)
-    e: number; // Eccentricity (이심률)
-    i: number; // Inclination (궤도 기울기)
-    o: number; // Longitude of Ascending Node (Ω)
-    w: number; // Argument of periapsis (ω)
-
-    E: number; // Eccentric Anomaly
-    T: number; // Time at perihelion
-    M: number; // Mean anomaly
-
-    l: number; // Mean longitude
-    lp: number; // Longitude of periapsis
-
-    r: number; // Distance from center
-    v: number; // True anomaly (through Kepler)
-
-    P: number; // Sidereal period
-    Pw: number; // Argument of periapsis precession period (mean value)
-    Pn: number; // Longitude of the ascending node precession period (mean value)
-
-    pos?: Vector3;
-    tilt?: number;
-}
-
-class OrbitManager {
+export class OrbitManager {
     public orbitData: OrbitData;
     private name: string;
 
@@ -49,7 +23,9 @@ class OrbitManager {
     }
 
     public getPosFromElements (computed: ComputedOrbitData): Vector3 {
-        if (!computed) return new Vector3();
+        if (!computed) {
+            return new Vector3();
+        }
 
         const a1 = new Euler(computed.tilt || 0, 0, computed.o, 'XYZ');
         const a2 = new Euler(computed.i, 0, computed.w, 'XYZ');
@@ -62,7 +38,7 @@ class OrbitManager {
         return computed.pos;
     }
 
-    public calcElements (timeEpoch: Date) {
+    public calcElements (timeEpoch: Date): ComputedOrbitData {
         if (!this.orbitData) {
             throw new Error('There is no orbit data in this Orbit manager');
         }
@@ -78,10 +54,17 @@ class OrbitManager {
             computed = keys.reduce((carry: string, el: string) => {
                 // cy: variation by century
                 // day: variation by day
-                variation = orbitData.cy ? orbitData.cy[el] : (orbitData.day[el] * CENTURY);
-                if (!variation) variation = 0;
-
+                if (orbitData.cy) {
+                    variation = orbitData.cy[el];
+                }
+                else if (orbitData.day) {
+                    variation = (orbitData.day[el] * CENTURY);
+                }
+                else {
+                    variation = 0;
+                }
                 carry[el] = orbitData.base[el] + (variation * tCentury);
+
                 return carry;
             }, computed);
         }
@@ -121,11 +104,11 @@ class OrbitManager {
         return computed;
     }
 
-    public calcPosition (timeEpoch: Date) {
+    public calcPosition (timeEpoch: Date): Vector3 {
         if (!this.orbitData) {
             return new Vector3();
         }
-        const computed = this.calcElements(timeEpoch);
+        const computed: ComputedOrbitData = this.calcElements(timeEpoch);
         return this.getPosFromElements(computed);
     }
 
@@ -160,5 +143,3 @@ class OrbitManager {
         }
     }
 }
-
-export default OrbitManager;

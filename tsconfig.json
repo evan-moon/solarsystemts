@@ -6,6 +6,7 @@
         "moduleResolution": "node",
         "experimentalDecorators": true,
         "allowJs": true,
+        "suppressImplicitAnyIndexErrors": true,
     },
     "files": [
         "./src/typings/index.d.ts",

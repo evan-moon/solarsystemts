@@ -30,8 +30,8 @@ export class AstronomicalObject {
     public material: Material;
     public sideralDay?: number;
 
-    private root: Object3D; // body, moons
-    private body: Object3D; // mesh, rigns
+    protected root: Object3D; // body, moons
+    protected body: Object3D; // mesh, rigns
 
     constructor (data: AstronomicalObjectData) {
         this.id = data.id;
@@ -49,22 +49,19 @@ export class AstronomicalObject {
 
         this.root = new Object3D();
         this.root.name = this.id;
-        this.createPlanetBody();
+        this.createObjectBasicBody();
     }
 
     public get3DBody () {
         return this.root;
     }
 
-    private createPlanetBody (): void {
+    private createObjectBasicBody (): void {
         const mat: any = Object.assign({}, this.material);
 
         const segment: number = AstronomicalObject.bodyQuality.segment;
         const rings: number = AstronomicalObject.bodyQuality.rings;
         this.renderedRadius = this.getPlanetSize(this.radius);
-
-        console.log(this.name, 'Actual Radius -> ', this.radius);
-        console.log(this.name, 'Rendered Radius -> ', this.renderedRadius);
 
         this.body = new Object3D();
 
@@ -79,6 +76,9 @@ export class AstronomicalObject {
         const mesh = new Mesh(geometry, material);
         this.body.add(mesh);
         this.body.name = `${this.id}-body`;
+
+        // console.log(this.name, 'Actual Radius -> ', this.radius);
+        // console.log(this.name, 'Rendered Radius -> ', this.renderedRadius);
     }
 
     private getPlanetSize (value: number): number {

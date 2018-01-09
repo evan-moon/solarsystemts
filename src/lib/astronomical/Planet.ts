@@ -32,6 +32,7 @@ export class Planet extends AstronomicalObject {
     private movement: Vector3;
 
     private position: Vector3;
+    private compressedPos: Vector3;
     private prevPos: Vector3;
     private relPosition: Vector3;
 
@@ -77,7 +78,7 @@ export class Planet extends AstronomicalObject {
         this.setPlanetBody();
     }
 
-    public setPlanetBody () {
+    public setPlanetBody (): void {
         if (this.ring) {
             const innerSize = DimensionService.getScaled(this.ring.innerRadius);
             const outerSize = DimensionService.getScaled(this.ring.innerRadius);
@@ -106,11 +107,13 @@ export class Planet extends AstronomicalObject {
     public setPositionByDate (date: Date): void {
         const epochTime: Date = date;
         this.position = this.orbitManager.calcPosition(date);
+        this.compressedPos = this.getPosition();
         this.relPosition = this.position.clone();
     }
 
     public getPosition (): Vector3 {
-        return this.position.clone();
+        const currentPosition = this.position.clone();
+        return DimensionService.getScaledVector(currentPosition);
     }
 
     private reset () {

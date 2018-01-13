@@ -268,7 +268,7 @@ export class World {
             material: new MeshBasicMaterial({
                 color: new Color(0xaaaaaa),
                 side: BackSide,
-                map: new TextureLoader().load(`src/assets/images/space/${this.currentSpaceTexture}.jpg`)
+                map: new TextureLoader().load(`static/images/space/${this.currentSpaceTexture}.jpg`)
             })
         };
 

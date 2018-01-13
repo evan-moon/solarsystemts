@@ -31,7 +31,7 @@ export class Star extends AstronomicalObject {
         super(astronomical);
 
         this.flareSize = 500;
-        this.flareMapResource = 'src/assets/images/effect/lensflare.png';
+        this.flareMapResource = 'static/images/effect/lensflare.png';
         this.setStarBody();
         this.setFlare();
         this.setLight();

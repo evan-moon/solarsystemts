@@ -8,7 +8,7 @@ import { StarData, PlanetData } from 'src/lib/interfaces/astro.interface';
 import { AU, SIDERAL_DAY, NM_TO_KM, DAY, HOUR } from 'src/constants';
 import { Color } from 'three';
 
-const TEX_DIR = 'src/assets/images/surface/';
+const TEX_DIR = 'static/images/surface/';
 
 export const SUN: StarData = {
     id: 'sun',

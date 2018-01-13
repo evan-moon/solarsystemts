@@ -87,7 +87,7 @@ export class Star extends AstronomicalObject {
     }
 
     private setLight (): void {
-        const color = 0xfffff;
+        const color = 0xffffff;
         const light = new PointLight(color);
         this.root.add(light);
     }

@@ -115,7 +115,7 @@ class CameraManager {
 
     public getAbsolutePosition (): Vector3 {
         const parent = this.currentCamera.parent;
-        return parent.localToWorld(this.currentCamera.position);
+        return parent.localToWorld(this.currentCamera.position.clone());
     }
 
     public getConfig (): CameraConfig {

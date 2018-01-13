@@ -223,6 +223,10 @@ export class World {
         }
         if (this.isPlaying) {
             this.date = this.ticker.currentTime;
+
+            const bodies = this.scenario.getAstronomicalObjects();
+            bodies.center.moveRotating(this.date);
+            bodies.others.forEach(planet => planet.moveRotating(this.date));
         }
     }
 
@@ -288,7 +292,7 @@ export class World {
             throw new Error('There is no scenario: setPlanets::World');
         }
 
-        let bodies = this.scenario.getBodies();
+        const bodies = this.scenario.getBodies();
         this.scene.add(bodies.center);
         bodies.others.forEach(planet => this.scene.add(planet));
     }

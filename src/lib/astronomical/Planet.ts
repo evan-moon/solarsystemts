@@ -45,7 +45,8 @@ export class Planet extends AstronomicalObject {
             name: data.name,
             mass: data.mass,
             radius: data.radius,
-            material: data.material
+            material: data.material,
+            sideralDay: data.sideralDay,
         };
         if (data.sideralDay) {
             astronomical.sideralDay = data.sideralDay;
@@ -127,6 +128,13 @@ export class Planet extends AstronomicalObject {
     public getPosition (): Vector3 {
         const currentPosition = this.position.clone();
         return DimensionService.getScaledVector(currentPosition);
+    }
+
+    public getScreenSizeRatio (camPos: Vector3, fov: number) {
+        const size: number = this.getObjectStageSize();
+        const distance: number = this.getPosition().sub(camPos).length();
+        const height = 2 * Math.tan((fov * DEG_TO_RAD) / 2) * distance;
+        return size / height;
     }
 
     private reset () {

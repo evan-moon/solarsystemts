@@ -1,4 +1,5 @@
 import { Object3D, Vector3, Color } from 'three';
+import { AstronomicalObject } from 'src/lib/astronomical/AstronomicalObject';
 
 export interface Material {
     emissive?: Color;
@@ -72,7 +73,7 @@ export interface AstronomicalObjectData {
     mass: number;
     radius: number;
     material: Material;
-    sideralDay?: number;
+    sideralDay: number;
 }
 
 export interface PlanetData extends AstronomicalObjectData {
@@ -89,5 +90,11 @@ export interface StarData extends AstronomicalObjectData {
 export interface SystemBodies {
     center: Object3D;
     others: Object3D[];
+    type: string;
+}
+
+export interface SystemObjects {
+    center: AstronomicalObject;
+    others: AstronomicalObject[];
     type: string;
 }

@@ -3,7 +3,7 @@
  * @name Scenario
  * @desc 시나리오 클래스
  */
-import { SystemBodies } from 'src/lib/interfaces/astro.interface';
+import { SystemBodies, SystemObjects } from 'src/lib/interfaces/astro.interface';
 import { ScenarioData, Tick } from 'src/constants/scenario.constant';
 import { StarSystemData, StarSystem } from 'src/lib/systems/StarSystem';
 import { PlanetSystemData, PlanetSystem } from 'src/lib/systems/PlanetSystem';
@@ -45,7 +45,7 @@ export class Scenario {
         }
         if (this.system.type === 'starsystem') {
             let system = this.system as StarSystem;
-            let bodies: SystemBodies = {
+            const bodies: SystemBodies = {
                 center: system.getCenterBody(),
                 others: system.getPlanetBodies(),
                 type: system.type
@@ -54,7 +54,7 @@ export class Scenario {
         }
         else if (this.system.type === 'planetsystem') {
             let system = this.system as PlanetSystem;
-            let bodies: SystemBodies = {
+            const bodies: SystemBodies = {
                 center: system.getCenterBody(),
                 others: system.getMoonBodies(),
                 type: system.type
@@ -63,6 +63,34 @@ export class Scenario {
         }
         else {
             throw new Error('invalid system type: Scenario::getBodies');
+        }
+    }
+
+    public getAstronomicalObjects (): SystemObjects {
+        if (!this.system) {
+            throw new Error('There is no system in this Scenario! : Scenario::getBodies');
+        }
+        let system = this.system;
+        if (this.system.type === 'starsystem') {
+            system = system as StarSystem;
+            const objects: SystemObjects = {
+                center: system.getCenter(),
+                others: system.getPlanets(),
+                type: system.type
+            };
+            return objects;
+        }
+        else if (this.system.type === 'planetsystem') {
+            system = system as PlanetSystem;
+            const objects: SystemObjects = {
+                center: system.getCenter(),
+                others: system.getMoons(),
+                type: system.type
+            };
+            return objects;
+        }
+        else {
+            throw new Error('invalid system type: Scenario::getAstronomicalObjects');
         }
     }
 

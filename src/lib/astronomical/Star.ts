@@ -25,11 +25,9 @@ export class Star extends AstronomicalObject {
             name: data.name,
             mass: data.mass,
             radius: data.radius,
-            material: data.material
+            material: data.material,
+            sideralDay:  data.sideralDay,
         };
-        if (data.sideralDay) {
-            astronomical.sideralDay = data.sideralDay;
-        }
         super(astronomical);
 
         this.flareSize = 500;

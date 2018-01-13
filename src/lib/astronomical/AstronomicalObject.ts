@@ -9,7 +9,7 @@ import {
     MeshPhongMaterial, SphereBufferGeometry, Mesh
 } from 'three';
 import { Material, AstronomicalObjectData } from 'src/lib/interfaces/astro.interface';
-import { KM } from 'src/constants';
+import { CIRCLE, KM } from 'src/constants';
 import DimensionService from 'src/lib/services/Dimension.service';
 
 interface BodyQuality {
@@ -29,7 +29,7 @@ export class AstronomicalObject {
     public radius: number;
     public renderedRadius: number;
     public material: Material;
-    public sideralDay?: number;
+    public sideralDay: number;
 
     protected root: Object3D; // body, moons
     protected body: Object3D; // mesh, rigns
@@ -45,10 +45,7 @@ export class AstronomicalObject {
         this.radius = data.radius;
         this.renderedRadius = 0;
         this.material = data.material;
-
-        if (data.sideralDay) {
-            this.sideralDay = data.sideralDay;
-        }
+        this.sideralDay = data.sideralDay;
 
         AstronomicalObject.bodyQuality.segment = 50;
         AstronomicalObject.bodyQuality.rings = 50;
@@ -84,6 +81,11 @@ export class AstronomicalObject {
 
     public getObjectStageSize () {
         return this.getObjectCompressedSize() * this.body.getObjectByName('mesh').scale.x;
+    }
+
+    public moveRotating (epochTime: Date): void {
+        const currentRotation = (epochTime.getTime() / this.sideralDay) * CIRCLE;
+        this.body.getObjectByName('mesh').rotation.y = 0 + currentRotation;
     }
 
     private createObjectBasicBody (): void {

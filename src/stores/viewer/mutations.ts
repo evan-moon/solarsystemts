@@ -19,8 +19,13 @@ export function SET_CURRENT_DATE (state: ViewerState, currentDate: Date)  {
     state.currentDate = currentDate;
 }
 
+export function SET_CURRENT_LOOK_AT (state: ViewerState, currentLookAt: string) {
+    state.currentLookAt = currentLookAt;
+}
+
 export default <MutationTree<ViewerState>> {
     SET_CURRENT_SCENARIO,
     SET_PLAYING,
     SET_CURRENT_DATE,
+    SET_CURRENT_LOOK_AT,
 }

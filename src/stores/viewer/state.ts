@@ -5,11 +5,13 @@ export class ViewerState {
     public currentScenario: ScenarioData;
     public isPlaying: boolean;
     public currentDate: Date;
+    public currentLookAt: string;
 
     constructor () {
         this.scenarios = [ SolarSystem ];
         this.currentScenario = this.scenarios[0];
         this.isPlaying = false;
         this.currentDate = new Date();
+        this.currentLookAt = 'root';
     }
 }

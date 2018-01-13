@@ -5,8 +5,8 @@
  * @desc 행성 클래스
  */
 import {
-    Vector3, MeshLambertMaterial, RingGeometry,
-    Mesh, TextureLoader, DoubleSide
+    Object3D, Vector3, MeshLambertMaterial,
+    RingGeometry, Mesh, TextureLoader, DoubleSide
 } from 'three';
 import {
     AstronomicalObjectData, PlanetData,
@@ -102,6 +102,14 @@ export class Planet extends AstronomicalObject {
         }
         this.body.rotation.x = tilt;
         this.root.add(this.body);
+    }
+
+    public getPlanetRoot (): Object3D {
+        return this.root;
+    }
+
+    public getPlanetBody (): Object3D {
+        return this.body;
     }
 
     public setPositionByDate (date: Date): void {

@@ -6,6 +6,10 @@
 
 import { DEG_TO_RAD } from 'src/constants';
 import { Scene, Vector3, PerspectiveCamera } from 'three';
+import { Scenario } from 'src/lib/graphics/Scenario';
+import { StarSystem } from 'src/lib/systems/StarSystem';
+import { PlanetSystem } from 'src/lib/systems/PlanetSystem';
+import { Planet } from 'src/lib/astronomical/Planet';
 
 interface CameraConfig {
     fov: number;
@@ -68,6 +72,45 @@ class CameraManager {
 
     public getCurrentCamera (): PerspectiveCamera {
         return this.currentCamera;
+    }
+
+    public setLookAt (scenario: Scenario, currentCameraPosition: string, planetId: string): void {
+        const cam = this.currentCamera;
+
+        if (currentCameraPosition === 'root') {
+            this.scene.remove(cam);
+        }
+        else {
+            this.scene.getObjectByName(currentCameraPosition).remove(cam);
+        }
+
+        if (planetId === 'root') {
+            this.scene.add(cam);
+            this.initCurrentCameraPosition();
+        }
+        else {
+            let system: StarSystem|PlanetSystem = scenario.system;
+            let target: Planet;
+
+            if (system.type === 'starsystem') {
+                system = system as StarSystem;
+                target = system.getPlanetById(planetId);
+            }
+            else if (scenario){
+                system = system as PlanetSystem;
+                target = system.getMoonById(planetId);
+            }
+            else throw new Error(`There is no ${system.type} in system types`);
+
+            const r: number = target.renderedRadius * 10;
+            target.getPlanetBody().add(cam);
+            console.log(target.getPlanetBody());
+            cam.position.set(r, r, r);
+        }
+    }
+
+    public initCurrentCameraPosition (): void {
+        this.currentCamera.position.set(this.stageSize, this.stageSize, this.stageSize * 1.5);
     }
 
     private getDistanceFromFov (dimToSee: number, fov: number): number {

@@ -18,9 +18,14 @@ export function currentDate (state: ViewerState): Date {
     return state.currentDate;
 }
 
+export function currentLookAt (state: ViewerState): string {
+    return state.currentLookAt;
+}
+
 export default <GetterTree<ViewerState, any>> {
     getAllScenarios,
     currentScenario,
     isPlaying,
     currentDate,
+    currentLookAt,
 }

@@ -10,6 +10,7 @@ import { ScenarioData } from 'src/constants/scenario.constant';
 import { Scenario } from 'src/lib/graphics/Scenario';
 import { StarSystemData, StarSystem } from 'src/lib/systems/StarSystem';
 import { PlanetSystemData, PlanetSystem } from 'src/lib/systems/PlanetSystem';
+import { Planet } from 'src/lib/astronomical/Planet';
 import { SystemBodies, PlanetData } from 'src/lib/interfaces/astro.interface';
 import DimensionService from 'src/lib/services/Dimension.service';
 import {
@@ -211,9 +212,9 @@ export class World {
         }
     }
 
-    public setLookAt(id: string): void {
-        this.cameraPos = id;
-        console.log('current camera position -> ', this.cameraPos);
+    public setLookAt(planetId: string): void {
+        this.CameraManager.setLookAt(this.scenario, this.cameraPos, planetId);
+        this.cameraPos = planetId;
     }
 
     private initCamera (): void {
@@ -223,6 +224,10 @@ export class World {
 
         this.currentCamera = this.CameraManager.globalCamera;
         this.cameraPos = 'root';
+        this.CameraManager.initCurrentCameraPosition();
+    }
+
+    private initCameraPosition (): void {
         this.currentCamera.position.set(this.stageSize, this.stageSize, this.stageSize * 1.5);
     }
 

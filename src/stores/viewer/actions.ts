@@ -23,8 +23,16 @@ export function setCurrentDate (store: ActionContext<ViewerState, any>, currentD
     return defer.promise;
 }
 
+export function setCurrentLookAt (store: ActionContext<ViewerState, any>, currentLookAt: string) {
+    const defer = Q.defer();
+    store.commit('SET_CURRENT_LOOK_AT', currentLookAt);
+    defer.resolve();
+    return defer.promise;
+}
+
 export default <ActionTree<ViewerState, any>> {
     setCurrentScenario,
     setPlaying,
     setCurrentDate,
+    setCurrentLookAt,
 }

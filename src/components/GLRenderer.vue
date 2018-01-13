@@ -18,13 +18,16 @@ export default class GLRenderer extends Vue {
     @Action('setCurrentDate') setCurrentDate: any;
     @Getter('currentScenario') currentScenario: any;
     @Getter('isPlaying') isPlaying: boolean;
+    @Getter('currentLookAt') currentLookAt: string;
 
     tick () {
         this.world.render();
-        this.setCurrentDate(this.world.date);
         window.requestAnimationFrame(() => {
             this.tick();
         });
+        if (this.isPlaying) {
+            this.setCurrentDate(this.world.date);
+        }
     }
 
     loadWorld () {
@@ -40,6 +43,11 @@ export default class GLRenderer extends Vue {
     @Watch('isPlaying')
     onChangeIsPlaying (isPlaying: boolean): void {
         this.world.isPlaying = isPlaying;
+    }
+    @Watch('currentLookAt')
+    onChangeCurrentLookAt (planetId: string): void {
+        console.log(planetId);
+        this.world.setLookAt(planetId);
     }
 
     mounted () {

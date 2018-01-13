@@ -10,6 +10,7 @@ import { ScenarioData } from 'src/constants/scenario.constant';
 import { Scenario } from 'src/lib/graphics/Scenario';
 import { StarSystemData, StarSystem } from 'src/lib/systems/StarSystem';
 import { PlanetSystemData, PlanetSystem } from 'src/lib/systems/PlanetSystem';
+import { Star } from 'src/lib/astronomical/Star';
 import { Planet } from 'src/lib/astronomical/Planet';
 import { SystemBodies, PlanetData } from 'src/lib/interfaces/astro.interface';
 import DimensionService from 'src/lib/services/Dimension.service';
@@ -205,8 +206,21 @@ export class World {
     }
 
     public render (): void {
+        const centerObject = this.scenario.system.getCenter();
+        const cameraAbsolutePosition = this.CameraManager.getAbsolutePosition();
+
         this.controls.update();
         this.renderer.render(this.scene, this.currentCamera);
+
+        if (centerObject instanceof Star) {
+            const star = centerObject as Star;
+            const starPosition = new Vector3();
+            const flarePosition = cameraAbsolutePosition.clone().sub(starPosition).multiplyScalar(0.1);
+            const flareSize = star.getScreenSizeRatio(cameraAbsolutePosition, this.CameraManager.getConfig().fov);
+
+            star.setFlarePosition(flarePosition);
+            star.setFlareSize(flareSize, this.rendererHeight);
+        }
         if (this.isPlaying) {
             this.date = this.ticker.currentTime;
         }

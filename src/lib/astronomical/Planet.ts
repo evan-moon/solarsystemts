@@ -100,7 +100,7 @@ export class Planet extends AstronomicalObject {
         if (this.tilt) {
             tilt -= (this.tilt * DEG_TO_RAD);
         }
-        this.body.rotation.x = tilt;
+        this.body.getObjectByName('mesh').rotation.x = tilt;
         this.root.add(this.body);
     }
 

@@ -104,13 +104,22 @@ class CameraManager {
 
             const r: number = target.renderedRadius * 10;
             target.getPlanetBody().add(cam);
-            console.log(target.getPlanetBody());
+            console.log(target.getPlanetBody().rotation);
             cam.position.set(r, r, r);
         }
     }
 
     public initCurrentCameraPosition (): void {
         this.currentCamera.position.set(this.stageSize, this.stageSize, this.stageSize * 1.5);
+    }
+
+    public getAbsolutePosition (): Vector3 {
+        const parent = this.currentCamera.parent;
+        return parent.localToWorld(this.currentCamera.position);
+    }
+
+    public getConfig (): CameraConfig {
+        return this.cameraConfig;
     }
 
     private getDistanceFromFov (dimToSee: number, fov: number): number {

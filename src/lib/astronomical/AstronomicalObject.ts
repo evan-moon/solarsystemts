@@ -43,6 +43,7 @@ export class AstronomicalObject {
         this.name = data.name;
         this.mass = data.mass;
         this.radius = data.radius;
+        this.renderedRadius = 0;
         this.material = data.material;
 
         if (data.sideralDay) {
@@ -76,12 +77,21 @@ export class AstronomicalObject {
         }
     }
 
+    public getObjectCompressedSize (): number {
+        const toKM: number = this.radius * KM;
+        return DimensionService.getScaled(toKM);
+    }
+
+    public getObjectStageSize () {
+        return this.getObjectCompressedSize() * this.body.getObjectByName('mesh').scale.x;
+    }
+
     private createObjectBasicBody (): void {
         const mat: any = Object.assign({}, this.material);
 
         const segment: number = AstronomicalObject.bodyQuality.segment;
         const rings: number = AstronomicalObject.bodyQuality.rings;
-        this.renderedRadius = this.getPlanetSize(this.radius);
+        this.renderedRadius = this.getObjectCompressedSize();
 
         this.body = new Object3D();
 
@@ -94,6 +104,7 @@ export class AstronomicalObject {
         material.color = new Color(0xffffff);
 
         const mesh = new Mesh(geometry, material);
+        mesh.name = 'mesh';
         this.body.add(mesh);
         this.body.name = this.bodyId;
 
@@ -103,23 +114,18 @@ export class AstronomicalObject {
         // console.log(this.name, 'Rendered Radius -> ', this.renderedRadius);
     }
 
-    protected getPlanetSize (value: number): number {
-        const toKM = value * KM;
-        return DimensionService.getScaled(toKM);
-    }
-
     protected setHelper (): void {
         const geometry = new Geometry();
         const material = new LineBasicMaterial({
             color: 0x00ff00
         });
         const centerPos = new Vector3();
-        const tailPos = new Vector3(0, this.getPlanetSize(this.radius) * 2, 0);
+        const tailPos = new Vector3(0, this.getObjectCompressedSize() * 2, 0);
         geometry.vertices.push(centerPos, tailPos);
 
         const mesh = new Line(geometry, material);
         mesh.name = this.helperId;
 
-        this.body.add(mesh);
+        this.body.getObjectByName('mesh').add(mesh);
     }
 }

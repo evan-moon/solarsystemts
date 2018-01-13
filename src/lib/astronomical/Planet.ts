@@ -109,6 +109,11 @@ export class Planet extends AstronomicalObject {
         this.position = this.orbitManager.calcPosition(date);
         this.compressedPos = this.getPosition();
         this.relPosition = this.position.clone();
+
+        const x = this.compressedPos.x;
+        const y = this.compressedPos.y;
+        const z = this.compressedPos.z;
+        this.body.position.set(x, y, z);
     }
 
     public getPosition (): Vector3 {

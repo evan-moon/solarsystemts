@@ -15,7 +15,12 @@ export function SET_PLAYING (state: ViewerState, isPlaying: boolean) {
     state.isPlaying = isPlaying;
 }
 
+export function SET_CURRENT_DATE (state: ViewerState, currentDate: Date)  {
+    state.currentDate = currentDate;
+}
+
 export default <MutationTree<ViewerState>> {
     SET_CURRENT_SCENARIO,
-    SET_PLAYING
+    SET_PLAYING,
+    SET_CURRENT_DATE,
 }

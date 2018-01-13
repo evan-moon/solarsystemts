@@ -42,6 +42,7 @@ export class World {
     public startDate: Date;
     public date: Date;
     public ticker: Ticker;
+    public isPlaying: boolean;
 
     private rendererSelector: string;
     private rendererDOM: HTMLElement;
@@ -85,6 +86,7 @@ export class World {
         this.scene = new Scene();
 
         this.currentSpaceTexture = 'universe';
+        this.isPlaying = false;
     }
 
     public setWindow (w: number, h: number): void {
@@ -204,7 +206,14 @@ export class World {
     public render (): void {
         this.controls.update();
         this.renderer.render(this.scene, this.currentCamera);
-        this.date = this.ticker.currentTime;
+        if (this.isPlaying) {
+            this.date = this.ticker.currentTime;
+        }
+    }
+
+    public setLookAt(id: string): void {
+        this.cameraPos = id;
+        console.log('current camera position -> ', this.cameraPos);
     }
 
     private initCamera (): void {

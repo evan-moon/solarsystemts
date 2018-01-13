@@ -16,7 +16,15 @@ export function setPlaying (store: ActionContext<ViewerState, any>, isPlaying: b
     return defer.promise;
 }
 
+export function setCurrentDate (store: ActionContext<ViewerState, any>, currentDate: Date) {
+    const defer = Q.defer();
+    store.commit('SET_CURRENT_DATE', currentDate);
+    defer.resolve();
+    return defer.promise;
+}
+
 export default <ActionTree<ViewerState, any>> {
     setCurrentScenario,
-    setPlaying
+    setPlaying,
+    setCurrentDate,
 }

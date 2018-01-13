@@ -8,10 +8,10 @@
         </b-button>
     </div>
     <b-col cols="2" class="tool-wrapper" data-name="time">
-        <!-- <p>{{ date | date }}</p> -->
+        <p>{{ currentDate | date }}</p>
     </b-col>
     <b-col cols="2" class="tool-wrapper" data-name="scenarios">
-        <b-form-select v-model="currentScenario">
+        <b-form-select v-model="currentScenarioId">
             <option v-for="scenario in viewerState.scenarios" :value="scenario.id">
                 {{ scenario.name }}
             </option>
@@ -23,6 +23,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State, Getter, Action } from 'vuex-class';
+import { ScenarioData } from 'src/constants/scenario.constant';
 import * as moment from 'moment';
 
 @Component({
@@ -34,10 +35,12 @@ import * as moment from 'moment';
     }
 })
 export default class ViewerTool extends Vue {
-    currentScenario: string = 'solarSystem';
+    currentScenarioId: string = '';
 
     @State('Viewer') viewerState: any;
     @Getter('isPlaying') isPlaying: boolean;
+    @Getter('currentDate') currentDate: Date;
+    @Getter('currentScenario') currentScenario: ScenarioData;
     @Action('setCurrentScenario') setCurrentScenario: any;
     @Action('setPlaying') setPlaying: any;
 
@@ -45,9 +48,13 @@ export default class ViewerTool extends Vue {
         this.setPlaying(!this.isPlaying);
     }
 
-    @Watch('currentScenario')
-    onChangeScenario (value: string, oldValue: string): void {
-        this.setCurrentScenario(value);
+    @Watch('currentScenarioId')
+    onChangeScenarioId (scenarioId: string): void {
+        this.setCurrentScenario(scenarioId);
+    }
+
+    created () {
+        this.currentScenarioId = this.currentScenario.id;
     }
 };
 </script>

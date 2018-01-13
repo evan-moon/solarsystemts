@@ -2,6 +2,9 @@
 
 > the solarsysten simulator created by Vue.js
 
+## Demo
+https://evan-moon.github.io/#/
+
 ## Build Setup
 
 ``` bash

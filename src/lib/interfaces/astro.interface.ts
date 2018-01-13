@@ -1,4 +1,5 @@
 import { Object3D, Vector3, Color } from 'three';
+import { Planet } from 'src/lib/astronomical/Planet';
 import { AstronomicalObject } from 'src/lib/astronomical/AstronomicalObject';
 
 export interface Material {
@@ -95,6 +96,6 @@ export interface SystemBodies {
 
 export interface SystemObjects {
     center: AstronomicalObject;
-    others: AstronomicalObject[];
+    others: Planet[];
     type: string;
 }

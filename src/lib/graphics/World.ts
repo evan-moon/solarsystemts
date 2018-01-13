@@ -226,7 +226,10 @@ export class World {
 
             const bodies = this.scenario.getAstronomicalObjects();
             bodies.center.moveRotating(this.date);
-            bodies.others.forEach(planet => planet.moveRotating(this.date));
+            bodies.others.forEach(planet => {
+                planet.moveRotating(this.date);
+                planet.setPositionByDate(this.date);
+            });
         }
     }
 
@@ -281,7 +284,7 @@ export class World {
 
     private initHelper () {
         let axisHelper: AxisHelper = new AxisHelper(this.stageSize);
-        let gridHelper: GridHelper = new GridHelper(this.stageSize, this.stageSize / 20);
+        let gridHelper: GridHelper = new GridHelper(this.stageSize, this.stageSize / 10);
         gridHelper.rotation.x = ( 90 / 180 ) * Math.PI;
 
         this.scene.add(axisHelper, gridHelper);

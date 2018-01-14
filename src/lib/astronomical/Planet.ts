@@ -16,6 +16,7 @@ import { QUARTER_CIRCLE, DEG_TO_RAD } from 'src/constants';
 import { AstronomicalObject } from 'src/lib/astronomical/AstronomicalObject';
 import { AtmoSphere } from 'src/lib/astronomical/AtmoSphere';
 import { OrbitManager } from 'src/lib/managers/Orbit.manager';
+import { Tracer } from 'src/lib/helpers/Tracer';
 import DimensionService from 'src/lib/services/Dimension.service';
 
 export class Planet extends AstronomicalObject {
@@ -23,6 +24,7 @@ export class Planet extends AstronomicalObject {
     public atmosphere?: AtmoSphere;
     public ring?: Ring;
     public tilt?: number;
+    public hasTrace: boolean;
 
     private invMass: number;
     private orbitManager: OrbitManager;
@@ -33,11 +35,13 @@ export class Planet extends AstronomicalObject {
 
     private position: Vector3;
     private compressedPos: Vector3;
-    private prevPos: Vector3;
+    private prevPosition: Vector3;
     private relPosition: Vector3;
 
     private absVelocity: Vector3;
     private relVelocity: Vector3;
+
+    private traceManager: Tracer;
 
     constructor (data: PlanetData) {
         let astronomical: AstronomicalObjectData = {
@@ -59,11 +63,14 @@ export class Planet extends AstronomicalObject {
         this.movement = new Vector3();
 
         this.position = new Vector3();
-        this.prevPos = new Vector3();
+        this.prevPosition = new Vector3();
         this.relPosition = new Vector3();
 
         this.absVelocity = new Vector3();
         this.relVelocity = new Vector3();
+
+        this.traceManager = new Tracer(data.id, data.material.color, 200);
+        this.hasTrace = true;
 
         if (data.atmosphere) {
             this.atmospherePressure = data.atmosphere.atmospherePressure;
@@ -103,6 +110,7 @@ export class Planet extends AstronomicalObject {
         }
         this.body.getObjectByName('mesh').rotation.x = tilt;
         this.root.add(this.body);
+        // this.root.add(this.traceManager.getTracer());
     }
 
     public getPlanetRoot (): Object3D {
@@ -115,6 +123,7 @@ export class Planet extends AstronomicalObject {
 
     public setPositionByDate (date: Date): void {
         const epochTime: Date = date;
+        this.prevPosition = this.position.clone();
         this.position = this.orbitManager.calcPosition(date);
         this.compressedPos = this.getPosition();
         this.relPosition = this.position.clone();
@@ -123,6 +132,10 @@ export class Planet extends AstronomicalObject {
         const y = this.compressedPos.y;
         const z = this.compressedPos.z;
         this.body.position.set(x, y, z);
+
+        if (this.hasTrace) {
+            this.traceManager.updateTrace(this.body.position);
+        }
     }
 
     public getPosition (): Vector3 {
@@ -141,6 +154,6 @@ export class Planet extends AstronomicalObject {
         this.angle = 0;
         this.force = new Vector3();
         this.movement = new Vector3();
-        this.prevPos = new Vector3();
+        this.prevPosition = new Vector3();
     }
 }

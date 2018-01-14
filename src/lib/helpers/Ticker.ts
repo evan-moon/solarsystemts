@@ -1,3 +1,9 @@
+/**
+ * @class
+ * @name Ticker
+ * @author Evan Moon
+ */
+
 import { J2000 } from 'src/constants';
 
 export class Ticker {

@@ -10,23 +10,25 @@ import {
     AdditiveBlending, PointLight, DirectionalLight,
     Vector3
 } from 'three';
-import { AstronomicalObjectData, StarData } from 'src/lib/interfaces/astro.interface';
+import { AstronomicalObjectData, PlanetData, StarData } from 'src/lib/interfaces/astro.interface';
 import { AstronomicalObject } from 'src/lib/astronomical/AstronomicalObject';
+import { Planet } from 'src/lib/astronomical/Planet';
 
-export class Star extends AstronomicalObject {
+export class Star extends Planet {
     private flareSize: number;
     private flareMapResource: string;
     private flareMap: Texture;
     private lensFlare: LensFlare;
 
     constructor (data: StarData) {
-        let astronomical: AstronomicalObjectData = {
+        let astronomical: PlanetData = {
             id: data.id,
             name: data.name,
             mass: data.mass,
             radius: data.radius,
             material: data.material,
             sideralDay:  data.sideralDay,
+            orbit: data.orbit,
         };
         super(astronomical);
 

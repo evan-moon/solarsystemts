@@ -84,7 +84,7 @@ export interface PlanetData extends AstronomicalObjectData {
     ring?: Ring;
 };
 
-export interface StarData extends AstronomicalObjectData {
+export interface StarData extends PlanetData {
     k?: number;
 }
 

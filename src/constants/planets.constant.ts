@@ -17,6 +17,24 @@ export const SUN: StarData = {
     radius: 6.96342e5,
     sideralDay: 25.6 * DAY,
     k: 0.01720209895,
+    orbit: {
+        base: {
+            a: 0,
+            e: 0,
+            i: 0,
+            l: 0,
+            lp: 0,
+            o: 0
+        },
+        cy: {
+            a: 0,
+            e: 0,
+            i: 0,
+            l: 0,
+            lp: 0,
+            o: 0
+        }
+    },
     material: {
         emissive: new Color(0xdddd33),
         color: '#ffff00',

@@ -224,12 +224,13 @@ export class World {
         }
         if (this.isPlaying) {
             this.date = this.ticker.currentTime;
+            const epochTime = new Date(this.ticker.epochTime);
 
             const bodies = this.scenario.getAstronomicalObjects();
-            bodies.center.moveRotating(this.date);
+            bodies.center.moveRotating(epochTime);
             bodies.others.forEach(planet => {
-                planet.moveRotating(this.date);
-                planet.setPositionByDate(this.date);
+                planet.moveRotating(epochTime);
+                planet.setPositionByDate(epochTime);
             });
         }
     }

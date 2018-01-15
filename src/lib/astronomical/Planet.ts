@@ -12,7 +12,7 @@ import {
     AstronomicalObjectData, PlanetData,
     ComputedOrbitData, Ring
 } from 'src/lib/interfaces/astro.interface';
-import { QUARTER_CIRCLE, DEG_TO_RAD } from 'src/constants';
+import { J2000, QUARTER_CIRCLE, DEG_TO_RAD } from 'src/constants';
 import { AstronomicalObject } from 'src/lib/astronomical/AstronomicalObject';
 import { AtmoSphere } from 'src/lib/astronomical/AtmoSphere';
 import { OrbitManager } from 'src/lib/managers/Orbit.manager';
@@ -125,7 +125,6 @@ export class Planet extends AstronomicalObject {
     }
 
     public setPositionByDate (date: Date): void {
-        const epochTime: Date = date;
         this.prevPosition = this.position.clone();
         this.position = this.orbitManager.calcPosition(date);
         this.compressedPos = this.getPosition();

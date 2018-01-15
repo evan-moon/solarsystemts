@@ -45,7 +45,7 @@ export const SolarSystem = {
     secondsPerTick: {
         min: 3600 * 5,
         max: 3600 * 25,
-        initial: 3600 * (1 / 60) * 1000
+        initial: 3600 * 10 * (1000)//배속
     },
     calcPerTick: DEFAULT_CALC_PER_TICK
 };

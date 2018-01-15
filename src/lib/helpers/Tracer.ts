@@ -36,7 +36,7 @@ export class Tracer {
 
         const maxLength = this.maxLength;
 
-        this.vertices.push(vertex);
+        this.vertices.push(vertex.clone());
         if (this.vertices.length > this.maxLength) {
             this.vertices.shift();
         }
@@ -53,9 +53,11 @@ export class Tracer {
             positionArr[index + 1] = vertex.y;
             positionArr[index + 2] = vertex.z;
 
-            colorArr[index] = colorRGB.r / 255;
-            colorArr[index + 1] = colorRGB.g / 255;
-            colorArr[index + 2] = colorRGB.b / 255;
+            const factor = 1 - (index / this.vertices.length);
+            const computedColor = ColorService.darken(colorRGB, factor);
+            colorArr[index] = computedColor.r / 255;
+            colorArr[index + 1] = computedColor.g / 255;
+            colorArr[index + 2] = computedColor.b / 255;
         });
 
         const positionAttr = new BufferAttribute(positionArr, 3);
@@ -63,14 +65,14 @@ export class Tracer {
         this.geometry.addAttribute('position', positionAttr);
         this.geometry.addAttribute('color', colorAttr);
 
-        console.log(this.geometry.attributes);
-
-        // this.geometry.attributes['position'].needsUpdate = true;
+        this.geometry.attributes['position'].needsUpdate = true;
     }
 
     private createTrace (): void {
         const maxLength = this.maxLength;
         const geometry = new BufferGeometry();
+        geometry.addAttribute('position', new BufferAttribute(new Float32Array(0), 3));
+        geometry.addAttribute('color', new BufferAttribute(new Float32Array(0), 3));
         const material = new LineBasicMaterial({
             vertexColors: VertexColors
         });

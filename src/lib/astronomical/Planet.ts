@@ -69,7 +69,10 @@ export class Planet extends AstronomicalObject {
         this.absVelocity = new Vector3();
         this.relVelocity = new Vector3();
 
-        this.traceManager = new Tracer(data.id, data.material.color, 200);
+        const factor = 1.6;
+        const orbitTraceLength = factor + Math.PI * DimensionService.getScaled(data.orbit.base.a);
+        console.log(orbitTraceLength ** 10, this.name);
+        this.traceManager = new Tracer(data.id, data.material.color, orbitTraceLength ** 10);
         this.hasTrace = true;
 
         if (data.atmosphere) {
@@ -110,7 +113,7 @@ export class Planet extends AstronomicalObject {
         }
         this.body.getObjectByName('mesh').rotation.x = tilt;
         this.root.add(this.body);
-        // this.root.add(this.traceManager.getTracer());
+        this.root.add(this.traceManager.getTracer());
     }
 
     public getPlanetRoot (): Object3D {

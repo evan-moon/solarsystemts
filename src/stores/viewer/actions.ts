@@ -30,9 +30,17 @@ export function setCurrentLookAt (store: ActionContext<ViewerState, any>, curren
     return defer.promise;
 }
 
+export function setCurrentCameraPosition (store: ActionContext<ViewerState, any>, currentCameraPosition: string) {
+    const defer = Q.defer();
+    store.commit('SET_CURRENT_CAMERA_POSITION', currentCameraPosition);
+    defer.resolve();
+    return defer.promise;
+}
+
 export default <ActionTree<ViewerState, any>> {
     setCurrentScenario,
     setPlaying,
     setCurrentDate,
     setCurrentLookAt,
+    setCurrentCameraPosition,
 }

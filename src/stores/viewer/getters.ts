@@ -22,10 +22,15 @@ export function currentLookAt (state: ViewerState): string {
     return state.currentLookAt;
 }
 
+export function currentCameraPosition (state: ViewerState): string {
+    return state.currentCameraPosition;
+}
+
 export default <GetterTree<ViewerState, any>> {
     getAllScenarios,
     currentScenario,
     isPlaying,
     currentDate,
     currentLookAt,
+    currentCameraPosition,
 }

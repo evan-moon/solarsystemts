@@ -196,7 +196,7 @@ export class World {
         this.initCamera();
         this.initControls();
         this.initSpacebox();
-        this.initHelper();
+        // this.initHelper();
 
         this.ticker = new Ticker(this.scenario.getStartDate());
         this.ticker.setSecondsPerTick(this.scenario.getSecondsPerTick().initial);
@@ -233,8 +233,12 @@ export class World {
         }
     }
 
-    public setLookAt(planetId: string): void {
-        this.CameraManager.setLookAt(this.scenario, this.cameraPos, planetId);
+    public setLookAt (planetId: string): void {
+
+    }
+
+    public setCameraPosition (planetId: string): void {
+        this.CameraManager.setCameraPosition(this.scenario, this.cameraPos, planetId);
         this.cameraPos = planetId;
     }
 

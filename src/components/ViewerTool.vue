@@ -17,8 +17,8 @@
             </option>
         </b-form-select>
     </b-col>
-    <b-col cols="2" class="tool-wrapper" data-name="lookats">
-        <b-form-select v-model="currentLookAtPlanetId">
+    <b-col cols="2" class="tool-wrapper" data-name="camera-position">
+        <b-form-select v-model="currentCameraPositionPlanetId">
             <option value="root">Default</option>
             <option v-for="planet in currentScenario.system.planets" :value="planet.id">
                 {{ planet.name }}
@@ -44,16 +44,16 @@ import * as moment from 'moment';
 })
 export default class ViewerTool extends Vue {
     currentScenarioId: string = '';
-    currentLookAtPlanetId: string = '';
+    currentCameraPositionPlanetId: string = '';
     planetIds: string[] = [];
 
     @State('Viewer') viewerState: any;
     @Getter('isPlaying') isPlaying: boolean;
     @Getter('currentDate') currentDate: Date;
     @Getter('currentScenario') currentScenario: ScenarioData;
-    @Getter('currentLookAt') currentLookAt: string;
+    @Getter('currentCameraPosition') currentCameraPosition: string;
     @Action('setCurrentScenario') setCurrentScenario: any;
-    @Action('setCurrentLookAt') setCurrentLookAt: any;
+    @Action('setCurrentCameraPosition') setCurrentCameraPosition: any;
     @Action('setPlaying') setPlaying: any;
 
     togglePlaying (): void {
@@ -64,14 +64,14 @@ export default class ViewerTool extends Vue {
     onChangeScenarioId (scenarioId: string): void {
         this.setCurrentScenario(scenarioId);
     }
-    @Watch('currentLookAtPlanetId')
-    onChangeCurrentLookAtPlanetId (planetId: string): void {
-        this.setCurrentLookAt(planetId);
+    @Watch('currentCameraPositionPlanetId')
+    onChangeCurrentCameraPositionPlanetId (planetId: string): void {
+        this.setCurrentCameraPosition(planetId);
     }
 
     created () {
         this.currentScenarioId = this.currentScenario.id;
-        this.currentLookAtPlanetId = this.currentLookAt;
+        this.currentCameraPositionPlanetId = this.currentCameraPosition;
     }
 };
 </script>

@@ -23,9 +23,14 @@ export function SET_CURRENT_LOOK_AT (state: ViewerState, currentLookAt: string) 
     state.currentLookAt = currentLookAt;
 }
 
+export function SET_CURRENT_CAMERA_POSITION (state: ViewerState, currentCameraPosition: string) {
+    state.currentCameraPosition = currentCameraPosition;
+}
+
 export default <MutationTree<ViewerState>> {
     SET_CURRENT_SCENARIO,
     SET_PLAYING,
     SET_CURRENT_DATE,
     SET_CURRENT_LOOK_AT,
+    SET_CURRENT_CAMERA_POSITION,
 }

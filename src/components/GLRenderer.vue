@@ -18,7 +18,7 @@ export default class GLRenderer extends Vue {
     @Action('setCurrentDate') setCurrentDate: any;
     @Getter('currentScenario') currentScenario: any;
     @Getter('isPlaying') isPlaying: boolean;
-    @Getter('currentLookAt') currentLookAt: string;
+    @Getter('currentCameraPosition') currentCameraPosition: string;
 
     tick () {
         this.world.render();
@@ -44,10 +44,9 @@ export default class GLRenderer extends Vue {
     onChangeIsPlaying (isPlaying: boolean): void {
         this.world.isPlaying = isPlaying;
     }
-    @Watch('currentLookAt')
-    onChangeCurrentLookAt (planetId: string): void {
-        console.log(planetId);
-        this.world.setLookAt(planetId);
+    @Watch('currentCameraPosition')
+    onChangeCurrentCameraPosition (planetId: string): void {
+        this.world.setCameraPosition(planetId);
     }
 
     mounted () {

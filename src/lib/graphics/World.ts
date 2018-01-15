@@ -66,6 +66,7 @@ export class World {
     protected CameraManager: CameraManager;
     protected currentCamera: PerspectiveCamera;
     protected cameraPos: string;
+    protected cameraLookAt: string;
 
     protected ControlsManager: ControlsManager;
     protected controls: OrbitControls;
@@ -234,7 +235,8 @@ export class World {
     }
 
     public setLookAt (planetId: string): void {
-
+        this.CameraManager.setLookAt(this.scenario, this.cameraPos, this.cameraLookAt);
+        this.cameraLookAt = planetId;
     }
 
     public setCameraPosition (planetId: string): void {
@@ -250,10 +252,6 @@ export class World {
         this.currentCamera = this.CameraManager.globalCamera;
         this.cameraPos = 'root';
         this.CameraManager.initCurrentCameraPosition();
-    }
-
-    private initCameraPosition (): void {
-        this.currentCamera.position.set(this.stageSize, this.stageSize, this.stageSize * 1.5);
     }
 
     private initControls () {

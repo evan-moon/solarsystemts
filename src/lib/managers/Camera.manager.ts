@@ -74,6 +74,12 @@ class CameraManager {
         return this.currentCamera;
     }
 
+    public setLookAt (scenario: Scenario, currentCameraPosition: string, planetId: string): void {
+        console.log(scenario, currentCameraPosition, planetId);
+        const cam = this.currentCamera;
+        const myPosition = cam.parent.position;
+    }
+
     public setCameraPosition (scenario: Scenario, currentCameraPosition: string, planetId: string): void {
         const cam = this.currentCamera;
 
@@ -104,13 +110,12 @@ class CameraManager {
 
             const r: number = target.renderedRadius * 10;
             target.getPlanetBody().add(cam);
-            console.log(target.getPlanetBody().rotation);
             cam.position.set(r, r, r);
         }
     }
 
     public initCurrentCameraPosition (): void {
-        this.currentCamera.position.set(this.stageSize, this.stageSize, this.stageSize * 1.5);
+        this.currentCamera.position.set(0, this.stageSize / 2, this.stageSize / 2);
     }
 
     public getAbsolutePosition (): Vector3 {

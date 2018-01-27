@@ -11,6 +11,7 @@ import {
 import { Material, AstronomicalObjectData } from 'src/lib/interfaces/astro.interface';
 import { CIRCLE, KM } from 'src/constants';
 import DimensionService from 'src/lib/services/Dimension.service';
+import { Label } from 'src/lib/helpers/Label';
 
 interface BodyQuality {
     segment: number;
@@ -30,6 +31,7 @@ export class AstronomicalObject {
     public renderedRadius: number;
     public material: Material;
     public sideralDay: number;
+    public labelManager: Label;
 
     protected root: Object3D; // body, moons
     protected body: Object3D; // mesh, rigns
@@ -37,6 +39,7 @@ export class AstronomicalObject {
     protected bodyId: string;
     protected helperId: string;
     protected ringId: string;
+    protected position: Vector3;
 
     constructor (data: AstronomicalObjectData) {
         this.id = data.id;
@@ -52,10 +55,13 @@ export class AstronomicalObject {
 
         this.root = new Object3D();
         this.root.name = this.id;
+        this.position = new Vector3();
 
         this.bodyId = `${this.id}-body`;
         this.helperId = `${this.id}-axis-helper`;
         this.ringId = `${this.id}-ring`;
+
+        this.labelManager = new Label(this.id, this.name);
 
         this.createObjectBasicBody();
     }

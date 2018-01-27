@@ -33,7 +33,6 @@ export class Planet extends AstronomicalObject {
     private force: Vector3;
     private movement: Vector3;
 
-    private position: Vector3;
     private compressedPos: Vector3;
     private prevPosition: Vector3;
     private relPosition: Vector3;
@@ -62,7 +61,6 @@ export class Planet extends AstronomicalObject {
         this.force = new Vector3();
         this.movement = new Vector3();
 
-        this.position = new Vector3();
         this.prevPosition = new Vector3();
         this.relPosition = new Vector3();
 
@@ -71,7 +69,7 @@ export class Planet extends AstronomicalObject {
 
         const factor = 1.6;
         const orbitTraceLength = factor + Math.PI * DimensionService.getScaled(data.orbit.base.a);
-        console.log(orbitTraceLength ** 10, this.name);
+
         this.traceManager = new Tracer(data.id, data.material.color, orbitTraceLength ** 10);
         this.hasTrace = true;
 

@@ -104,13 +104,13 @@ $toolbar-height: 45px;
     width: 100%;
     height: $toolbar-height;
     margin: 0;
-    background-color: $grey-900;
+    background-color: $grey900;
 }
 
 .tool-wrapper {
     padding: 0;
     height: 100%;
-    border-right: 1px solid $grey-800;
+    border-right: 1px solid $grey800;
 
     %vertical-align-center {
         margin-top: $toolbar-height / 2;

@@ -33,13 +33,15 @@ export class AstronomicalObject {
     public sideralDay: number;
     public labelManager: Label;
 
+    public position: Vector3;
+    public compressedPos: Vector3;
+
     protected root: Object3D; // body, moons
     protected body: Object3D; // mesh, rigns
 
     protected bodyId: string;
     protected helperId: string;
     protected ringId: string;
-    protected position: Vector3;
 
     constructor (data: AstronomicalObjectData) {
         this.id = data.id;
@@ -56,6 +58,7 @@ export class AstronomicalObject {
         this.root = new Object3D();
         this.root.name = this.id;
         this.position = new Vector3();
+        this.compressedPos = new Vector3();
 
         this.bodyId = `${this.id}-body`;
         this.helperId = `${this.id}-axis-helper`;

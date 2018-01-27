@@ -1,0 +1,19 @@
+/**
+ * Label Style
+ */
+
+div.planet-label {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 1px solid $white;
+    border-radius: 50%;
+    h3 {
+        position: absolute;
+        color: $white;
+        font-size: 12px;
+        font-weight: normal;
+        bottom: -20px;
+        margin: 0;
+    }
+}

@@ -33,7 +33,6 @@ export class Planet extends AstronomicalObject {
     private force: Vector3;
     private movement: Vector3;
 
-    private compressedPos: Vector3;
     private prevPosition: Vector3;
     private relPosition: Vector3;
 
@@ -71,7 +70,7 @@ export class Planet extends AstronomicalObject {
         const orbitTraceLength = factor + Math.PI * DimensionService.getScaled(data.orbit.base.a);
 
         this.traceManager = new Tracer(data.id, data.material.color, orbitTraceLength ** 10);
-        this.hasTrace = true;
+        this.hasTrace = false;
 
         if (data.atmosphere) {
             this.atmospherePressure = data.atmosphere.atmospherePressure;

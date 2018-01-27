@@ -11,7 +11,7 @@ export class ViewerState {
     constructor () {
         this.scenarios = [ SolarSystem ];
         this.currentScenario = this.scenarios[0];
-        this.isPlaying = true;
+        this.isPlaying = false;
         this.currentDate = new Date();
         this.currentLookAt = 'root';
         this.currentCameraPosition = 'root';

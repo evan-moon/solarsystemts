@@ -221,12 +221,17 @@ export class World {
 
             star.setFlarePosition(flarePosition);
             star.setFlareSize(flareSize, this.rendererHeight);
+            star.labelManager.updatePosition(star.compressedPos, this.currentCamera);
         }
+
+        const bodies = this.scenario.getAstronomicalObjects();
+        bodies.others.forEach(planet => {
+            planet.labelManager.updatePosition(planet.compressedPos, this.currentCamera);
+        });
+        
         if (this.isPlaying) {
             this.date = this.ticker.currentTime;
             const epochTime = new Date(this.ticker.epochTime);
-
-            const bodies = this.scenario.getAstronomicalObjects();
             bodies.center.moveRotating(epochTime);
             bodies.others.forEach(planet => {
                 planet.moveRotating(epochTime);
@@ -294,13 +299,22 @@ export class World {
     }
 
     private setPlanets () {
+        const epochTime = new Date(this.ticker.epochTime);
         if (!this.scenario) {
             throw new Error('There is no scenario: setPlanets::World');
         }
 
-        const bodies = this.scenario.getBodies();
-        this.scene.add(bodies.center);
-        bodies.others.forEach(planet => this.scene.add(planet));
+        const bodies3d = this.scenario.getBodies();
+        this.scene.add(bodies3d.center);
+        bodies3d.others.forEach(planet => this.scene.add(planet));
+
+        const bodies = this.scenario.getAstronomicalObjects();
+        bodies.others.forEach(planet => {
+            planet.moveRotating(epochTime);
+            planet.setPositionByDate(epochTime);
+            planet.labelManager.updatePosition(planet.compressedPos, this.currentCamera);
+            planet.hasTrace = true;
+        });
     }
 
     private onClick (e: any): void {

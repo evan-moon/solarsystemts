@@ -402,7 +402,6 @@ export class OrbitControls extends THREE.EventDispatcher {
                     if ( this.enableZoom === false ) return;
                     if ( this.state !== STATE.TOUCH_DOLLY ) return; // is this needed?...
 
-                    //console.log( 'handleTouchMoveDolly' );
                     var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
                     var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
 

@@ -74,12 +74,6 @@ class CameraManager {
         return this.currentCamera;
     }
 
-    public setLookAt (scenario: Scenario, currentCameraPosition: string, planetId: string): void {
-        console.log(scenario, currentCameraPosition, planetId);
-        const cam = this.currentCamera;
-        const myPosition = cam.parent.position;
-    }
-
     public setCameraPosition (scenario: Scenario, currentCameraPosition: string, planetId: string): void {
         const cam = this.currentCamera;
 

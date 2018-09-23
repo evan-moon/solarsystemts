@@ -120,9 +120,6 @@ export class AstronomicalObject {
         this.body.name = this.bodyId;
 
         this.setHelper();
-
-        // console.log(this.name, 'Actual Radius -> ', this.radius);
-        // console.log(this.name, 'Rendered Radius -> ', this.renderedRadius);
     }
 
     protected setHelper (): void {

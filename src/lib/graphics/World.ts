@@ -131,11 +131,6 @@ export class World {
         sma.largest *= KM;
         sma.smallest *= KM;
 
-        console.log('=========== CALCED DIMENSION ==========');
-        console.log('largest SMA => ', sma.largest);
-        console.log('smallest SMA => ', sma.smallest);
-        console.log('=======================================');
-
         return sma;
     }
 
@@ -241,7 +236,6 @@ export class World {
     }
 
     public setLookAt (planetId: string): void {
-        this.CameraManager.setLookAt(this.scenario, this.cameraPos, this.cameraLookAt);
         this.cameraLookAt = planetId;
     }
 

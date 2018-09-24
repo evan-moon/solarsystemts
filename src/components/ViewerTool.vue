@@ -34,10 +34,10 @@
         </b-form-select>
     </b-col>
     <b-col cols="1" class="tool-wrapper" data-name="debug">
-        <label for="debug-checkbox">
-            <input id="debug-checkbox" type="checkbox" @click="toggleDebug">
-            Debug
-        </label>
+        <b-button class="debug-button" @click="toggleDebug">
+            <i v-show="!isDebug" class="xi-checkbox-blank"></i>
+            <i v-show="isDebug" class="xi-check-square-o"></i>
+        </b-button>
     </b-col>
 </b-row>
 </template>

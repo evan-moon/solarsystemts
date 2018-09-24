@@ -230,15 +230,11 @@ export class World {
             bodies.center.moveRotating(epochTime);
         }
 		bodies.others.forEach(planet => {
-			planet.labelManager.updatePosition(planet.compressedPos, this.currentCamera);
 			if (this.isPlaying) {
 				planet.moveRotating(epochTime);
 				planet.setPositionByDate(epochTime);
 			}
-			if (this.isDebug) {
-			    const debugBox = new BoxHelper(planet.get3DBody(), new Color(0xffff00));
-			    this.scene.add(debugBox);
-            }
+            planet.labelManager.updatePosition(planet.compressedPos, this.currentCamera);
 		});
     }
 

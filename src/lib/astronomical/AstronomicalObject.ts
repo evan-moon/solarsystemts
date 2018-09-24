@@ -139,7 +139,7 @@ export class AstronomicalObject {
         }
 
         const geometry = new SphereBufferGeometry(this.renderedRadius, segment, rings);
-        const material = new MeshPhongMaterial(mat);
+        const material = new MeshLambertMaterial(mat);
         material.color = new Color(0xffffff);
 
         const mesh = new Mesh(geometry, material);

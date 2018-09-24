@@ -4,7 +4,7 @@
  * @desc 천체 클래스
  */
 import {
-    Object3D, Color, TextureLoader, Texture,
+    Object3D, Color, TextureLoader,
     Geometry, LineBasicMaterial, Vector3, Line,
     MeshPhongMaterial, SphereBufferGeometry, Mesh
 } from 'three';
@@ -69,11 +69,21 @@ export class AstronomicalObject {
         this.createObjectBasicBody();
     }
 
-    public get3DBody () {
+	/**
+	 * @method get3DBody
+	 * @desc 현재 천체의 최상위 Object3D 객체를 반환한다.
+	 * @returns { Object3D }
+	 */
+	public get3DBody () {
         return this.root;
     }
 
-    public setShowHelper (val: boolean): void {
+	/**
+	 * @method setShowHelper
+	 * @desc 현재 천체의 자전축 표시 여부를 set한다
+	 * @param { boolean } val
+	 */
+	public setShowHelper (val: boolean): void {
         const helper = this.body.getObjectByName(this.helperId);
         if (helper) {
             helper.visible = val;
@@ -83,21 +93,39 @@ export class AstronomicalObject {
         }
     }
 
-    public getObjectCompressedSize (): number {
+	/**
+	 * @method getObjectCompressedSize
+	 * @desc 특정 비율로 압축된 천체의 실제 반지름을 반환한다.
+	 * @returns { number }
+	 */
+	public getObjectCompressedSize (): number {
         const toKM: number = this.radius * KM;
         return DimensionService.getScaled(toKM);
     }
 
-    public getObjectStageSize () {
+	/**
+	 * @method getObjectStageSize
+	 * @desc 특정 비율로 압축된 렌더 스케일의 x사이즈를 반환한다.
+	 * @returns { number }
+	 */
+	public getObjectStageSize () {
         return this.getObjectCompressedSize() * this.body.getObjectByName('mesh').scale.x;
     }
 
-    public moveRotating (epochTime: Date): void {
-        const currentRotation = (epochTime.getTime() / this.sideralDay) * CIRCLE;
-        this.body.getObjectByName('mesh').rotation.y = 0 + currentRotation;
+	/**
+	 * @method moveRotating
+	 * @desc 현재 시각 상 천체의 자전 각을 계산한다
+	 * @param { Date } epochTime
+	 */
+	public moveRotating (epochTime: Date): void {
+        this.body.getObjectByName('mesh').rotation.y = (epochTime.getTime() / this.sideralDay) * CIRCLE;
     }
 
-    private createObjectBasicBody (): void {
+	/**
+	 * @method createObjectBasicBody
+	 * @desc 천체의 3D 오브젝트를 생성한다
+	 */
+	private createObjectBasicBody (): void {
         const mat: any = Object.assign({}, this.material);
 
         const segment: number = AstronomicalObject.bodyQuality.segment;
@@ -122,7 +150,11 @@ export class AstronomicalObject {
         this.setHelper();
     }
 
-    protected setHelper (): void {
+	/**
+	 * @method setHelper
+	 * @desc 천체의 자전축 오브젝트를 생성한다
+	 */
+	protected setHelper (): void {
         const geometry = new Geometry();
         const material = new LineBasicMaterial({
             color: 0x00ff00

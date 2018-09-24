@@ -2,12 +2,12 @@
 <b-container fluid>
     <ViewerTool
         ref="toolbar"
-        @onChangePlaying="onChangePlaying"
-    ></ViewerTool>
+        @onChangePlaying="onChangePlaying">
+	</ViewerTool>
     <GLRenderer
         ref="renderer"
-        :is-playing="isPlaying"
-    ></GLRenderer>
+        :is-playing="isPlaying">
+	</GLRenderer>
 </b-container>
 </template>
 

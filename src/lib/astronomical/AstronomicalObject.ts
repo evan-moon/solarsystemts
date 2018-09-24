@@ -4,9 +4,9 @@
  * @desc 천체 클래스
  */
 import {
-    Object3D, Color, TextureLoader,
-    Geometry, LineBasicMaterial, Vector3, Line,
-    MeshPhongMaterial, SphereBufferGeometry, Mesh
+	Object3D, Color, TextureLoader,
+	Geometry, LineBasicMaterial, Vector3, Line,
+	MeshLambertMaterial, SphereBufferGeometry, Mesh, BoxHelper
 } from 'three';
 import { Material, AstronomicalObjectData } from 'src/lib/interfaces/astro.interface';
 import { CIRCLE, KM } from 'src/constants';

@@ -16,6 +16,13 @@ export function setPlaying (store: ActionContext<ViewerState, any>, isPlaying: b
     return defer.promise;
 }
 
+export function setDebug (store: ActionContext<ViewerState, any>, isDebug: boolean) {
+	const defer = Q.defer();
+	store.commit('SET_DEBUG', isDebug);
+	defer.resolve();
+	return defer.promise;
+}
+
 export function setCurrentDate (store: ActionContext<ViewerState, any>, currentDate: Date) {
     const defer = Q.defer();
     store.commit('SET_CURRENT_DATE', currentDate);
@@ -40,6 +47,7 @@ export function setCurrentCameraPosition (store: ActionContext<ViewerState, any>
 export default <ActionTree<ViewerState, any>> {
     setCurrentScenario,
     setPlaying,
+	setDebug,
     setCurrentDate,
     setCurrentLookAt,
     setCurrentCameraPosition,

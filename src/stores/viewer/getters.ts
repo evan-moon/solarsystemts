@@ -14,6 +14,10 @@ export function isPlaying (state: ViewerState): boolean {
     return state.isPlaying;
 }
 
+export function isDebug (state: ViewerState): boolean {
+	return state.isDebug;
+}
+
 export function currentDate (state: ViewerState): Date {
     return state.currentDate;
 }
@@ -30,6 +34,7 @@ export default <GetterTree<ViewerState, any>> {
     getAllScenarios,
     currentScenario,
     isPlaying,
+	isDebug,
     currentDate,
     currentLookAt,
     currentCameraPosition,

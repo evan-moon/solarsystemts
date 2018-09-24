@@ -15,6 +15,10 @@ export function SET_PLAYING (state: ViewerState, isPlaying: boolean) {
     state.isPlaying = isPlaying;
 }
 
+export function SET_DEBUG (state: ViewerState, isDebug: boolean) {
+	state.isDebug = isDebug;
+}
+
 export function SET_CURRENT_DATE (state: ViewerState, currentDate: Date)  {
     state.currentDate = currentDate;
 }
@@ -30,6 +34,7 @@ export function SET_CURRENT_CAMERA_POSITION (state: ViewerState, currentCameraPo
 export default <MutationTree<ViewerState>> {
     SET_CURRENT_SCENARIO,
     SET_PLAYING,
+	SET_DEBUG,
     SET_CURRENT_DATE,
     SET_CURRENT_LOOK_AT,
     SET_CURRENT_CAMERA_POSITION,

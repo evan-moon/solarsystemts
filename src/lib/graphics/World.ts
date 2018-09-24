@@ -15,10 +15,10 @@ import { Planet } from 'src/lib/astronomical/Planet';
 import { SystemBodies, PlanetData } from 'src/lib/interfaces/astro.interface';
 import DimensionService from 'src/lib/services/Dimension.service';
 import {
-    Scene, WebGLRenderer, AmbientLight, Vector3, Vector2,
-    SphereBufferGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
-    TextureLoader, Raycaster, PerspectiveCamera,
-    AxisHelper, GridHelper
+	Scene, WebGLRenderer, AmbientLight, Vector3, Vector2,
+	SphereBufferGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
+	TextureLoader, Raycaster, PerspectiveCamera,
+	AxisHelper, GridHelper, BoxHelper
 } from 'three';
 import { OrbitControls } from 'src/plugin/Orbit-controls';
 import CameraManager from 'src/lib/managers/Camera.manager';
@@ -45,6 +45,7 @@ export class World {
     public date: Date;
     public ticker: Ticker;
     public isPlaying: boolean;
+    public isDebug: boolean;
 
     private rendererSelector: string;
     private rendererDOM: HTMLElement;
@@ -90,6 +91,7 @@ export class World {
 
         this.currentSpaceTexture = 'universe';
         this.isPlaying = false;
+        this.isDebug = false;
     }
 
     public setWindow (w: number, h: number): void {
@@ -220,19 +222,24 @@ export class World {
         }
 
         const bodies = this.scenario.getAstronomicalObjects();
-        bodies.others.forEach(planet => {
-            planet.labelManager.updatePosition(planet.compressedPos, this.currentCamera);
-        });
-        
+		const epochTime = new Date(this.ticker.epochTime);
+
         if (this.isPlaying) {
             this.date = this.ticker.currentTime;
             const epochTime = new Date(this.ticker.epochTime);
             bodies.center.moveRotating(epochTime);
-            bodies.others.forEach(planet => {
-                planet.moveRotating(epochTime);
-                planet.setPositionByDate(epochTime);
-            });
         }
+		bodies.others.forEach(planet => {
+			planet.labelManager.updatePosition(planet.compressedPos, this.currentCamera);
+			if (this.isPlaying) {
+				planet.moveRotating(epochTime);
+				planet.setPositionByDate(epochTime);
+			}
+			if (this.isDebug) {
+			    const debugBox = new BoxHelper(planet.get3DBody(), new Color(0xffff00));
+			    this.scene.add(debugBox);
+            }
+		});
     }
 
     public setLookAt (planetId: string): void {

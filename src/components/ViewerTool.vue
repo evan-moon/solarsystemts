@@ -25,13 +25,19 @@
             </option>
         </b-form-select>
     </b-col>
-    <b-col cols="2" class="tool-wrapper hidden" data-name="camera-lookat">
+    <b-col cols="2" class="tool-wrapper" data-name="camera-lookat">
         <b-form-select v-model="currentCameraLookAtPlanetId">
             <option value="root">Default</option>
             <option v-for="planet in currentScenario.system.planets" :value="planet.id">
                 {{ planet.name }}
             </option>
         </b-form-select>
+    </b-col>
+    <b-col cols="1" class="tool-wrapper" data-name="debug">
+        <label for="debug-checkbox">
+            <input id="debug-checkbox" type="checkbox" @click="toggleDebug">
+            Debug
+        </label>
     </b-col>
 </b-row>
 </template>
@@ -58,6 +64,7 @@ export default class ViewerTool extends Vue {
 
     @State('Viewer') viewerState: any;
     @Getter('isPlaying') isPlaying: boolean;
+    @Getter('isDebug') isDebug: boolean;
     @Getter('currentDate') currentDate: Date;
     @Getter('currentScenario') currentScenario: ScenarioData;
     @Getter('currentCameraPosition') currentCameraPosition: string;
@@ -66,9 +73,14 @@ export default class ViewerTool extends Vue {
     @Action('setCurrentCameraPosition') setCurrentCameraPosition: any;
     @Action('setCurrentLookAt') setCurrentLookAt: any;
     @Action('setPlaying') setPlaying: any;
+    @Action('setDebug') setDebug: any;
 
     togglePlaying (): void {
         this.setPlaying(!this.isPlaying);
+    }
+
+    toggleDebug (): void {
+        this.setDebug(!this.isDebug);
     }
 
     @Watch('currentScenarioId')

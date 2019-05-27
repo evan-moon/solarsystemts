@@ -1,6 +1,7 @@
 # Solar System Simulator
 
 > the solarsysten simulator created by Vue.js, ThreeJS, TypeScript
+
 [Live Demo](https://solar-system-ts.herokuapp.com/#/)
 
 ## Build Setup

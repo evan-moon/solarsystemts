@@ -1,20 +1,22 @@
 {
-  "name": "solarsystemjs",
+  "name": "solarsystemts",
   "version": "1.0.0",
   "description": "the solarsysten simulator created by Vue.js",
   "author": "Evan Moon <bboydart91@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
+    "start": "node server.js",
     "unit": "jest test/unit/specs --coverage",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "postinstall": "npm rebuild"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.2.0",
+    "express-history-api-fallback": "^2.2.1",
     "jquery": "^3.2.1",
     "moment": "^2.19.2",
     "q": "^1.5.1",
@@ -54,7 +56,7 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^3.0.1",
     "eventsource-polyfill": "^0.9.6",
-    "express": "^4.14.1",
+    "express": "^4.17.1",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",

@@ -12,7 +12,8 @@
         "allowJs": true,
 		"experimentalDecorators": true,
         "suppressImplicitAnyIndexErrors": true,
-		"allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "strictPropertyInitialization": false,
     },
 	"include": [
 		"src/**/*.ts"

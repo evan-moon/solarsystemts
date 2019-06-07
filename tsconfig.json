@@ -5,7 +5,7 @@
 			"*": ["*"],
 			"src/*": ["./*"]
 		},
-        "target": "es5",
+        "target": "es2015",
         "strict": true,
         "module": "esnext",
         "moduleResolution": "node",

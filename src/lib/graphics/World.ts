@@ -203,7 +203,7 @@ export class World {
         this.setPlanets();
     }
 
-    public render (): void {
+    public render (): Promise<any> {
         const centerObject = this.scenario.system.getCenter();
         const cameraAbsolutePosition = this.CameraManager.getAbsolutePosition();
 
@@ -229,13 +229,19 @@ export class World {
             const epochTime = new Date(this.ticker.epochTime);
             bodies.center.moveRotating(epochTime);
         }
-		bodies.others.forEach(planet => {
-			if (this.isPlaying) {
-				planet.moveRotating(epochTime);
-				planet.setPositionByDate(epochTime);
-			}
-            planet.labelManager.updatePosition(planet.compressedPos, this.currentCamera);
-		});
+
+        const queue: any[] = bodies.others.map(planet => {
+            return new Promise((resolve: any, reject: any) => {
+                if (this.isPlaying) {
+                    planet.moveRotating(epochTime);
+                    planet.setPositionByDate(epochTime);
+                }
+                planet.labelManager.updatePosition(planet.compressedPos, this.currentCamera);
+                resolve();
+            })
+        });
+
+        return Promise.all(queue);
     }
 
     public setLookAt (planetId: string): void {

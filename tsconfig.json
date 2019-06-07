@@ -5,16 +5,23 @@
 			"*": ["*"],
 			"src/*": ["./*"]
 		},
-        "target": "es2015",
+        "target": "es5",
         "strict": true,
         "module": "esnext",
         "moduleResolution": "node",
         "allowJs": true,
-		"experimentalDecorators": true,
         "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
         "strictPropertyInitialization": false,
+        "strictNullChecks": false,
+        "experimentalDecorators": true,
+        "noImplicitAny": false,
+        "skipLibCheck": true,
     },
+    "types": [
+        "vue-typescript-import-dts",
+        "node"
+    ],
 	"include": [
 		"src/**/*.ts"
 	],

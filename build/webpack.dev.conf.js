@@ -7,8 +7,10 @@ const baseWebpackConfig = require('./webpack.base.conf');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const portfinder = require('portfinder');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
+    mode: 'development',
     module: {
         rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
     },
@@ -47,7 +49,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
             template: 'index.html',
             inject: true
         }),
-        new FriendlyErrorsPlugin()
+        new FriendlyErrorsPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css'
+        })
     ]
 });
 

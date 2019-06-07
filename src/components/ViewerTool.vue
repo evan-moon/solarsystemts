@@ -156,7 +156,7 @@ $toolbar-height: 45px;
     }
 }
 
-select.form-control {
+select.custom-select {
     background-color: transparent;
     border: none;
     &:not([disabled]):not(.disabled):active, &:not([disabled]):not(.disabled):focus {

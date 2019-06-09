@@ -89,7 +89,7 @@ export class World {
         this.date = new Date();
         this.scene = new Scene();
 
-        this.currentSpaceTexture = 'universe';
+        this.currentSpaceTexture = 'milkyway';
         this.isPlaying = false;
         this.isDebug = false;
     }

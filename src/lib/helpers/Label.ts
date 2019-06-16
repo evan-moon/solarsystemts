@@ -13,14 +13,14 @@ export class Label {
     elementDOM: any;
     position: Vector3;
     position2d: Vector3;
-    
+
     constructor (name: string, planetName: string) {
         this.name = `${name}-label`;
         this.planetName = planetName;
         this.position = new Vector3();
         this.elementString = `<div class="planet-label"><h3>${planetName}</h3></div>`
         this.elementDOM = $(this.elementString);
-        
+
         this.elementDOM.appendTo($('#renderer'));
     }
 
@@ -46,9 +46,9 @@ export class Label {
         const w = window.innerWidth;
         const h = window.innerHeight;
 
-        position2d.x = (position2d.x + 1) / 2 * w;
-        position2d.y = -(position2d.y - 1) / 2 * h;
-        
+        position2d.x = (position2d.x + 1) / 2 * w - 20;
+        position2d.y = -(position2d.y - 1) / 2 * h - 20;
+
         if (position2d.z < 1 && position2d.x > 0 && position2d.x < w && position2d.y > 0 && position2d.y < h) {
             const distance = camera.position.distanceTo(position);
             const span = Math.atan(camera.fov / 2) * distance;

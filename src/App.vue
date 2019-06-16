@@ -16,4 +16,7 @@ export default class App extends Vue {
 
 <style lang="scss">
 @import '~src/styles/__module__';
+#app {
+    background-color: black;
+}
 </style>

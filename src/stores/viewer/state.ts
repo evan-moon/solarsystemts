@@ -7,7 +7,6 @@ export class ViewerState {
     public currentDate: Date;
     public currentLookAt: string;
     public currentCameraPosition: string;
-    public isDebug: boolean;
 
     constructor () {
         this.scenarios = [ SolarSystem ];
@@ -16,6 +15,5 @@ export class ViewerState {
         this.currentDate = new Date();
         this.currentLookAt = 'root';
         this.currentCameraPosition = 'root';
-        this.isDebug = false;
     }
 }

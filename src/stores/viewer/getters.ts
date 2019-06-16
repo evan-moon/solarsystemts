@@ -1,4 +1,4 @@
-import { Getter, GetterTree } from 'vuex';
+import { GetterTree } from 'vuex';
 import { ViewerState } from './state';
 import { ScenarioData } from 'src/constants/scenario.constant';
 
@@ -12,10 +12,6 @@ export function currentScenario (state: ViewerState): ScenarioData {
 
 export function isPlaying (state: ViewerState): boolean {
     return state.isPlaying;
-}
-
-export function isDebug (state: ViewerState): boolean {
-	return state.isDebug;
 }
 
 export function currentDate (state: ViewerState): Date {
@@ -34,7 +30,6 @@ export default <GetterTree<ViewerState, any>> {
     getAllScenarios,
     currentScenario,
     isPlaying,
-	isDebug,
     currentDate,
     currentLookAt,
     currentCameraPosition,

@@ -45,7 +45,6 @@ export class World {
     public date: Date;
     public ticker: Ticker;
     public isPlaying: boolean;
-    public isDebug: boolean;
 
     private rendererSelector: string;
     private rendererDOM: HTMLElement;
@@ -91,7 +90,6 @@ export class World {
 
         this.currentSpaceTexture = 'milkyway';
         this.isPlaying = false;
-        this.isDebug = false;
     }
 
     public setWindow (w: number, h: number): void {

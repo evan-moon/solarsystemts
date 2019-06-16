@@ -1,6 +1,5 @@
 <template>
 <b-row class="viewer-tool" align-h="start">
-
     <div class="tool-wrapper" data-name="play-button">
         <b-button class="playing-button" @click="togglePlaying">
             <i v-show="!isPlaying" class="xi-play"></i>
@@ -33,12 +32,6 @@
             </option>
         </b-form-select>
     </b-col>
-    <b-col cols="1" class="tool-wrapper" data-name="debug">
-        <b-button class="debug-button" @click="toggleDebug">
-            <i v-show="!isDebug" class="xi-checkbox-blank"></i>
-            <i v-show="isDebug" class="xi-check-square-o"></i>
-        </b-button>
-    </b-col>
 </b-row>
 </template>
 
@@ -64,7 +57,6 @@ export default class ViewerTool extends Vue {
 
     @State('Viewer') viewerState: any;
     @Getter('isPlaying') isPlaying: boolean;
-    @Getter('isDebug') isDebug: boolean;
     @Getter('currentDate') currentDate: Date;
     @Getter('currentScenario') currentScenario: ScenarioData;
     @Getter('currentCameraPosition') currentCameraPosition: string;
@@ -77,10 +69,6 @@ export default class ViewerTool extends Vue {
 
     togglePlaying (): void {
         this.setPlaying(!this.isPlaying);
-    }
-
-    toggleDebug (): void {
-        this.setDebug(!this.isDebug);
     }
 
     @Watch('currentScenarioId')

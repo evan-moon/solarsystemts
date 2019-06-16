@@ -1,4 +1,4 @@
-import { Store, ActionTree, ActionContext } from 'vuex';
+import { ActionTree, ActionContext } from 'vuex';
 import { ViewerState } from './state';
 import * as Q from 'q';
 
@@ -14,13 +14,6 @@ export function setPlaying (store: ActionContext<ViewerState, any>, isPlaying: b
     store.commit('SET_PLAYING', isPlaying);
     defer.resolve();
     return defer.promise;
-}
-
-export function setDebug (store: ActionContext<ViewerState, any>, isDebug: boolean) {
-	const defer = Q.defer();
-	store.commit('SET_DEBUG', isDebug);
-	defer.resolve();
-	return defer.promise;
 }
 
 export function setCurrentDate (store: ActionContext<ViewerState, any>, currentDate: Date) {
@@ -47,7 +40,6 @@ export function setCurrentCameraPosition (store: ActionContext<ViewerState, any>
 export default <ActionTree<ViewerState, any>> {
     setCurrentScenario,
     setPlaying,
-	setDebug,
     setCurrentDate,
     setCurrentLookAt,
     setCurrentCameraPosition,

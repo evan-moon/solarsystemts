@@ -9,6 +9,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
-        Viewer: new ViewerStoreModule()
+        viewer: new ViewerStoreModule()
     },
 });

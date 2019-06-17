@@ -9,13 +9,6 @@
     <b-col cols="2" class="tool-wrapper" data-name="time">
         <p>{{ currentDate | date }}</p>
     </b-col>
-    <b-col cols="2" class="tool-wrapper" data-name="scenarios">
-        <b-form-select v-model="currentScenarioId">
-            <option v-for="scenario in viewerState.scenarios" :value="scenario.id">
-                {{ scenario.name }}
-            </option>
-        </b-form-select>
-    </b-col>
     <b-col cols="2" class="tool-wrapper" data-name="camera-position">
         <b-form-select v-model="currentCameraPositionPlanetId">
             <option value="root">Default</option>
@@ -37,9 +30,12 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import { State, Getter, Action } from 'vuex-class';
+import { State, Getter, Mutation } from 'vuex-class';
 import { ScenarioData } from 'src/constants/scenario.constant';
 import * as moment from 'moment';
+import {
+    SET_PLAYING, SET_CURRENT_CAMERA_POSITION, SET_CURRENT_LOOK_AT
+} from 'src/stores/viewer/config';
 
 @Component({
     name: 'ViewerTool',
@@ -56,25 +52,19 @@ export default class ViewerTool extends Vue {
     planetIds: string[] = [];
 
     @State('Viewer') viewerState: any;
-    @Getter('isPlaying') isPlaying: boolean;
-    @Getter('currentDate') currentDate: Date;
-    @Getter('currentScenario') currentScenario: ScenarioData;
-    @Getter('currentCameraPosition') currentCameraPosition: string;
-    @Getter('currentLookAt') currentLookAt: string;
-    @Action('setCurrentScenario') setCurrentScenario: any;
-    @Action('setCurrentCameraPosition') setCurrentCameraPosition: any;
-    @Action('setCurrentLookAt') setCurrentLookAt: any;
-    @Action('setPlaying') setPlaying: any;
-    @Action('setDebug') setDebug: any;
+    @State(state => state.viewer.isPlaying) isPlaying: boolean;
+    @State(state => state.viewer.currentDate) currentDate: Date;
+    @State(state => state.viewer.currentScenario) currentScenario: ScenarioData;
+    @State(state => state.viewer.currentCameraPosition) currentCameraPosition: string;
+    @State(state => state.viewer.currentLookAt) currentLookAt: string;
+    @Mutation(SET_CURRENT_CAMERA_POSITION) setCurrentCameraPosition: any;
+    @Mutation(SET_CURRENT_LOOK_AT) setCurrentLookAt: any;
+    @Mutation(SET_PLAYING) setPlaying: any;
 
     togglePlaying (): void {
         this.setPlaying(!this.isPlaying);
     }
 
-    @Watch('currentScenarioId')
-    onChangeScenarioId (scenarioId: string): void {
-        this.setCurrentScenario(scenarioId);
-    }
     @Watch('currentCameraPositionPlanetId')
     onChangeCurrentCameraPositionPlanetId (planetId: string): void {
         this.setCurrentCameraPosition(planetId);

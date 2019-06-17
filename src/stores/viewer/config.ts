@@ -1,0 +1,4 @@
+export const SET_PLAYING = 'viewer/SET_PLAYING';
+export const SET_CURRENT_DATE = 'viewer/SET_CURRENT_DATE';
+export const SET_CURRENT_LOOK_AT = 'viewer/SET_CURRENT_LOOK_AT';
+export const SET_CURRENT_CAMERA_POSITION = 'viewer/SET_CURRENT_CAMERA_POSITION';

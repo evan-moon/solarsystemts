@@ -195,7 +195,7 @@ export class World {
         // this.initHelper();
 
         this.ticker = new Ticker(this.scenario.getStartDate());
-        this.ticker.setSecondsPerTick(this.scenario.getSecondsPerTick().initial);
+        this.ticker.setSecondsPerTick(this.scenario.getSecondsPerTick());
         this.ticker.setCalcPerTick(this.scenario.getCalcPerTick());
 
         this.setPlanets();
@@ -240,6 +240,10 @@ export class World {
         });
 
         return Promise.all(queue);
+    }
+
+    public setSecondsPerTick (tick: number): void {
+        this.ticker.setSecondsPerTick(tick);
     }
 
     public setCameraPosition (planetId: string): void {

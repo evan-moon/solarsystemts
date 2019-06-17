@@ -9,9 +9,16 @@
     <b-col cols="2" class="tool-wrapper" data-name="time">
         <p>{{ currentDate | date }}</p>
     </b-col>
+    <b-col cols="2" class="tool-wrapper" data-name="timesets">
+        <b-form-select v-model="currentTimesetIndex" @change="onChangeCurrentTimeIndex">
+            <option v-for="(timeset, index) in timesets" :key="timeset.name" :value="index">
+                {{ timeset.name }}
+            </option>
+        </b-form-select>
+    </b-col>
     <b-col cols="2" class="tool-wrapper" data-name="camera-position">
-        <b-form-select v-model="currentCameraPositionPlanetId">
-            <option value="root">Default</option>
+        <b-form-select v-model="currentCameraPositionPlanetId" @change="onChangeCurrentCameraPositionPlanetId">
+            <option value="root">All Planets</option>
             <option v-for="planet in currentScenario.system.planets" :value="planet.id">
                 {{ planet.name }}
             </option>
@@ -21,11 +28,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
 import { State, Mutation } from 'vuex-class';
 import { ScenarioData } from 'src/constants/scenario.constant';
 import * as moment from 'moment';
-import { SET_PLAYING, SET_CURRENT_CAMERA_POSITION } from 'src/stores/viewer/config';
+import { SET_PLAYING, SET_CURRENT_CAMERA_POSITION, SET_CURRENT_SCENARIO_SECONDS_PER_TICK, Timeset } from 'src/stores/viewer/config';
 
 @Component({
     name: 'ViewerTool',
@@ -38,27 +45,43 @@ import { SET_PLAYING, SET_CURRENT_CAMERA_POSITION } from 'src/stores/viewer/conf
 export default class ViewerTool extends Vue {
     currentScenarioId: string = '';
     currentCameraPositionPlanetId: string = '';
+    currentTimesetIndex: number = -1;
 
     @State('Viewer') viewerState: any;
     @State(state => state.viewer.isPlaying) isPlaying: boolean;
     @State(state => state.viewer.currentDate) currentDate: Date;
     @State(state => state.viewer.currentScenario) currentScenario: ScenarioData;
     @State(state => state.viewer.currentCameraPosition) currentCameraPosition: string;
+    @State(state => state.viewer.timesets) timesets: Timeset[];
     @Mutation(SET_CURRENT_CAMERA_POSITION) setCurrentCameraPosition: any;
     @Mutation(SET_PLAYING) setPlaying: any;
+    @Mutation(SET_CURRENT_SCENARIO_SECONDS_PER_TICK) setCurrentScenarioSecondsPerTick: any;
+
+    get currentTimeset () {
+        return this.timesets[this.currentTimesetIndex];
+    }
 
     togglePlaying (): void {
         this.setPlaying(!this.isPlaying);
     }
 
-    @Watch('currentCameraPositionPlanetId')
     onChangeCurrentCameraPositionPlanetId (planetId: string): void {
         this.setCurrentCameraPosition(planetId);
+    }
+
+    onChangeCurrentTimeIndex (): void {
+        if (!this.currentTimeset) {
+            return;
+        }
+        this.setCurrentScenarioSecondsPerTick(this.currentTimeset.time);
     }
 
     created () {
         this.currentScenarioId = this.currentScenario.id;
         this.currentCameraPositionPlanetId = this.currentCameraPosition;
+        this.currentTimesetIndex = this.timesets.findIndex(timeset => {
+            return timeset.time === this.currentScenario.secondsPerTick;
+        });
     }
 };
 </script>

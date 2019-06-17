@@ -4,10 +4,10 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import { Mutation, State } from 'vuex-class';
+import { Mutation, State, Getter } from 'vuex-class';
 import LoaderService from 'src/lib/services/Loader.service';
 import { World } from 'src/lib/graphics/World';
-import { SET_CURRENT_DATE } from 'src/stores/viewer/config';
+import { SET_CURRENT_DATE, GET_CURRENT_SCENARIO_SECONDS_PER_TICK } from 'src/stores/viewer/config';
 
 @Component({
     name: 'GLRenderer'
@@ -20,6 +20,7 @@ export default class GLRenderer extends Vue {
     @State(state => state.viewer.currentScenario) currentScenario: any;
     @State(state => state.viewer.isPlaying) isPlaying: boolean;
     @State(state => state.viewer.currentCameraPosition) currentCameraPosition: string;
+    @Getter(GET_CURRENT_SCENARIO_SECONDS_PER_TICK) currentSecondsPerTick: number;
 
     tick () {
         this.world.render();
@@ -48,6 +49,10 @@ export default class GLRenderer extends Vue {
     @Watch('currentCameraPosition')
     onChangeCurrentCameraPosition (planetId: string): void {
         this.world.setCameraPosition(planetId);
+    }
+    @Watch('currentSecondsPerTick')
+    onChangeCurrentSecondsPerTick (tick: number): void {
+        this.world.setSecondsPerTick(tick);
     }
 
     mounted () {

@@ -4,7 +4,7 @@
  * @desc 시나리오 클래스
  */
 import { SystemBodies, SystemObjects } from 'src/lib/interfaces/astro.interface';
-import { ScenarioData, Tick } from 'src/constants/scenario.constant';
+import { ScenarioData } from 'src/constants/scenario.constant';
 import { StarSystemData, StarSystem } from 'src/lib/systems/StarSystem';
 import { PlanetSystemData, PlanetSystem } from 'src/lib/systems/PlanetSystem';
 
@@ -14,7 +14,7 @@ export class Scenario {
     public systemType: string;
     public system: StarSystem|PlanetSystem;
     private startDate: Date;
-    private secondsPerTick: Tick;
+    private secondsPerTick: number;
     private calcPerTick: number;
 
     constructor (data: ScenarioData) {
@@ -31,7 +31,7 @@ export class Scenario {
         return this.startDate;
     }
 
-    public getSecondsPerTick(): Tick {
+    public getSecondsPerTick(): number {
         return this.secondsPerTick;
     }
 

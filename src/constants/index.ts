@@ -12,8 +12,6 @@ export const LB_TO_KG: number = 0.453592;
 export const LBF_TO_NEWTON: number = 4.44822162;
 export const FT_TO_M: number= 0.3048;
 
-export const USE_PHYSICS_BY_DEFAULT: boolean = false; // use physics or orbital elements to animate
-
 export const HOUR: number = 60 * 60;
 export const DAY: number = 60 * 60 * 24; // duration in seconds
 export const YEAR: number = 365.25; // duration in days
@@ -22,7 +20,4 @@ export const SIDERAL_DAY: number = 3600 * 23.9344696;
 
 export const J2000: Date = new Date('2000-01-01T12:00:00-00:00');
 
-export const DEFAULT_CALC_PER_TICK: number = 10;
-
-export const IS_SCREENSHOT: boolean = false;
-export const IS_CAPTURE: boolean = false;
+export const DEFAULT_CALC_PER_TICK: number = 1;

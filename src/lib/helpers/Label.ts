@@ -13,6 +13,7 @@ export class Label {
     elementDOM: any;
     position: Vector3;
     position2d: Vector3;
+    centerVector: Vector3 = new Vector3();
 
     constructor (name: string, planetName: string) {
         this.name = `${name}-label`;
@@ -58,7 +59,7 @@ export class Label {
             return position2d;
         }
         else {
-            return new Vector3();
+            return this.centerVector;
         }
     }
 }

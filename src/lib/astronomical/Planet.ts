@@ -90,7 +90,7 @@ export class Planet extends AstronomicalObject {
         if (this.ring) {
             const innerSize = DimensionService.getScaled(this.ring.innerRadius);
             const outerSize = DimensionService.getScaled(this.ring.innerRadius);
-            const segments = 30;
+            const segments = 20;
 
             const material: MeshLambertMaterial = new MeshLambertMaterial({
                 map: new TextureLoader().load(this.ring.map),

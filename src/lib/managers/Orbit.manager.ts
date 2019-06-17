@@ -6,13 +6,21 @@
 
 import * as $ from 'jquery';
 import { Vector3, Euler, Quaternion } from 'three';
-import { G, CENTURY, DAY, KM, DEG_TO_RAD, CIRCLE, AU } from 'src/constants';
+import { CENTURY, DAY, KM, DEG_TO_RAD, CIRCLE } from 'src/constants';
 import { OrbitData, ComputedOrbitData } from 'src/lib/interfaces/astro.interface';
 import Kepler from 'src/lib/services/Kepler.service';
 
 export class OrbitManager {
     public orbitData: OrbitData;
     private name: string;
+    private computedPosition: Vector3 = new Vector3();
+    private defaultPosition: Vector3 = new Vector3();
+
+    private euler1: Euler = new Euler();
+    private euler2: Euler = new Euler();
+    private quaternion1 = new Quaternion();
+    private quaternion2 = new Quaternion();
+    private multiplyQuaternion = new Quaternion();
 
     constructor (orbitData: OrbitData) {
         this.orbitData = orbitData;
@@ -24,15 +32,15 @@ export class OrbitManager {
 
     public getPosFromElements (computed: ComputedOrbitData): Vector3 {
         if (!computed) {
-            return new Vector3();
+            return this.defaultPosition;
         }
 
-        const a1 = new Euler(computed.tilt || 0, 0, computed.o, 'XYZ');
-        const a2 = new Euler(computed.i, 0, computed.w, 'XYZ');
-        const q1 = new Quaternion().setFromEuler(a1);
-        const q2 = new Quaternion().setFromEuler(a2);
+        const a1 = this.euler1.set(computed.tilt || 0, 0, computed.o, 'XYZ');
+        const a2 = this.euler2.set(computed.i, 0, computed.w, 'XYZ');
+        const q1 = this.quaternion1.setFromEuler(a1);
+        const q2 = this.quaternion2.setFromEuler(a2);
 
-        const planeQuaternion = new Quaternion().multiplyQuaternions(q1, q2);
+        const planeQuaternion = this.multiplyQuaternion.multiplyQuaternions(q1, q2);
         computed.pos.applyQuaternion(planeQuaternion);
 
         return computed.pos;
@@ -93,10 +101,12 @@ export class OrbitManager {
         computed.w %= CIRCLE;
         computed.M %= CIRCLE;
 
-        computed.pos = new Vector3(
+        this.computedPosition.set(
             computed.a * (Math.cos(computed.E) - computed.e),
-            computed.a * (Math.sqrt(1 - (computed.e ** 2))) * Math.sin(computed.E)
+            computed.a * (Math.sqrt(1 - (computed.e ** 2))) * Math.sin(computed.E),
+            0
         );
+        computed.pos = this.computedPosition;
 
         computed.r = computed.pos.length();
         computed.v = Math.atan2(computed.pos.y, computed.pos.x);

@@ -8,7 +8,6 @@ import {
     Vector3, LineBasicMaterial, Line,
     BufferGeometry, BufferAttribute, VertexColors
 } from 'three';
-import { QUARTER_CIRCLE } from 'src/constants';
 import ColorService from 'src/lib/services/Color.service';
 
 export class Tracer {
@@ -33,8 +32,6 @@ export class Tracer {
 
     public updateTrace (vertex: Vector3): void {
         if (!this.trace) throw new Error(`There is no trace in ${this.name}! :: updateTrace`);
-
-        const maxLength = this.maxLength;
 
         this.vertices.push(vertex.clone());
         if (this.vertices.length > this.maxLength) {
@@ -69,7 +66,6 @@ export class Tracer {
     }
 
     private createTrace (): void {
-        const maxLength = this.maxLength;
         const geometry = new BufferGeometry();
         geometry.addAttribute('position', new BufferAttribute(new Float32Array(0), 3));
         geometry.addAttribute('color', new BufferAttribute(new Float32Array(0), 3));

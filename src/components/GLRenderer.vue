@@ -4,9 +4,10 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import { Action, Getter } from 'vuex-class';
+import { Mutation, State } from 'vuex-class';
 import LoaderService from 'src/lib/services/Loader.service';
 import { World } from 'src/lib/graphics/World';
+import { SET_CURRENT_DATE } from 'src/stores/viewer/config';
 
 @Component({
     name: 'GLRenderer'
@@ -15,17 +16,14 @@ export default class GLRenderer extends Vue {
     rendererID: string = 'renderer';
     world: World;
 
-    @Action('setCurrentDate') setCurrentDate: any;
-    @Getter('currentScenario') currentScenario: any;
-    @Getter('isPlaying') isPlaying: boolean;
-    @Getter('currentCameraPosition') currentCameraPosition: string;
-    @Getter('currentLookAt') currentLookAt: string;
+    @Mutation(SET_CURRENT_DATE) setCurrentDate: any;
+    @State(state => state.viewer.currentScenario) currentScenario: any;
+    @State(state => state.viewer.isPlaying) isPlaying: boolean;
+    @State(state => state.viewer.currentCameraPosition) currentCameraPosition: string;
 
     tick () {
         this.world.render();
-        window.requestAnimationFrame(() => {
-            this.tick();
-        });
+        window.requestAnimationFrame(() => this.tick());
         if (this.isPlaying) {
             this.setCurrentDate(this.world.date);
         }
@@ -50,10 +48,6 @@ export default class GLRenderer extends Vue {
     @Watch('currentCameraPosition')
     onChangeCurrentCameraPosition (planetId: string): void {
         this.world.setCameraPosition(planetId);
-    }
-    @Watch('currentLookAt')
-    onChangeCurrentLookAt (planetId: string): void {
-        this.world.setLookAt(planetId);
     }
 
     mounted () {

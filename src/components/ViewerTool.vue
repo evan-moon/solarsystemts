@@ -17,25 +17,15 @@
             </option>
         </b-form-select>
     </b-col>
-    <b-col cols="2" class="tool-wrapper" data-name="camera-lookat">
-        <b-form-select v-model="currentCameraLookAtPlanetId">
-            <option value="root">Default</option>
-            <option v-for="planet in currentScenario.system.planets" :value="planet.id">
-                {{ planet.name }}
-            </option>
-        </b-form-select>
-    </b-col>
 </b-row>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import { State, Getter, Mutation } from 'vuex-class';
+import { State, Mutation } from 'vuex-class';
 import { ScenarioData } from 'src/constants/scenario.constant';
 import * as moment from 'moment';
-import {
-    SET_PLAYING, SET_CURRENT_CAMERA_POSITION, SET_CURRENT_LOOK_AT
-} from 'src/stores/viewer/config';
+import { SET_PLAYING, SET_CURRENT_CAMERA_POSITION } from 'src/stores/viewer/config';
 
 @Component({
     name: 'ViewerTool',
@@ -48,17 +38,13 @@ import {
 export default class ViewerTool extends Vue {
     currentScenarioId: string = '';
     currentCameraPositionPlanetId: string = '';
-    currentCameraLookAtPlanetId: string = '';
-    planetIds: string[] = [];
 
     @State('Viewer') viewerState: any;
     @State(state => state.viewer.isPlaying) isPlaying: boolean;
     @State(state => state.viewer.currentDate) currentDate: Date;
     @State(state => state.viewer.currentScenario) currentScenario: ScenarioData;
     @State(state => state.viewer.currentCameraPosition) currentCameraPosition: string;
-    @State(state => state.viewer.currentLookAt) currentLookAt: string;
     @Mutation(SET_CURRENT_CAMERA_POSITION) setCurrentCameraPosition: any;
-    @Mutation(SET_CURRENT_LOOK_AT) setCurrentLookAt: any;
     @Mutation(SET_PLAYING) setPlaying: any;
 
     togglePlaying (): void {
@@ -69,15 +55,10 @@ export default class ViewerTool extends Vue {
     onChangeCurrentCameraPositionPlanetId (planetId: string): void {
         this.setCurrentCameraPosition(planetId);
     }
-    @Watch('currentCameraLookAtPlanetId')
-    onChangeCurrentCameraLookAtPlanetId (planetId: string): void {
-        this.setCurrentLookAt(planetId);
-    }
 
     created () {
         this.currentScenarioId = this.currentScenario.id;
         this.currentCameraPositionPlanetId = this.currentCameraPosition;
-        this.currentCameraLookAtPlanetId = this.currentLookAt;
     }
 };
 </script>

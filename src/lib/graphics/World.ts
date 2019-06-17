@@ -8,17 +8,16 @@ import * as $ from 'jquery';
 import { KM } from 'src/constants';
 import { ScenarioData } from 'src/constants/scenario.constant';
 import { Scenario } from 'src/lib/graphics/Scenario';
-import { StarSystemData, StarSystem } from 'src/lib/systems/StarSystem';
-import { PlanetSystemData, PlanetSystem } from 'src/lib/systems/PlanetSystem';
+import { StarSystemData } from 'src/lib/systems/StarSystem';
+import { PlanetSystemData} from 'src/lib/systems/PlanetSystem';
 import { Star } from 'src/lib/astronomical/Star';
-import { Planet } from 'src/lib/astronomical/Planet';
 import { SystemBodies, PlanetData } from 'src/lib/interfaces/astro.interface';
 import DimensionService from 'src/lib/services/Dimension.service';
 import {
 	Scene, WebGLRenderer, AmbientLight, Vector3, Vector2,
 	SphereBufferGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
 	TextureLoader, Raycaster, PerspectiveCamera,
-	AxisHelper, GridHelper, BoxHelper
+	AxisHelper, GridHelper
 } from 'three';
 import { OrbitControls } from 'src/plugin/Orbit-controls';
 import CameraManager from 'src/lib/managers/Camera.manager';
@@ -66,10 +65,11 @@ export class World {
     protected CameraManager: CameraManager;
     protected currentCamera: PerspectiveCamera;
     protected cameraPos: string;
-    protected cameraLookAt: string;
 
     protected ControlsManager: ControlsManager;
     protected controls: OrbitControls;
+
+    private centerVector = new Vector3();
 
     constructor (rendererSelector: string) {
         this.rendererSelector = rendererSelector;
@@ -210,7 +210,7 @@ export class World {
 
         if (centerObject instanceof Star) {
             const star = centerObject as Star;
-            const starPosition = new Vector3();
+            const starPosition = this.centerVector;
             const flarePosition = cameraAbsolutePosition.clone().sub(starPosition).multiplyScalar(0.1);
             const flareSize = star.getScreenSizeRatio(cameraAbsolutePosition, this.CameraManager.getConfig().fov);
 
@@ -240,10 +240,6 @@ export class World {
         });
 
         return Promise.all(queue);
-    }
-
-    public setLookAt (planetId: string): void {
-        this.cameraLookAt = planetId;
     }
 
     public setCameraPosition (planetId: string): void {

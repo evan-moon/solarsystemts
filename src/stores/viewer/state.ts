@@ -5,7 +5,6 @@ export class ViewerState {
     public currentScenario: ScenarioData;
     public isPlaying: boolean;
     public currentDate: Date;
-    public currentLookAt: string;
     public currentCameraPosition: string;
 
     constructor () {
@@ -13,7 +12,6 @@ export class ViewerState {
         this.currentScenario = this.scenarios[0];
         this.isPlaying = false;
         this.currentDate = new Date();
-        this.currentLookAt = 'root';
         this.currentCameraPosition = 'root';
     }
 }

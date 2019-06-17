@@ -36,6 +36,7 @@ class CameraManager {
     private scene: Scene;
 
     protected cameraConfig: CameraConfig;
+    private defaultVector = new Vector3();
 
     constructor (
         scene: Scene,
@@ -53,7 +54,7 @@ class CameraManager {
     public init (): void {
         this.globalCamera = this.createCamera('mainCam');
         this.globalCamera.position.set(0, -1, this.getDistanceFromFov(this.stageSize, this.globalCamera.fov));
-        this.globalCamera.lookAt(new Vector3());
+        this.globalCamera.lookAt(this.defaultVector);
 
         this.scene.add(this.globalCamera);
     }

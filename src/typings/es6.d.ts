@@ -1,7 +1,6 @@
 declare interface Math {
     log10(x: number): number;
     sinh(x: number): number;
-    tanh(x: number): number;
     cosh(x: number): number;
     sign(x: number): number;
 }

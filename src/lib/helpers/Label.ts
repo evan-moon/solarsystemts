@@ -28,27 +28,25 @@ export class Label {
     public updatePosition (position: Vector3, camera: PerspectiveCamera) {
         this.position = position.clone();
         this.position2d = this.get2DPosition(camera);
-
-        const alpha = 1 / this.position2d.z;
-        this.setElementPosition(this.position2d, alpha);
+        this.setElementPosition(this.position2d);
     }
 
-    private setElementPosition (position2d: Vector3, alpha: number) {
+    private setElementPosition (position2d: Vector3) {
         const style = {
-            transform: `translate(${position2d.x}px, ${position2d.y}px) scale(${position2d.z})`,
-            opacity: alpha
+            transform: `translate(${position2d.x - 20}px, ${position2d.y - 20}px) scale(${position2d.z})`,
+            opacity: 1,
         };
         this.elementDOM.css(style);
     }
 
-    private get2DPosition (camera: PerspectiveCamera) {
+    private get2DPosition (camera: PerspectiveCamera): Vector3 {
         const position = this.position.clone();
         const position2d = position.project(camera);
         const w = window.innerWidth;
         const h = window.innerHeight;
 
-        position2d.x = (position2d.x + 1) / 2 * w - 20;
-        position2d.y = -(position2d.y - 1) / 2 * h - 20;
+        position2d.x = (position2d.x + 1) / 2 * w;
+        position2d.y = -(position2d.y - 1) / 2 * h;
 
         if (position2d.z < 1 && position2d.x > 0 && position2d.x < w && position2d.y > 0 && position2d.y < h) {
             const distance = camera.position.distanceTo(position);

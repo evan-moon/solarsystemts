@@ -42,7 +42,7 @@ export class Planet extends AstronomicalObject {
     private traceManager: Tracer;
 
     constructor (data: PlanetData) {
-        let astronomical: AstronomicalObjectData = {
+        const astronomical: AstronomicalObjectData = {
             id: data.id,
             name: data.name,
             mass: data.mass,

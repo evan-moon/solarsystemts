@@ -229,7 +229,7 @@ export class World {
         }
 
         const queue: any[] = bodies.others.map(planet => {
-            return new Promise((resolve: any, reject: any) => {
+            return new Promise((resolve: any) => {
                 if (this.isPlaying) {
                     planet.moveRotating(epochTime);
                     planet.setPositionByDate(epochTime);

@@ -13,10 +13,6 @@ Math.cosh = function (x: number): number {
     return (Math.E ** x) + (Math.E ** -x) / 2;
 }
 
-Math.tanh = function (x: number): number {
-    return Math.sinh(x) / Math.cosh(x);
-}
-
 Math.sign = function (x: number) {
     return ( x >= 0.0 ) ? 1 : -1;
 }

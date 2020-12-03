@@ -283,6 +283,7 @@ export class World {
 
         space.mesh = new Mesh(space.geometry, space.material);
         space.mesh.name = name;
+        space.mesh.rotateX(90);
 
         if (this.scene.getObjectByName(name)) {
             this.scene.remove(this.scene.getObjectByName(name));

@@ -4,7 +4,7 @@
 
 ![img](./thumb.png)
 
-[Live Demo](https://solar-system-ts.herokuapp.com/#/)
+[Live Demo](https://evan-moon.github.io/solarsystemts/#/)
 
 ## Build Setup
 

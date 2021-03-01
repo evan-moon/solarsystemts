@@ -21,7 +21,7 @@
     "jquery": "^3.2.1",
     "moment": "^2.19.2",
     "q": "^1.5.1",
-    "three": "^0.88.0",
+    "three": "^0.125.0",
     "three-orbitcontrols-ts": "^0.1.2",
     "typescript": "^3.5.1",
     "vue": "^2.5.2",

@@ -35,7 +35,6 @@
     "@babel/preset-env": "^7.4.5",
     "@types/jquery": "^3.2.16",
     "@types/q": "^1.0.6",
-    "@types/three": "^0.133.1",
     "autoprefixer": "^9.6.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",

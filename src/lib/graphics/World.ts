@@ -17,7 +17,7 @@ import {
 	Scene, WebGLRenderer, AmbientLight, Vector3, Vector2,
 	SphereBufferGeometry, MeshBasicMaterial, Mesh, Color, BackSide,
 	TextureLoader, Raycaster, PerspectiveCamera,
-	AxisHelper, GridHelper
+	AxesHelper, GridHelper
 } from 'three';
 import { OrbitControls } from 'src/plugin/Orbit-controls';
 import CameraManager from 'src/lib/managers/Camera.manager';
@@ -293,8 +293,8 @@ export class World {
     }
 
     private initHelper () {
-        let axisHelper: AxisHelper = new AxisHelper(this.stageSize);
-        let gridHelper: GridHelper = new GridHelper(this.stageSize, this.stageSize / 10);
+        const axisHelper = new AxesHelper(this.stageSize);
+        const gridHelper = new GridHelper(this.stageSize, this.stageSize / 10);
         gridHelper.rotation.x = ( 90 / 180 ) * Math.PI;
 
         this.scene.add(axisHelper, gridHelper);

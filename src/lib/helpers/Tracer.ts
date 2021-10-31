@@ -6,7 +6,7 @@
 
 import {
     Vector3, LineBasicMaterial, Line,
-    BufferGeometry, BufferAttribute, VertexColors
+    BufferGeometry, BufferAttribute
 } from 'three';
 import ColorService from 'src/lib/services/Color.service';
 
@@ -70,7 +70,7 @@ export class Tracer {
         geometry.addAttribute('position', new BufferAttribute(new Float32Array(0), 3));
         geometry.addAttribute('color', new BufferAttribute(new Float32Array(0), 3));
         const material = new LineBasicMaterial({
-            vertexColors: VertexColors
+            vertexColors: true
         });
         const mesh = new Line(geometry, material);
         this.geometry = geometry;

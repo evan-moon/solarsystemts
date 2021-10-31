@@ -5,8 +5,8 @@
  */
 import {
 	Object3D, Color, TextureLoader,
-	Geometry, LineBasicMaterial, Vector3, Line,
-	MeshLambertMaterial, SphereBufferGeometry, Mesh, BoxHelper
+	BufferGeometry, LineBasicMaterial, Vector3, Line,
+	MeshLambertMaterial, SphereBufferGeometry, Mesh, Float32BufferAttribute
 } from 'three';
 import { Material, AstronomicalObjectData } from 'src/lib/interfaces/astro.interface';
 import { CIRCLE, KM } from 'src/constants';
@@ -155,13 +155,14 @@ export class AstronomicalObject {
 	 * @desc 천체의 자전축 오브젝트를 생성한다
 	 */
 	protected setHelper (): void {
-        const geometry = new Geometry();
+        const geometry = new BufferGeometry();
         const material = new LineBasicMaterial({
             color: 0x00ff00
         });
-        const centerPos = new Vector3();
-        const tailPos = new Vector3(0, this.getObjectCompressedSize() * 2, 0);
-        geometry.vertices.push(centerPos, tailPos);
+        const centerPos = new Vector3().toArray();
+        const tailPos = new Vector3(0, this.getObjectCompressedSize() * 2, 0).toArray();
+
+        geometry.setAttribute('position', new Float32BufferAttribute([...centerPos, ...tailPos], 3));
 
         const mesh = new Line(geometry, material);
         mesh.name = this.helperId;

@@ -6,19 +6,17 @@
  */
 import { DEG_TO_RAD } from 'src/constants';
 import {
-    TextureLoader, Texture, Color, LensFlare,
-    AdditiveBlending, PointLight, DirectionalLight,
-    Vector3
+    TextureLoader, Texture, Color, PointLight, Vector3
 } from 'three';
-import { AstronomicalObjectData, PlanetData, StarData } from 'src/lib/interfaces/astro.interface';
-import { AstronomicalObject } from 'src/lib/astronomical/AstronomicalObject';
+import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare';
+import { PlanetData, StarData } from 'src/lib/interfaces/astro.interface';
 import { Planet } from 'src/lib/astronomical/Planet';
 
 export class Star extends Planet {
     private flareSize: number;
     private flareMapResource: string;
     private flareMap: Texture;
-    private lensFlare: LensFlare;
+    private lensFlare: PointLight;
 
     constructor (data: StarData) {
         let astronomical: PlanetData = {
@@ -32,7 +30,7 @@ export class Star extends Planet {
         };
         super(astronomical);
 
-        this.flareSize = 500;
+        this.flareSize = 100;
         this.flareMapResource = 'static/images/effect/lensflare.png';
         this.setStarBody();
         this.setFlare();
@@ -60,30 +58,20 @@ export class Star extends Planet {
     }
 
     private setFlare (): void {
-        this.flareMap = new TextureLoader().load(this.flareMapResource);
         const flareColor = new Color(0xffffff);
-        let flareSize = this.flareSize;
+        flareColor.setHSL(0.57, 0.80, 0.97);
 
-        flareColor.setHSL(0.57, 0.80, 0.97); // #fce8e8
-        this.lensFlare = new LensFlare(this.flareMap, flareSize, 0.0, AdditiveBlending, flareColor);
-        this.lensFlare.customUpdateCallback = (lensFlare: LensFlare) => {
-            const len: number = lensFlare.lensFlares.length;
-            const vectorX: number = -lensFlare.positionScreen.x * 2;
-            const vectorY: number = -lensFlare.positionScreen.y * 2;
-            let f: number = 0;
-            let flare: any;
+        const flareSize = this.flareSize;
+        this.flareMap = new TextureLoader().load(this.flareMapResource);
 
-            for (f; f < len; f++) {
-                flare = lensFlare.lensFlares[f];
-                flare.x = lensFlare.positionScreen.x + vectorX * flare.distance;
-                flare.y = lensFlare.positionScreen.y + vectorY * flare.distance;
-                flare.size = this.flareSize;
-                flare.wantedRotation = flare.x * Math.PI * 0.5;
-                flare.rotation += (flare.wantedRotation - flare.rotation) * 0.5;
-            }
-        };
+        const newLensflare = new Lensflare();
+        newLensflare.addElement(new LensflareElement(this.flareMap, flareSize, 0.0, flareColor));
 
-        this.root.add(this.lensFlare);
+        const light = new PointLight(0xffffff, 1.5, 100);
+        light.add(newLensflare);
+
+        this.lensFlare = light;
+        this.root.add(light);
     }
 
     private setLight (): void {

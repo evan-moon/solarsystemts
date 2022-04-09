@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "express-history-api-fallback": "^2.2.1",
     "jquery": "^3.2.1",
-    "moment": "^2.19.2",
+    "moment": "^2.29.2",
     "q": "^1.5.1",
     "three": "^0.125.0",
     "three-orbitcontrols-ts": "^0.1.2",
